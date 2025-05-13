@@ -11,5 +11,11 @@
                 Pays
             </a>
         </li>
+        <li>
+            <a href="{{ route('parametre.communes.index') }}" class="{{Route::currentRouteName() === 'parametre.communes.index' ? 'mm-active' : ''}}">
+                <i class="fa fa-certificate"></i>
+                Communes / S-pr&eacute;fecture
+            </a>
+        </li>
     </ul>
 </li>

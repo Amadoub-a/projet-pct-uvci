@@ -244,11 +244,13 @@
                             @include("layouts.menus.admin.parametre")
                             <li class="app-sidebar__heading"></li>
                             <li class="app-sidebar__heading"></li>
+                            @if(auth()->user()->role == "admin" or auth()->user()->role == "super-admin")
                             <li>
                                 <a href="{{ route('auth.users.index') }}" class=" {{Route::currentRouteName() === 'auth.users.index' ? 'mm-active' : ''}}">
                                     <i class="metismenu-icon pe-7s-users"></i>Utilisateurs
                                 </a>
                             </li>
+                            @endif
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="metismenu-icon pe-7s-power"></i>D&eacute;connexion

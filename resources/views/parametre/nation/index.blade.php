@@ -1,7 +1,7 @@
 @extends(
 'layouts.app',
 [
-'title' => "Smart Parc Auto | Pays",
+'title' => "E-Civil | Pays",
 ]
 )
 

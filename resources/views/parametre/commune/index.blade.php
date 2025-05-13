@@ -1,7 +1,7 @@
 @extends(
 'layouts.app',
 [
-'title' => 'Smart Parc Auto | Carburant',
+'title' => "E-Civil | Communes ou sous-préfectures",
 ]
 )
 
@@ -11,7 +11,7 @@
         <div class="main-card mb-3 card">
             <form id="formAjout" ng-controller="formAjoutCtrl">
                 @csrf
-                <input type="text" class="hidden" id="idCarburantModifier" ng-hide="true" ng-model="carburant.id" />
+                <input type="text" class="hidden" id="idCommuneModifier" ng-hide="true" ng-model="commune.id" />
                 <div class="modal-header bg-primary">
                     <h5 class="modal-title" style="color:#fff;">
                         {{$titleControlleur}}
@@ -20,8 +20,8 @@
                 <div class="modal-body">
                     <div class="col-md-12">
                         <div class="position-relative mb-3">
-                            <label for="libelle_carburant" class="form-label">Libell&eacute; *</label>
-                            <input type="text" onkeyup="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);" class="form-control" ng-model="carburant.libelle_carburant" name="libelle_carburant" id="libelle_carburant" placeholder="Niveau du carburant" autofocus required>
+                            <label for="libelle_commune" class="form-label">Libell&eacute; *</label>
+                            <input type="text" onkeyup="this.value = this.value.charAt(0).toUpperCase() + this.value.substr(1);" class="form-control" ng-model="commune.libelle_commune" name="libelle_commune" id="libelle_commune" placeholder="Nom de la commune ou du sous préfecture" autofocus required>
                         </div>
                     </div>
                 </div>
@@ -36,11 +36,11 @@
     <div class="col-md-8">
         <div class="main-card mb-3 card">
             <div class="card-body">
-                <h5 class="card-title">Liste des niveaux</h5>
-                <table id="table" class="mb-0 table table-striped table-hover" data-pagination="true" data-search="false" data-toggle="table" data-show-columns="false" data-url="{{url('parametre', ['action'=>'liste-carburants'])}}" data-show-toggle="false">
+                <h5 class="card-title">Liste des communes ou sous pr&eacute;fectures</h5>
+                <table id="table" class="mb-0 table table-striped table-hover" data-pagination="true" data-search="false" data-toggle="table" data-show-columns="false" data-url="{{url('parametre', ['action'=>'liste-communes'])}}" data-show-toggle="false">
                     <thead>
                         <tr>
-                            <th data-field="libelle_carburant" data-sortable="true">Niveau du carburant</th>
+                            <th data-field="libelle_commune" data-sortable="true">Commune / Sous pr&eacute;fecture</th>
                             <th data-field="id" data-width="80px" data-align="center" data-formatter="optionFormatter"><i class="fa fa-wrench"></i></th>
                         </tr>
                     </thead>
@@ -57,7 +57,7 @@
         <div class="modal-content">
             <form id="formSupprimer" ng-controller="formSupprimerCtrl">
                 @csrf
-                <input type="text" class="hidden" id="idCarburantSupprimer" ng-hide="true" ng-model="carburant.id" />
+                <input type="text" class="hidden" id="idCommuneSupprimer" ng-hide="true" ng-model="commune.id" />
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title" style="color:#fff;">
                         <i class="metismenu-icon pe-7s-trash"></i> Suppression de donn&eacute;es
@@ -67,7 +67,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <i class="fa fa-question-circle fa-2x"></i>
-                        Etes vous certains de vouloir supprimer<br /><b>@{{carburant.libelle_carburant}}</b>
+                        Etes vous certains de vouloir supprimer<br /><b>@{{commune.libelle_commune}}</b>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -86,21 +86,21 @@
         rows = [];
 
     appSmarty.controller('formAjoutCtrl', function($scope) {
-        $scope.populateForm = function(carburant) {
-            $scope.carburant = carburant;
+        $scope.populateForm = function(commune) {
+            $scope.commune = commune;
         };
         $scope.initForm = function() {
             ajout = true;
-            $scope.carburant = {};
+            $scope.commune = {};
         };
     });
 
     appSmarty.controller('formSupprimerCtrl', function($scope) {
-        $scope.populateForm = function(carburant) {
-            $scope.carburant = carburant;
+        $scope.populateForm = function(commune) {
+            $scope.commune = commune;
         };
         $scope.initForm = function() {
-            $scope.carburant = {};
+            $scope.commune = {};
         };
     });
 
@@ -121,42 +121,42 @@
 
             if (ajout == true) {
                 var methode = 'POST';
-                var url = "{{route('parametre.carburants.store')}}";
+                var url = "{{route('parametre.communes.store')}}";
             } else {
-                var id = $("#idCarburantModifier").val();
+                var id = $("#idCommuneModifier").val();
                 var methode = 'PUT';
-                var url = 'carburants/' + id;
+                var url = 'communes/' + id;
             }
             editerAction(methode, url, $(this), $(this).serialize(), $ajaxLoader, $table, ajout);
         });
 
         $("#formSupprimer").submit(function(e) {
             e.preventDefault();
-            var id = $("#idCarburantSupprimer").val();
+            var id = $("#idCommuneSupprimer").val();
             var formData = $(this).serialize();
             var $ajaxLoader = $(".bs-modal-suppression");
-            supprimerAction('carburants/' + id, $(this).serialize(), $ajaxLoader, $table);
+            supprimerAction('communes/' + id, $(this).serialize(), $ajaxLoader, $table);
         });
     });
 
-    function updateRow(idCarburant) {
+    function updateRow(idCommune) {
         ajout = false;
         var $scope = angular.element($("#formAjout")).scope();
-        var carburant = _.findWhere(rows, {
-            id: idCarburant
+        var commune = _.findWhere(rows, {
+            id: idCommune
         });
         $scope.$apply(function() {
-            $scope.populateForm(carburant);
+            $scope.populateForm(commune);
         });
     }
 
-    function deleteRow(idCarburant) {
+    function deleteRow(idCommune) {
         var $scope = angular.element($("#formSupprimer")).scope();
-        var carburant = _.findWhere(rows, {
-            id: idCarburant
+        var commune = _.findWhere(rows, {
+            id: idCommune
         });
         $scope.$apply(function() {
-            $scope.populateForm(carburant);
+            $scope.populateForm(commune);
         });
         $(".bs-modal-suppression").modal("show");
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfilController;
+use App\Http\Controllers\Parametre\CommuneController;
 use App\Http\Controllers\Parametre\NationController;
 
 Route::get('/', function () {
@@ -43,7 +44,8 @@ Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(functi
     Route::resource('nations', NationController::class);
     Route::get('liste-nations', [NationController::class, 'listeNations'])->name('liste-nations');
 
-    
+    Route::resource('communes', CommuneController::class);
+    Route::get('liste-communes', [CommuneController::class, 'listeCommunes'])->name('liste-communes');
 });  
 
 
