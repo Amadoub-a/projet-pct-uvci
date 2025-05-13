@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="fr">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Page de Connexion</title>
+    <title>E-Civil - Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
     <meta name="description" content="Smart Parc Auto simplifie la gestion de votre flotte de véhicules avec des outils de suivi en temps réel et des rapports personnalisés pour une efficacité optimale.">
     <!-- Disable tap highlight on IE -->
@@ -93,7 +93,7 @@
                                         <div class="h5 modal-title text-center">
                                             <h4 class="mt-2">
                                                 <div>Bienvenue</div>
-                                                <span>Veuillez vous connecter à votre compte admin.</span>
+                                                <span>Veuillez vous connecter à votre compte ci-dessous.</span>
                                             </h4>
                                         </div>
 
@@ -124,9 +124,9 @@
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary btn-lg">Connexion</button>
                                         </div>
-                                        <!--div class="text-center">
+                                        <div class="text-center">
                                             <a href="{{ route('password.request') }}" class="btn-lg btn btn-link">Mot de passe oublié ?</a>
-                                        </div-->
+                                        </div>
                                     </div>
                                 </form>
                             </div>

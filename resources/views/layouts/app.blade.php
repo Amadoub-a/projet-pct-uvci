@@ -22,17 +22,14 @@
     <link rel="stylesheet" href="{{asset('template/vendors/linearicons-master/dist/web-font/style.css')}}">
     <link rel="stylesheet" href="{{asset('template/vendors/pixeden-stroke-7-icon-master/pe-icon-7-stroke/dist/pe-icon-7-stroke.css')}}">
     <link rel="stylesheet" href="{{asset('template/styles/css/base.css')}}">
-    <link rel="stylesheet" href="{{asset('css/my-style.css')}}">
 
     <!-- plugin dependencies -->
     <link rel="stylesheet" href="{{asset('plugin/loading-modal-indicator/css/jquery.loadingModal.css')}}">
     <link rel="stylesheet" href="{{asset('plugin/css/jquery.gritter.css') }}">
     <link rel="stylesheet" href="{{asset('plugin/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{asset('plugin/css/bootstrap-table.min.css') }}">
-    
-    <!-- js plugin -->
-    <script type="text/javascript" src="{{asset('plugin/angular/angular.js')}}"></script>
 
+    <script type="text/javascript" src="{{asset('plugin/angular/angular.js')}}"></script>
     <style>
         .style-app-name {
             font-size: large;
@@ -55,26 +52,26 @@
         <div class="app-header header-shadow bg-night-sky header-text-light">
             <div class="app-header__logo">
                 <div class="style-app-name">
-                 
+                    E-Civil
                 </div>
                 <div class="header__pane ms-auto">
-                    <!--div>
+                    <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                             <span class="hamburger-box">
                                 <span class="hamburger-inner"></span>
                             </span>
                         </button>
-                    </div-->
+                    </div>
                 </div>
             </div>
             <div class="app-header__mobile-menu">
-                <!--div>
+                <div>
                     <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
                         <span class="hamburger-box">
                             <span class="hamburger-inner"></span>
                         </span>
                     </button>
-                </div-->
+                </div>
             </div>
             <div class="app-header__menu">
                 <span>
@@ -89,27 +86,33 @@
                 <div class="app-header-right">
                     <div class="header-dots">
                         <div class="dropdown">
-                            <!--button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
-                                <span class="icon-wrapper icon-wrapper-alt rounded-circle">
-                                    <span class="icon-wrapper-bg bg-danger"></span>
-                                    <i class="icon text-danger icon-anim-pulse ion-android-notifications"></i>
-                                    <span class="badge badge-dot badge-dot-sm bg-danger">Notifications</span>
-                                </span>
-                            </button-->
+                            @if(auth()->user()->role == "admin" or auth()->user()->role == "super-admin")
+                                <!--button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-2 btn btn-link">
+                                    <span class="icon-wrapper icon-wrapper-alt rounded-circle">
+                                        <span class="icon-wrapper-bg bg-danger"></span>
+                                        <i class="icon text-danger icon-anim-pulse ion-android-notifications"></i>
+                                        <span class="badge badge-dot badge-dot-sm">Notifications</span>
+                                    </span>
+                                </button-->
+                            @endif
                             <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
-                                <!--div class="dropdown-menu-header mb-0">
-                                    <div class="dropdown-menu-header-inner bg-deep-blue">
-                                        <div class="menu-header-content text-dark">
-                                            <h5 class="menu-header-title">Notifications</h5>
-                                            <h6 class="menu-header-subtitle">
-                                                Vous avez
-                                                <b>21</b>
-                                                messages non lus
-                                            </h6>
+                                
+                                    <!--div class="dropdown-menu-header mb-0">
+                                        <div class="dropdown-menu-header-inner bg-deep-blue">
+                                            <div class="menu-header-content text-dark">
+                                                <h5 class="menu-header-title">Notifications</h5>
+                                                <h6 class="menu-header-subtitle">
+                                                    Vous avez
+                                                    <b id="notificationCount">0</b>
+                                                    message(s) non lus
+                                                </h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div-->
-                                <div class="tab-content">
+                                    </div-->
+                                
+                                <!--div class="tab-content">
+                                    <audio id="notificationSound" src="" preload="auto"></audio>
+
                                     <div class="tab-pane active" id="tab-messages-header" role="tabpanel">
                                         <div class="scroll-area-sm">
                                             <div class="scrollbar-container ps">
@@ -117,30 +120,7 @@
                                                     <div class="notifications-box">
                                                         <div class="vertical-time-simple vertical-without-time vertical-timeline vertical-timeline--one-column">
                                                             
-                                                            <div class="vertical-timeline-item dot-warning vertical-timeline-element">
-                                                                <div>
-                                                                    <span class="vertical-timeline-element-icon bounce-in"></span>
-                                                                    <div class="vertical-timeline-element-content bounce-in">
-                                                                        <p>
-                                                                            Yet another one, at
-                                                                            <span class="text-success">15:00 PM</span>
-                                                                        </p>
-                                                                        <span class="vertical-timeline-element-date"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="vertical-timeline-item dot-warning vertical-timeline-element">
-                                                                <div>
-                                                                    <span class="vertical-timeline-element-icon bounce-in"></span>
-                                                                    <div class="vertical-timeline-element-content bounce-in">
-                                                                        <p>
-                                                                            Yet another one, at
-                                                                            <span class="text-success">15:00 PM</span>
-                                                                        </p>
-                                                                        <span class="vertical-timeline-element-date"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,8 +132,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <ul class="nav flex-column all-notification-btn">
+                                            <li class="nav-item-divider nav-item"></li>
+                                            <li class="nav-item-btn text-center nav-item ">
+                                                <a href="" class="btn-shadow btn-wide btn-pill btn btn-focus btn-sm">Voir toutes les notifications non lues</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </div>
+                                </div-->
                             </div>
                         </div>
                     </div>
@@ -164,6 +150,7 @@
                                     <div class="widget-heading"> {{auth()->user()->name}}</div>
                                     <div class="widget-subheading"> {{ucfirst(str_replace('-',' ',auth()->user()->role))}}</div>
                                 </div>
+                                <input type="hidden" id="userId" value="{{auth()->user()->id}}">
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
@@ -216,23 +203,23 @@
                     <div class="app-header__logo">
                         <div class="logo-src"></div>
                         <div class="header__pane ms-auto">
-                            <!--div>
+                            <div>
                                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                                     <span class="hamburger-box">
                                         <span class="hamburger-inner"></span>
                                     </span>
                                 </button>
-                            </div-->
+                            </div>
                         </div>
                     </div>
                     <div class="app-header__mobile-menu">
-                        <!--div>
+                        <div>
                             <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
                                 <span class="hamburger-box">
                                     <span class="hamburger-inner"></span>
                                 </span>
                             </button>
-                        </div-->
+                        </div>
                     </div>
                     <div class="app-header__menu">
                         <span>
@@ -246,22 +233,27 @@
                     <div class="scrollbar-sidebar ps ps--active-y">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu metismenu">
-                            <li class="app-sidebar__heading">
-                                <p class="text-center fs-5">
-                                    E-Civil
-                                </p>
-                                <p class="text-center">
-                                <img src="{{asset('armoirie.png')}}" alt="logo armoirie">
-                                </p>
-                            </li>
-                        
+                            <li class="app-sidebar__heading">Menu</li>
                             <li>
-                                <a href="{{route('home')}}" class=" {{Route::currentRouteName() === 'home' ? 'mm-active' : ''}}">
+                                <a href="{{route('home')}}" class=" {{Route::currentRouteName() === 'home' ? 'mm-active' : ''}}" aria-expanded="false">
                                     <i class="metismenu-icon pe-7s-display1"></i>
                                     Tableau de bord
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading"></li>                            
+                            <li class="app-sidebar__heading"></li>
+                            @include("layouts.menus.admin.parametre")
+                            <li class="app-sidebar__heading"></li>
+                            <li class="app-sidebar__heading"></li>
+                            <li>
+                                <a href="{{ route('auth.users.index') }}" class=" {{Route::currentRouteName() === 'auth.users.index' ? 'mm-active' : ''}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Utilisateurs
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="metismenu-icon pe-7s-power"></i>D&eacute;connexion
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 636px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 399px;"></div></div></div>
@@ -325,7 +317,7 @@
             </div>
     </div>
 
-    <!-- plugin dependencies -->
+      <!-- plugin dependencies -->
     <script type="text/javascript" src="{{asset('template/vendors/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/vendors/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/vendors/bootstrap4-toggle/js/bootstrap4-toggle.min.js')}}"></script>

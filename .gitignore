@@ -19,3 +19,6 @@ changement-nom-champs.docx
 /.fleet
 /.idea
 /.vscode
+!storage/app/data/
+!storage/app/data/countries.json
+

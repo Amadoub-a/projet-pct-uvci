@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -22,10 +20,18 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {     
         $menuPrincipal = "Tableau de bord";
         $titleControlleur = "";
         $btnModalAjout = "FALSE";
         return view("home", compact('menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
+    public function superviseur()
+    {     
+        $menuPrincipal = "Tableau de bord";
+        $titleControlleur = "";
+        $btnModalAjout = "FALSE";
+        return view("superviseur", compact('menuPrincipal','titleControlleur','btnModalAjout'));
     }
 }

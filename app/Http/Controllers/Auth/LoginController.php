@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Configuration\InfoEntreprise;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -37,56 +38,72 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        //$config = Configuration::find(1);
-
-        /*if($config && $config->expiration_licence){
-            $nowDate = Carbon::now();
-            //Si la licence est expirée
-            if($nowDate > $config->expiration_licence && Auth::user()->role != 'Concepteur'){
-                $user = Auth::user();
-                $user->update(['etat_user' => 0]);
-  
-                $this->guard()->logout();
-    
-                $request->session()->invalidate();
-    
-                $request->session()->regenerateToken();
-    
-                if ($response = $this->loggedOut($request)) {
-                    return $response;
-                }
-                return view('auth.expiration-licence');
-            }
-        }*/
-        
-        $user->update([
-            'user_connected' => 1
+    public function definirPassword(Request $request){
+        $this->validate($request, [
+            'password' => 'required',
+            'password-confirmation' => 'required',
         ]);
 
-        /*switch ($user->role) {
-            case 'Concepteur':
-            case 'Administrateur':
-                return redirect('/home');
-            case 'Chef_atelier':
-                return redirect('/chef-atelier');
-            case 'Receptionniste':
-                return redirect('/receptionniste');
-            case 'Gestion_sortie_vehicule':
-                return redirect('/gestion-sortie-vehicule');
-            case 'Comptable':
-                return redirect('/comptable');
-            case 'Maintenancier':
-                return redirect('/maintenancier');
-            case 'Parc-auto':
-                return redirect('/parc-auto');
-            default:
-                // Si aucun rôle ne correspond, vous pouvez ajouter une redirection ou un message d'erreur ici
-                abort(403, 'Accès non autorisé.');
-        }*/
+        $data = $request->all();
 
-        return redirect('/home');
+        if($data["password"] != $data["password-confirmation"]){
+            return redirect()->back()->with([
+                'email' => $data["email"],
+                'msg' => 'Vérifier que le mot de passe et la confirmation soient les mêmes.'
+            ]);       
+        }
+
+        $user = User::where('email',$data["email"])->first();
+
+        if($user){
+            $user->confirmation_token = null;
+            $user->password = bcrypt($data["password"]);
+            $user->save();
+
+            return redirect('/admin');
+        }
+        return redirect()->back()->with('msg'," Votre compte n'existe pas");
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+         // Si l'utilisateur n'a pas confirmé son compte
+        if ($user->confirmation_token) {
+            return $this->logoutAndRedirect($request, '/confirm-compte', ['email' => $user->email]);
+        }
+        
+        if(!$user->compte_is_actif){
+            return $this->logoutAndRedirect($request, 'auth.compte-user-suspendu');
+        }
+
+        $user->update(['user_connected' => 1]);
+
+        return match ($user->role) {
+            'super-admin', 'admin' => redirect('/home'),
+            'superviseur' => redirect('/superviseur'),
+            default => abort(403, 'Accès non autorisé.'),
+        };
+    }
+
+
+    /**
+    * Déconnecte l'utilisateur et redirige vers une vue ou une URL donnée.
+    */
+    private function logoutAndRedirect(Request $request, string $redirect, array $withData = [])
+    {
+        Auth::user()->update(['etat_user' => 0]);
+
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return is_string($redirect) && str_starts_with($redirect, '/') 
+            ? redirect($redirect)->with($withData) 
+            : view($redirect);
     }
 
     /**
@@ -103,7 +120,6 @@ class LoginController extends Controller
     {
         return array_merge(
             $request->only($this->username(), 'password'),
-            ['compte_is_actif' => 1],
             ['deleted_at' => null]
         );
     }
@@ -129,7 +145,7 @@ class LoginController extends Controller
 
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect('/');
+            : redirect('/admin');
     }
 
 }

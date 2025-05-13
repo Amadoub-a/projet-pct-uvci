@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="fr">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Smart Parc Auto - Mot de passe</title>
+    <title>E-Civil - Mot de passe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
     <meta name="description" content="Smart Parc Auto simplifie la gestion de votre flotte de véhicules avec des outils de suivi en temps réel et des rapports personnalisés pour une efficacité optimale.">
     <!-- Disable tap highlight on IE -->
@@ -127,7 +127,6 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="text-center text-white opacity-8 mt-3 text-personnel">Copyright © <a href="https://groupsmarty.com/" target="_blank">Group Smarty</a> 2024</div>
                     </div>
                 </div>
             </div>

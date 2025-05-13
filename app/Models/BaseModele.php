@@ -26,7 +26,7 @@ abstract class BaseModele extends Model
     {
         parent::__construct($attributes);
 
-        $this->fillable = array_merge($this->fillable, $this->getFillable());
+        $this->fillable = array_unique(array_merge($this->fillable, $this->getFillable()));
         $this->casts = array_merge($this->casts, $this->getCasts());
     }
 
@@ -46,12 +46,10 @@ abstract class BaseModele extends Model
         return [];
     }
 
-
     //Supression avec enregistrement de l'utilisateur
     public function softDeleteWithUser($userId)
     {
-        $this->deleted_by = $userId;
-        $this->save();
+        $this->update(['deleted_by' => $userId]);
         $this->delete();
     }
 }

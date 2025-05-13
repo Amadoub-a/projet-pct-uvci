@@ -1,7 +1,7 @@
 @extends(
 'layouts.app',
 [
-'title' => 'Smart Parc Auto | Utilisateurs',
+'title' => 'E-Civil | Utilisateurs',
 ]
 )
 
@@ -13,8 +13,8 @@
             <thead>
                 <tr>
                     <th data-field="name" data-sortable="true">Nom</th>
+                    <th data-field="email">E-mail</th>
                     <th data-field="contact">Contact</th>
-                    <th data-field="depot.libelle_depot">D&eacute;p&ocirc;t</th>
                     <th data-field="role" data-formatter="optionRoleFormatter">Role</th>
                     <th data-field="compte_is_actif" data-formatter="etatCompteFormatter">Compte</th>
                     <th data-field="user_connected" data-formatter="etatConnexionFormatter">Connect&eacute;</th>
@@ -72,43 +72,6 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row sectionUniteDepot">
-                        <div class="col-md-6">
-                            <div class="position-relative mb-3">
-                                <label for="unite_id" class="form-label">Unit&eacute;</label>
-                                <select class="form-select form-control" name="unite_id" id="unite_id" ng-model="user.unite_id">
-                                    <option value="">-- Choisissez une unit&eacute; --</option>
-                                    @foreach($unites as $unite)
-                                        <option value="{{$unite->id}}">{{$unite->libelle_unite}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="position-relative mb-3">
-                                <label for="depot_id" class="form-label">D&eacute;p&ocirc;t</label>
-                                <select class="form-select form-control" name="depot_id" id="depot_id" ng-model="user.depot_id">
-                                    <option value="">-- Choisissez un d&eacute;p&ocirc;t--</option>
-                                    @foreach($depots as $depot)
-                                        <option value="{{$depot->id}}">{{$depot->libelle_depot}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row sectionUniteSuperviseur">
-                    <div class="col-md-12">
-                        <div class="position-relative mb-3">
-                            <label for="unites" class="form-label">L'unit&eacute; ou les unit&eacute;s &agrave; superviser</label>
-                            <select class="form-select form-control" multiple="multiple" name="unites[]" id="unites">
-                                <option value="">-- Choisissez une ou les unit&eacute;s --</option>
-                                @foreach($unites as $unite)
-                                <option value="{{$unite->id}}">{{$unite->libelle_unite}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -184,22 +147,6 @@
             dropdownParent: $(".bs-modal-ajout")
         });
 
-        $("#role").change(function(e) {
-            var role = $("#role").val();
-            if(role == "admin"){
-                $(".sectionUniteDepot, .sectionUniteSuperviseur").hide();
-            }
-            if(role != "admin" && role != "superviseur"){
-                $(".sectionUniteDepot").show();
-                $(".sectionUniteSuperviseur").hide();
-            }
-            if(role == "superviseur"){
-                $(".sectionUniteDepot").hide();
-                $(".sectionUniteSuperviseur").show();
-            }
-        });
-
-
         $("#formAjout").submit(function(e) {
             e.preventDefault();
             var $ajaxLoader = $(".bs-modal-ajout");
@@ -240,37 +187,6 @@
             $scope.populateForm(user);
         });
           
-        var role = $("#role").val();
-        if(role == "admin"){
-            $(".sectionUniteDepot, .sectionUniteSuperviseur").hide();
-            $("#depot_id").val("");
-            $("#unite_id").val("");
-        }
-        if(role != "admin" && role != "superviseur"){
-            $(".sectionUniteDepot").show();
-            $(".sectionUniteSuperviseur").hide();
-            if(user.depot_id == null){
-                $("#depot_id").val("");
-            }
-            if(user.unite_id == null){
-                $("#unite_id").val("").trigger('change');
-            }else{
-                $("#unite_id").val(user.unite_id).trigger('change');
-            }
-        }
-
-        if(role == "superviseur"){
-            $(".sectionUniteDepot").hide();
-            $(".sectionUniteSuperviseur").show();
-            $("#depot_id").val("");
-            $("#unite_id").val("");
-
-            var ids = user.unites.map(function(unite){
-                return unite.id;
-            });
-            $("#unites").val(ids).trigger('change');
-        }
-
         $(".bs-modal-ajout").modal("show");
     }
 

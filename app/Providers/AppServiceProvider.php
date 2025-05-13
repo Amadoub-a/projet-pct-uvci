@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\SmsService;
+use App\Interfaces\SmsInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Configuration\InfoEntreprise;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(SmsInterface::class, SmsService::class);
     }
 
     /**
@@ -19,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('rapports.pdf-header', function ($view) {
+            $view->with('infoEntreprise', InfoEntreprise::latest()->first());
+        });
     }
 }

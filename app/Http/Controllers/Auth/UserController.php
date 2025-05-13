@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use Exception;
 use App\Models\User;
+use App\Enums\RoleUserEnum;
+use App\Mail\SimpleMessage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -18,12 +22,14 @@ class UserController extends Controller
         $titleControlleur = "Gestion des comptes utilisateurs";
         $btnModalAjout = "TRUE";
         
-        return view("users.index", compact('menuPrincipal','titleControlleur','btnModalAjout'));
+        $roles = collect(value: RoleUserEnum::cases())->pluck('value');
+        
+        return view("users.index", compact('roles','menuPrincipal','titleControlleur','btnModalAjout'));
     }
 
     public function listeUsers()
     {
-        $users = User::with('depot','unite','unites')->where('role','!=','super-admin')->orderBy('users.name', 'ASC')->get();
+        $users = User::where('role','!=','super-admin')->orderBy('users.name', 'ASC')->get();
 
         $jsonData["rows"] = $users->toArray();
         $jsonData["total"] = $users->count();
@@ -69,10 +75,26 @@ class UserController extends Controller
                 $user->role = $data['role'];
                 $user->contact = $data['contact'];
                 $user->password = bcrypt($password); 
+                $user->confirmation_token = str_replace('/', '', bcrypt(Str::random(16)));
                 $user->created_by = $request->user()->id;
                 $user->save();
 
                 $jsonData["data"] = json_decode($user);
+
+                //Envoi de mail pour notifier la création du compte
+                $subject = "CRÉATION DE VOTRE COMPTE UTILISATEUR";
+                $appUrl = config('app.url');
+
+                $body = "Bonjour <strong>{$user->name}</strong>, <br/><br/>"
+                        . "Votre compte utilisateur vient d'être créé avec succès. 🎉<br/><br/>"
+                        . "<strong>Nom d'utilisateur :</strong> {$user->email} <br/>"
+                        . "<strong>Mot de passe :</strong> {$password} <br/><br/>"
+                        . "Veuillez vous connecter pour réinitialiser votre mot de passe.<br/>"
+                        . "👉 <a href='{$appUrl}/admin' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
+                        . "Merci !";
+
+                Mail::to($user->email)->send((new SimpleMessage($subject, $body))->onQueue('notifications'));
+
                 //En cas de succes
                 DB::commit();
                 return response()->json($jsonData);
@@ -111,6 +133,7 @@ class UserController extends Controller
                     'email' => 'required',
                     'role' => 'required',
                     'contact' => 'required',
+                    Rule::unique('users')->ignore($id)->whereNull('deleted_at'),
                 ]);
                 $oldEmail = $user->email;
 
@@ -124,16 +147,27 @@ class UserController extends Controller
                 $user->updated_by = $request->user()->id;
                 $user->save();
 
-                if(isset($data['unites'])){
-                    $user->unites()->sync($data['unites']);
-                }
-
 
                 //Si l'email differe de l'ancien on reprend le processus de creation du compte
                 if($oldEmail != $data['email']){
                     $password = Str::random(10);
                     $user->password = bcrypt($password); 
+                    $user->confirmation_token = str_replace('/', '', bcrypt(Str::random(16)));
                     $user->save();
+                    
+                    //Envoi de mail pour notifier la création du compte
+                    $subject = "CRÉATION DE VOTRE COMPTE UTILISATEUR";
+                    $appUrl = config('app.url');
+
+                    $body = "Bonjour <strong>{$user->name}</strong>, <br/><br/>"
+                        . "Votre compte utilisateur vient d'être créé avec succès. 🎉<br/><br/>"
+                        . "<strong>Nom d'utilisateur :</strong> {$user->email} <br/>"
+                        . "<strong>Mot de passe :</strong> {$password} <br/><br/>"
+                        . "Veuillez vous connecter pour réinitialiser votre mot de passe.<br/>"
+                        . "👉 <a href='{$appUrl}/admin' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
+                        . "Merci !";
+
+                        Mail::to($user->email)->send((new SimpleMessage($subject, $body))->onQueue('notifications'));
                 }
 
                 $jsonData["data"] = json_decode($user);

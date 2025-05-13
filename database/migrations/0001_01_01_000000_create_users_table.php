@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('role');
             $table->datetime('last_login_at')->nullable()->default(null);
             $table->string('last_login_ip')->nullable()->default(null);
+            $table->string('confirmation_token')->nullable();
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->boolean('compte_is_actif')->default(1);
             $table->boolean('user_connected')->default(0);

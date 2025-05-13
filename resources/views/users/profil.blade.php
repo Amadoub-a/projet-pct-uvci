@@ -121,7 +121,7 @@
 @endpush
 @push('javascript')
 <script type="text/javascript">
-    
+    var ajout = true;
     $(function() {
         $("#formAjout").submit(function(e) {
             e.preventDefault();

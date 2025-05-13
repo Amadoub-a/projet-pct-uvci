@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -27,6 +26,7 @@ class User extends Authenticatable
         'last_login_at',
         'compte_is_actif',
         'user_connected',
+        'confirmation_token',
         'deleted_by',
         'updated_by',
         'created_by',
@@ -56,10 +56,5 @@ class User extends Authenticatable
             'password' => 'hashed',
             'unites' => 'array',
         ];
-    }
-
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
     }
 }

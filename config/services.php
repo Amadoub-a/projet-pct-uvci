@@ -13,7 +13,11 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'brevo' => [
+        'key' => env('BREVO_API_KEY'),
+        'sender' => env('BREVO_SENDER'),
+    ],
+    
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

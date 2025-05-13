@@ -7,9 +7,9 @@ use App\Models\User;
 use App\Mail\SimpleMessage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -45,6 +45,7 @@ class ProfilController extends Controller
             'name' => 'required',
             'email' => 'required',
             'contact' => 'required',
+            Rule::unique('users')->ignore($id)->whereNull('deleted_at'),
         ]);
 
         $data = $request->all();
@@ -109,24 +110,31 @@ class ProfilController extends Controller
        
         if($user){
             try {
-                //Debut de transaction
+                
                 DB::beginTransaction();
                 
                 $password = Str::random(16);
                 $user->password = bcrypt($password); 
+                $user->confirmation_token = str_replace('/', '', bcrypt(Str::random(16)));
                 $user->save();
                 
-                //Puis on envoie un email de création de compte
-                $subject = "REINITIALISATION DE VOTRE MOT DE PASSE";
-                $body = "Bonjour <strong>".$user->name."</strong>, <br/>Vous avez demandé à réinitialiser votre mot de passe.<br/> Un nouveau mot de passe a été généré pour vous : <strong>".$password."</strong><br/>Veillez vous connectz pour changer cet mot de passe.<br/> Merci !";
+               
+                $subject = "RÉINITIALISATION DE VOTRE MOT DE PASSE";
+                $appUrl = config('app.url');
+
+                $body = "Bonjour <strong>{$user->name}</strong>, <br/><br/>"
+                        . "Vous avez demandé à réinitialiser votre mot de passe.<br/>"
+                        . "Un nouveau mot de passe a été généré pour vous : <strong>{$password}</strong><br/><br/>"
+                        . "Veuillez vous connecter pour changer ce mot de passe.<br/>"
+                        . "👉 <a href='{$appUrl}/admin' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
+                        . "Merci !";
                 Mail::to($user->email)->send((new SimpleMessage($subject, $body))->onQueue('notifications'));
-              
-                //En cas de succes
+                
                 DB::commit();
                
                 return Redirect::back()->withErrors(['success' => "Mot de réinitialiser avec succès . Verifiez votre boite mail."]);
             } catch (Exception $exc) {
-                //En cas d'echec
+               
                 DB::rollBack();
             }
         }    

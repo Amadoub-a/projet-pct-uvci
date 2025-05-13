@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\CountryTableSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\NationSeeder;
+use Database\Seeders\TypeEnginSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            CountryTableSeeder::class,
+            NationSeeder::class,
         ]);
     }
 }

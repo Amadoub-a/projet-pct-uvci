@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('nations', function (Blueprint $table) {
             $table->id();
-            $table->string(column: 'libelle_pays');
-            $table->string(column: 'flag');
+            $table->string("libelle_nation");
+
+            $table->dateTime('deleted_at')->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('nations');
     }
 };

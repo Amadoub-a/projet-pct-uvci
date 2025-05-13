@@ -62,6 +62,10 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
             // Réinitialiser le formulaire
             formElement.reset();
 
+            if ($(".select2-hidden-accessible").length > 0) {
+                $(".select2-hidden-accessible").val("").trigger("change");
+            }
+
             if (ajout) { // creation
                 $table.bootstrapTable('refresh');
                 if(formElement.hasAttribute('data-name')){
@@ -84,7 +88,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
             
             $.gritter.add({
                 // heading of the notification
-                title: "E-Civil",
+                title: "Smart Parc Auto",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -93,7 +97,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
         }else{
             $.gritter.add({
                 // heading of the notification
-                title: "E-Civil",
+                title: "Smart Parc Auto",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -105,7 +109,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
     .catch(err => {
         $.gritter.add({
             // heading of the notification
-            title: "E-Civil",
+            title: "Smart Parc Auto",
              // the text inside the notification
             text: err.msg,
             sticky: false, 
@@ -162,7 +166,7 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
 
             $.gritter.add({
                 // heading of the notification
-                title: "E-Civil",
+                title: "Smart Parc Auto",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -171,7 +175,7 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
         }else{
             $.gritter.add({
                 // heading of the notification
-                title: "E-Civil",
+                title: "Smart Parc Auto",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -182,11 +186,11 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
     .catch(err => {
         $.gritter.add({
             // heading of the notification
-            title: "E-Civil",
+            title: "Smart Parc Auto",
              // the text inside the notification
             text: err.msg,
             sticky: false, 
-            image: "../plugin/gritter/img/canceled.png",
+            image: "../plugin/gritter/img/confirm.png",
         });
         $ajaxLoader.loadingModal('destroy');
     })
@@ -194,6 +198,55 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
         //destroy the loading modal
         $ajaxLoader.loadingModal('destroy');
     });
+}
+
+/**
+* Charger les notifications non lues et mettre à jour l'interface.
+* @param {string} userId - ID de l'utilisateur
+* @param {HTMLAudioElement|null} [notificationSound=null] - Son de notification (facultatif)
+*/
+function chargerNotifications(userId, notificationSound = null) {
+    $.getJSON(`/notification/get-user-notification-not-read/${userId}`)
+        .done(function (response) {
+            $(".badge-dot-sm").removeClass("bg-danger");
+            $("#notificationCount").text(0);
+            $(".vertical-time-simple").html("");
+            $(".all-notification-btn").hide();
+            
+            if (response.total > 0) {
+                $(".badge-dot-sm").addClass("bg-danger");
+                $("#notificationCount").text(response.total);
+                document.title = `(${response.total}) Nouveau(x) message(s) - Smart parc Auto`;
+
+                $(".all-notification-btn").show();
+                
+                if (notificationSound) {
+                    notificationSound.play();
+                }
+
+                response.notifications.forEach(function (notification) {
+                    let contentHTML = `<div class="vertical-timeline-item dot-warning vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in"></span>
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <p>
+                                    <span>
+                                    ${notification.data.titre} <br>
+                                    <span class="text-success">${formatDateComplet(notification.created_at)}</span>
+                                    </span>
+                                </p>
+                                <span class="vertical-timeline-element-date"></span>
+                            </div>
+                             
+                        </div>
+                    </div>`;
+                    $(".vertical-time-simple").append(contentHTML);
+                });
+            }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Erreur lors de la récupération des notifications :", textStatus, errorThrown);
+        });
 }
 
 
@@ -205,6 +258,34 @@ function formatDate(date) {
     let year = d.getUTCFullYear();
 
     return `${day}-${month}-${year}`;
+}
+
+function formatDateComplet(date) {
+    let d = new Date(date);
+    let day = String(d.getUTCDate()).padStart(2, '0');
+    let month = String(d.getUTCMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
+    let year = d.getUTCFullYear();
+
+    // Récupérer l'heure, la minute et la seconde
+    let hours = String(d.getUTCHours()).padStart(2, '0');
+    let minutes = String(d.getUTCMinutes()).padStart(2, '0');
+    let seconds = String(d.getUTCSeconds()).padStart(2, '0');
+
+    return `${day}-${month}-${year} à ${hours}:${minutes}:${seconds}`;
+}
+
+function formatDateSanSeconde(date) {
+    let d = new Date(date);
+    let day = String(d.getUTCDate()).padStart(2, '0');
+    let month = String(d.getUTCMonth() + 1).padStart(2, '0'); // Les mois commencent à 0
+    let year = d.getUTCFullYear();
+
+    // Récupérer l'heure, la minute et la seconde
+    let hours = String(d.getUTCHours()).padStart(2, '0');
+    let minutes = String(d.getUTCMinutes()).padStart(2, '0');
+    let seconds = String(d.getUTCSeconds()).padStart(2, '0');
+
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
 
 function numStr(a, b) {
