@@ -233,7 +233,11 @@
                     <div class="scrollbar-sidebar ps ps--active-y">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu metismenu">
-                            <li class="app-sidebar__heading">Menu</li>
+                        <li class="app-sidebar__heading">
+                            <p class="text-center">
+                                <img src="{{asset('images/logo-page-connexion.png')}}" height="60" alt="logo armoirie">
+                            </p>
+                        </li>
                             <li>
                                 <a href="{{route('home')}}" class=" {{Route::currentRouteName() === 'home' ? 'mm-active' : ''}}" aria-expanded="false">
                                     <i class="metismenu-icon pe-7s-display1"></i>

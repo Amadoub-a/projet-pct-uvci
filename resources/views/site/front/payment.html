@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Paiement - État Civil Côte d'Ivoire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/e-civil-ci.svg" alt="Logo État Civil CI"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Accueil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="services.html">Tous les services</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#acte-naissance">Acte de naissance</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#acte-mariage">Acte de mariage</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#acte-deces">Certificat de décès</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#acte-vie">Certification de vie</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#legalisation-document">Légalisation de documents</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="services.html#copies-actes">Copies d'actes</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tariffs.html">Tarifs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">À propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-outline-success" href="sign-in.html">Se connecter</a>
+                </li>
+                <li class="nav-item ms-lg-2">
+                    <a class="btn btn-outline-primary" href="sign-up.html">S'inscrire</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4">Paiement de votre demande</h1>
+        <p class="lead mb-4">
+            Finalisez votre demande en effectuant le paiement des frais associés
+        </p>
+    </div>
+</section>
+
+<!-- Payment Section -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="text-center mb-4">Détails de la transaction</h2>
+
+                    <!-- Order Summary -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="fas fa-receipt me-2 text-success"></i>Récapitulatif de la commande</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p class="mb-0 text-muted">Service :</p>
+                                    <p class="fw-bold" id="service-name">Légalisation de document</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-0 text-muted">Référence :</p>
+                                    <p class="fw-bold" id="reference-number">REF-2025-0001</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-0 text-muted">Date :</p>
+                                    <p class="fw-bold" id="order-date">01/01/2025</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-0 text-muted">Montant total :</p>
+                                    <p class="fw-bold fs-5 text-success" id="total-amount">5 000 FCFA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <h4 class="mb-3">Choisissez votre méthode de paiement</h4>
+
+                    <div class="mb-4">
+                        <div class="form-check mb-3 p-3 border rounded">
+                            <input class="form-check-input" type="radio" name="payment_method" id="mobile_money" value="mobile_money" checked>
+                            <label class="form-check-label d-flex align-items-center" for="mobile_money">
+                                <i class="fas fa-mobile-alt fs-3 me-3 text-success"></i>
+                                <div>
+                                    <span class="d-block fw-bold">Mobile Money</span>
+                                    <span class="text-muted small">Orange Money, MTN Mobile Money, Moov Money, Wave</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3 p-3 border rounded">
+                            <input class="form-check-input" type="radio" name="payment_method" id="credit_card" value="credit_card">
+                            <label class="form-check-label d-flex align-items-center" for="credit_card">
+                                <i class="fas fa-credit-card fs-3 me-3 text-primary"></i>
+                                <div>
+                                    <span class="d-block fw-bold">Carte bancaire</span>
+                                    <span class="text-muted small">Visa, Mastercard</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="form-check p-3 border rounded">
+                            <input class="form-check-input" type="radio" name="payment_method" id="tresor_money" value="tresor_money">
+                            <label class="form-check-label d-flex align-items-center" for="tresor_money">
+                                <i class="fas fa-university fs-3 me-3 text-info"></i>
+                                <div>
+                                    <span class="d-block fw-bold">TresorMoney</span>
+                                    <span class="text-muted small">Paiement par TresorMoney/TresorPay</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Money Form (default) -->
+                    <div id="mobile_money_form">
+                        <h5 class="mb-3">Détails Mobile Money</h5>
+                        <div class="mb-3">
+                            <label for="mobile_operator" class="form-label">Opérateur *</label>
+                            <select class="form-select" id="mobile_operator" required>
+                                <option value="" selected disabled>Sélectionnez un opérateur</option>
+                                <option value="orange">Orange Money</option>
+                                <option value="mtn">MTN Mobile Money</option>
+                                <option value="moov">Moov Money</option>
+                                <option value="wave">Wave</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobile_number" class="form-label">Numéro de téléphone *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <input type="tel" class="form-control" id="mobile_number" placeholder="+225 XXXXXXXXXX" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Credit Card Form (hidden by default) -->
+                    <div id="credit_card_form" style="display: none;">
+                        <h5 class="mb-3">Détails de la carte</h5>
+                        <div class="mb-3">
+                            <label for="card_number" class="form-label">Numéro de carte *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-credit-card"></i>
+                                </span>
+                                <input type="text" class="form-control" id="card_number" placeholder="XXXX XXXX XXXX XXXX">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="expiry_date" class="form-label">Date d'expiration *</label>
+                                <input type="text" class="form-control" id="expiry_date" placeholder="MM/AA">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label">CVV *</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="XXX">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="card_holder" class="form-label">Nom du titulaire *</label>
+                            <input type="text" class="form-control" id="card_holder" placeholder="Nom tel qu'il apparaît sur la carte">
+                        </div>
+                    </div>
+
+                    <!-- Bank Transfer Form (hidden by default) -->
+                    <div id="tresor_money_form" style="display: none;">
+                        <h5 class="mb-3">Informations TresorMoney</h5>
+                        <div class="alert alert-info">
+                            <p class="mb-0"><i class="fas fa-info-circle me-2"></i>Veuillez composer *760# et suivre les intructions</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tresor_mobile_number" class="form-label">Numéro de téléphone *</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <input type="tel" class="form-control" id="tresor_mobile_number" placeholder="+225 XXXXXXXXXX" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-4 mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="terms_conditions" required>
+                            <label class="form-check-label" for="terms_conditions">
+                                J'accepte les <a href="#" class="text-decoration-none">conditions générales</a> et la <a href="#" class="text-decoration-none">politique de confidentialité</a> *
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2">
+                        <button type="button" id="pay-button" class="btn btn-cta btn-lg">Procéder au paiement</button>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">
+                            <i class="fas fa-lock me-1"></i> Toutes les transactions sont sécurisées et cryptées.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <p>
+                    <img src="images/e-civil-ci.svg" alt="Logo État Civil CI" class="mb-4 d-block" />
+                    Système de Gestion Intégré de l'État Civil de Côte d'Ivoire. Une
+                    solution innovante pour rapprocher l'état civil des citoyens.
+                </p>
+                <div class="d-flex gap-3 mt-4">
+                    <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h5>Liens rapides</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="index.html" class="text-white text-decoration-none">Accueil</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="services.html" class="text-white text-decoration-none">Services</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="about.html" class="text-white text-decoration-none">À propos</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="contact.html" class="text-white text-decoration-none">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5>Services</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="services.html#acte-naissance" class="text-white text-decoration-none">Acte de naissance</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="services.html#acte-mariage" class="text-white text-decoration-none">Acte de mariage</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="services.html#acte-deces" class="text-white text-decoration-none">Certificat de décès</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="services.html#certification-document" class="text-white text-decoration-none">Certification de documents</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h5>Contact</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i> Abidjan, Cocody
+                        Deux-Plateaux
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone me-2"></i> +225 0781452561
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        contact@e-civil.ci
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4 bg-light"/>
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">
+                    &copy; 2025 État Civil Côte d'Ivoire. Tous droits réservés.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <a href="#" class="text-white text-decoration-none me-3">Mentions légales</a>
+                <a href="#" class="text-white text-decoration-none me-3">Politique de confidentialité</a>
+                <a href="#" class="text-white text-decoration-none">CGU</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Set current date
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString('fr-FR');
+        document.getElementById('order-date').textContent = formattedDate;
+
+        // Generate a random reference number
+        const refNumber = 'REF-' + today.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('reference-number').textContent = refNumber;
+
+        // Get service name and amount from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const service = urlParams.get('service');
+        const amount = urlParams.get('amount');
+
+        if (service) {
+            document.getElementById('service-name').textContent = service;
+        }
+
+        if (amount) {
+            document.getElementById('total-amount').textContent = amount + ' FCFA';
+        }
+
+        // Toggle payment method forms
+        const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+        const mobileMoney = document.getElementById('mobile_money_form');
+        const creditCard = document.getElementById('credit_card_form');
+        const bankTransfer = document.getElementById('tresor_money_form');
+
+        paymentMethods.forEach(method => {
+            method.addEventListener('change', function() {
+                mobileMoney.style.display = 'none';
+                creditCard.style.display = 'none';
+                bankTransfer.style.display = 'none';
+
+                if (this.value === 'mobile_money') {
+                    mobileMoney.style.display = 'block';
+                } else if (this.value === 'credit_card') {
+                    creditCard.style.display = 'block';
+                } else if (this.value === 'tresor_money') {
+                    bankTransfer.style.display = 'block';
+                }
+            });
+        });
+
+        // Payment button click handler
+        document.getElementById('pay-button').addEventListener('click', function() {
+            // In a real application, this would handle the payment processing
+            // For now, we'll simulate success or failure randomly
+            const urlParams = new URLSearchParams(window.location.search);
+            const service = urlParams.get('service');
+            const amount = urlParams.get('amount');
+
+            // Simulate success or failure (80% success rate)
+            const isSuccess = Math.random() < 0.8;
+
+            if (isSuccess) {
+                // Redirect to success page
+                window.location.href = `payment-success.html?service=${encodeURIComponent(service || '')}&amount=${encodeURIComponent(amount || '')}`;
+            } else {
+                // Redirect to failure page
+                window.location.href = `payment-failure.html?service=${encodeURIComponent(service || '')}&amount=${encodeURIComponent(amount || '')}`;
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -8,10 +8,25 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfilController;
 use App\Http\Controllers\Parametre\CommuneController;
 use App\Http\Controllers\Parametre\NationController;
+use App\Http\Controllers\SiteController;
 
 Route::get('/', function () {
     return view('site.index');
 });
+
+Route::get('services', [SiteController::class, 'services'])->name('services');
+Route::get('declaration-naissance', [SiteController::class, 'declarationNaissance'])->name('declaration-naissance');
+Route::get('declaration-mariage', [SiteController::class, 'declarationMariage'])->name('declaration-mariage');
+Route::get('declaration-deces', [SiteController::class, 'declarationDeces'])->name('declaration-deces');
+Route::get('declaration-vie', [SiteController::class, 'declarationVie'])->name('declaration-vie');
+Route::get('legalisation-document', [SiteController::class, 'legalisationDocument'])->name('legalisation-document');
+Route::get('copie-acte', [SiteController::class, 'copieActe'])->name('copie-acte');
+
+Route::get('tarifs', [SiteController::class, 'tarifs'])->name('tarifs');
+Route::get('about', [SiteController::class, 'about'])->name('about');
+Route::get('contact', [SiteController::class, 'contact'])->name('contact');
+Route::get('se-conneceter', [SiteController::class, 'signIn'])->name('sign-in');
+Route::get('cree-compte', [SiteController::class, 'signUp'])->name('sign-up');
 
 Route::get('/admin', function () {
     return view('auth.login');
