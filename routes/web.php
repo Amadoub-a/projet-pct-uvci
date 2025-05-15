@@ -28,6 +28,9 @@ Route::get('contact', [SiteController::class, 'contact'])->name('contact');
 Route::get('se-conneceter', [SiteController::class, 'signIn'])->name('sign-in');
 Route::get('cree-compte', [SiteController::class, 'signUp'])->name('sign-up');
 
+Route::post('inscription', [SiteController::class, 'inscription'])->name('inscription');
+Route::post('connexion', [SiteController::class, 'connexion'])->name('connexion');
+
 Route::get('/admin', function () {
     return view('auth.login');
 });
@@ -53,6 +56,9 @@ Route::middleware("auth")->prefix("auth")->name('auth.')->group(function (){
     Route::put('update-password/{id}', [ProfilController::class, 'updatePassword'])->name('update-password');
 }); 
 
+Route::middleware("auth")->prefix("site")->name('site.')->group(function (){
+   
+}); 
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){
    

@@ -139,9 +139,7 @@
                         >
                     </li>
                     <li class="mb-2">
-                        <a href="{{ route(name: 'declaration-deces') }}" class="text-white text-decoration-none"
-                        >Certificat de décès</a
-                        >
+                        <a href="{{ route(name: 'declaration-deces') }}" class="text-white text-decoration-none">Certificat de décès</a>
                     </li>
                     <li class="mb-2">
                         <a href="{{ route(name: 'legalisation-document') }}" class="text-white text-decoration-none"

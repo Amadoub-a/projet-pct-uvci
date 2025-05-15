@@ -81,6 +81,7 @@ class LoginController extends Controller
         return match ($user->role) {
             'super-admin', 'admin' => redirect('/home'),
             'superviseur' => redirect('/superviseur'),
+            'client' => redirect('/'),
             default => abort(403, 'Accès non autorisé.'),
         };
     }
@@ -127,25 +128,25 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $user = Auth::user();
-        $user->update([
-            'last_login_at' => Carbon::now(),
-            'last_login_ip' => $request->getClientIp(),
-            'user_connected' => 0
-        ]);
+
+        if ($user) {
+            $user->update([
+                'last_login_at' => Carbon::now(),
+                'last_login_ip' => $request->getClientIp(),
+                'user_connected' => 0
+            ]);
+        }
 
         $this->guard()->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
+        $redirectUrl = ($user && $user->role === 'client') ? '/' : '/admin';
 
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect('/admin');
+            : redirect($redirectUrl);
     }
 
 }
