@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="mb-4 text-end">
-                            <a href="{{ route('password.request') }}" class="text-decoration-none small">Mot de passe oublié ?</a>
+                            <a href="{{ route('client-password-request') }}" class="text-decoration-none small">Mot de passe oublié ?</a>
                         </div>
 
                         <button type="submit" class="btn btn-sign-in w-100">Se connecter</button>

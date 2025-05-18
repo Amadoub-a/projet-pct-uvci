@@ -37,7 +37,7 @@
                             Demandez votre extrait d'acte de naissance en ligne et
                             recevez-le rapidement.
                         </p>
-                        <a href="declaration-naissance.html" class="btn btn-cta mt-3">Faire une demande</a>
+                        <a href="{{ route(name: 'declaration-naissance') }}" class="btn btn-cta mt-3">Faire une demande</a>
                     </div>
                 </div>
             </div>
@@ -50,25 +50,23 @@
                             Obtenez votre acte de mariage facilement sans vous déplacer
                             dans votre commune d'origine.
                         </p>
-                        <a href="declaration-mariage.html" class="btn btn-cta mt-3">Faire une demande</a>
+                        <a href="{{ route(name: 'declaration-mariage') }}" class="btn btn-cta mt-3">Faire une demande</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card service-card h-100 text-center shadow rounded-4">
-                    <img
-                            src="{{asset('images/actes/acte-deces.png')}}"
+                    <img src="{{asset('images/actes/acte-deces.png')}}"
                             class="card-img-top p-4"
                             alt="Certificat de décès"
-                            style="max-height: 160px; object-fit: contain"
-                    />
+                            style="max-height: 160px; object-fit: contain"/>
                     <div class="card-body px-4 pb-4">
                         <h5 class="card-title">Certificat de décès</h5>
                         <p class="card-text">
                             Demandez un certificat de décès en toute simplicité grâce à
                             notre système centralisé.
                         </p>
-                        <a href="declaration-deces.html" class="btn btn-cta mt-3">Faire une demande</a>
+                        <a href="{{ route(name: 'declaration-deces') }}" class="btn btn-cta mt-3">Faire une demande</a>
                     </div>
                 </div>
             </div>

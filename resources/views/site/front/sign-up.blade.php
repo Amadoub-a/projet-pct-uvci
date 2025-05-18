@@ -159,7 +159,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const telInput = document.getElementById('telephone');
-
         telInput.addEventListener('input', function (e) {
             let digits = this.value.replace(/\D/g, '').slice(0, 10); // max 10 chiffres
             let formatted = digits.replace(/(\d{2})(?=\d)/g, '$1 ').trim(); // espace tous les 2 chiffres

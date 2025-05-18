@@ -28,7 +28,7 @@ class CommuneController extends Controller
         return response()->json($jsonData); 
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $jsonData = ["code" => 1, "msg" => "Enregistrement effectué avec succès."];
         

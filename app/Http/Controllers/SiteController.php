@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
+use App\Mail\SimpleMessage;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class SiteController extends Controller
 {
@@ -62,6 +68,13 @@ class SiteController extends Controller
         return view("site.front.sign-up");
     }
 
+    public function clientPasswordRequest(){
+        return view("site.front.password-reset");
+    }
+
+    public function definirPassword(){
+        return view("site.front.definir-password");
+    }
 
     public function inscription(Request $request)
     {
@@ -112,7 +125,8 @@ class SiteController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-
+        
+       
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -120,19 +134,102 @@ class SiteController extends Controller
 
             $user = Auth::user();
 
+            // Si l'utilisateur n'a pas défini un mot de passe après réinitialisation
+            if ($user->confirmation_token) {
+                return $this->logoutAndRedirect($request, 'client-definir-password', ['email' => $user->email]);
+            }
+
             $user->update([
                 'last_login_at' => now(),
                 'last_login_ip' => $request->ip(),
                 'user_connected' => 1,
             ]);
 
-            return redirect()->intended(
-                $user->role === 'client' ? '/' : '/admin'
-            );
+            return redirect()->intended('/client-home');
         }
 
         return back()->withErrors([
             'email' => 'Identifiants invalides.',
         ])->withInput($request->except('password'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where([
+            ['email', $request->input('email')],
+            ['compte_is_actif', 1],
+        ])->first();
+
+        if (!$user) {
+            return Redirect::back()->withErrors(['email' => "Aucun compte actif ne correspond à cette adresse e-mail."]);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $newPassword = Str::random(16);
+
+            $user->password = bcrypt($newPassword);
+            $user->confirmation_token = str_replace('/', '', bcrypt(Str::random(16)));
+            $user->save();
+
+            $subject = "RÉINITIALISATION DE VOTRE MOT DE PASSE";
+            $appUrl = config('app.url');
+            $body = "Bonjour <strong>{$user->name}</strong>, <br/><br/>"
+                . "Vous avez demandé à réinitialiser votre mot de passe.<br/>"
+                . "Un nouveau mot de passe a été généré pour vous : <strong>{$newPassword}</strong><br/><br/>"
+                . "Veuillez vous connecter pour changer ce mot de passe.<br/>"
+                . "👉 <a href='{$appUrl}/se-conneceter' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
+                . "Merci !";
+
+            Mail::to($user->email)->send((new SimpleMessage($subject, $body))->onQueue('notifications'));
+
+            DB::commit();
+
+            return redirect()->back()->with('status', 'Votre mot de passe a été réinitialisé avec succès. Vérifiez votre boîte mail.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['email' => "Une erreur est survenue. Veuillez réessayer plus tard."]);
+        }
+    }
+
+    public function redefnirPassword(Request $request){
+        
+        $this->validate($request, [
+            'password' => 'required',
+            'password_confirmation' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        if(!hash_equals($data['password'], $data['password_confirmation'])) {
+            return back()
+                ->withErrors([
+                    'password_test' => 'Le mot de passe et sa confirmation ne correspondent pas.',
+                ]);
+        }
+
+        $user = User::where('email',$data["email"])->first();
+
+        if($user){
+            $user->confirmation_token = null;
+            $user->password = bcrypt($data["password"]);
+            $user->save();
+            return redirect('/se-conneceter');
+        }
+        return redirect()->back()->withErrors('msg'," Votre compte n'existe pas.");
+    }
+
+    protected function logoutAndRedirect($request, $route, $params = [])
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route($route, $params);
     }
 }
