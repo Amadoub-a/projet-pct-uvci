@@ -12,6 +12,64 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('plugin/css/bootstrap-table.min.css') }}">
     <link rel="stylesheet" href="{{asset('css/style-front.css')}}" />
+
+    <style>
+        .style-app-name {
+            text-align: center;
+        }
+
+        .disposition-personnelle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .disposition-personnelle .text-center {
+            width: 100%;
+        }
+
+        .disposition-personnelle button {
+            width: 80%;
+        }
+
+        .text-personnel {
+            font-size: larger;
+        }
+
+        .text-personnel a {
+            color: black;
+            text-decoration: overline !important;
+        }
+
+        
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader::after {
+            content: "";
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -93,7 +151,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('client-logout') }}">
                                     @csrf
                                     <button class="dropdown-item text-danger" type="submit">Se déconnecter</button>
                                 </form>

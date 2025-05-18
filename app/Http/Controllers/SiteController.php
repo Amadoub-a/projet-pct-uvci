@@ -232,4 +232,19 @@ class SiteController extends Controller
 
         return redirect()->route($route, $params);
     }
+
+    protected function clientLogout(Request $request)
+    {
+        if (Auth::check()) {
+            Auth::user()->update(['user_connected' => 0]);
+        }
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('sign-in');
+    }
+
 }

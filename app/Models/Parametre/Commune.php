@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Commune extends BaseModele
 {
-     use HasFactory;
+    use HasFactory;
 
     public function getFillable()
     {

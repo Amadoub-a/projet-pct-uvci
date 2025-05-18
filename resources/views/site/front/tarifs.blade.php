@@ -232,11 +232,6 @@
                         <td>1 500 FCFA</td>
                         <td>Permanent</td>
                     </tr>
-                    <tr>
-                        <td>Certification de document</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
         </div>

@@ -36,7 +36,7 @@
         </div>
     </div>
 </section>
-
+@auth
 <!-- Form Section -->
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -328,7 +328,7 @@
         </div>
     </div>
 </div>
-
+@endauth
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.querySelector('form');
