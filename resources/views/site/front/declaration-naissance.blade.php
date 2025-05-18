@@ -1,7 +1,7 @@
 @extends(
 'site.layout',
 [
-    'title' => "État Civil Côte d'Ivoire - Naissance",
+'title' => "État Civil Côte d'Ivoire - Naissance",
 ]
 )
 @section('content-front')
@@ -32,13 +32,13 @@
                     <i class="fas fa-exclamation-triangle me-2"></i>Note : La déclaration doit être faite dans les 30 jours suivant la naissance. Au-delà de ce délai, une procédure judiciaire sera nécessaire.
                 </div>
                 @guest
-                    <h4 class="mt-4">Prêt à faire votre demande ?</h4>
-                    <p class="lead mb-4">
-                        Créez votre compte en quelques clics et accédez à tous nos services en
-                        ligne
-                    </p>
-                    <a href="{{ route(name: 'sign-up') }}" class="btn btn-cta btn-lg px-5">S'inscrire maintenant</a>
-                    <p class="mt-3">Déjà inscrit ? <a href="{{ route(name: 'sign-in') }}">Connectez-vous</a></p>
+                <h4 class="mt-4">Prêt à faire votre demande ?</h4>
+                <p class="lead mb-4">
+                    Créez votre compte en quelques clics et accédez à tous nos services en
+                    ligne
+                </p>
+                <a href="{{ route(name: 'sign-up') }}" class="btn btn-cta btn-lg px-5">S'inscrire maintenant</a>
+                <p class="mt-3">Déjà inscrit ? <a href="{{ route(name: 'sign-in') }}">Connectez-vous</a></p>
                 @endguest
             </div>
         </div>
@@ -55,7 +55,7 @@
                     <p class="text-center text-muted mb-4">Veuillez remplir tous les champs obligatoires (*)</p>
                     <div id="loader" class="loader"></div>
                     <form onsubmit="showLoader()" enctype="multipart/form-data" method="post" action="{{route('send-declaration-naissance')}}">
-                         @csrf
+                        @csrf
                         <!-- Informations sur l'enfant -->
                         <h4 class="mb-3 mt-4 text-success">Informations sur l'enfant</h4>
                         <div class="row">
@@ -75,7 +75,7 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    <input type="text" class="form-control @error('prenoms_enfant') is-invalid @enderror" id="prenoms_enfant" name="prenoms_enfant" value="{{ old('prenoms_enfant') }}"  placeholder="Prénoms">
+                                    <input type="text" class="form-control @error('prenoms_enfant') is-invalid @enderror" id="prenoms_enfant" name="prenoms_enfant" value="{{ old('prenoms_enfant') }}" placeholder="Prénoms">
                                     <em class="error invalid-feedback">Les ou le pr&eacute;nom(s) de l'enfant sont/est obligatoire(s)</em>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                 <label for="heure_naissance_enfant" class="form-label">Heure de naissance *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                     <i class="fas fa-clock"></i>
+                                        <i class="fas fa-clock"></i>
                                     </span>
                                     <input type="time" class="form-control @error('heure_naissance_enfant') is-invalid @enderror" id="heure_naissance_enfant" name="heure_naissance_enfant" value="{{ old('heure_naissance_enfant') }}">
                                     <em class="error invalid-feedback">L'heure de naissance de l'enfant est obligatoire</em>
@@ -132,13 +132,13 @@
                                 <label class="form-label">Sexe *</label>
                                 <div class="d-flex">
                                     <div class="form-check me-4">
-                                        <input class="form-check-input @error('sexe_enfant') is-invalid @enderror" type="radio" name="sexe_enfant" id="sexe_masculin"  value="M" {{ old('sexe', 'M') == 'F' ? 'checked' : '' }}>
+                                        <input class="form-check-input @error('sexe_enfant') is-invalid @enderror" type="radio" name="sexe_enfant" id="sexe_masculin" value="M" {{ old('sexe_enfant', 'M') == 'M' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="sexe_masculin">
                                             Masculin
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input @error('sexe_enfant') is-invalid @enderror" type="radio" name="sexe_enfant" id="sexe_feminin" value="F" {{ old('sexe', 'M') == 'F' ? 'checked' : '' }}>
+                                        <input class="form-check-input @error('sexe_enfant') is-invalid @enderror" type="radio" name="sexe_enfant" id="sexe_feminin" value="F" {{ old('sexe_enfant', 'M') == 'F' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="sexe_feminin">
                                             Féminin
                                         </label>
@@ -152,10 +152,10 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-flag"></i>
                                     </span>
-                                    <select class="form-select @error('nationalite_enfant') is-invalid @enderror" id="nationalite_enfant">
+                                    <select class="form-select @error('nationalite_enfant') is-invalid @enderror" id="nationalite_enfant" name="nationalite_enfant">
                                         <option value="" selected disabled>Sélectionnez une nationalité</option>
-                                        <option value="ivoirienne">Ivoirienne</option>
-                                        <option value="autre">Autre</option>
+                                        <option value="ivoirienne" {{ old('nationalite_enfant') == 'ivoirienne' ? 'selected' : '' }}>Ivoirienne</option>
+                                        <option value="autre" {{ old('nationalite_enfant') == 'autre' ? 'selected' : '' }}>Autre</option>
                                     </select>
                                     <em class="error invalid-feedback">Vous devez sélectionner un sexe</em>
                                 </div>
@@ -201,7 +201,7 @@
                                     <span class="input-group-text">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
-                                    <input type="text" class="form-control" id="lieu_naissance_pere" name="lieu_naissance_pere" value="{{ old('lieu_naissance_pere') }}" placeholder="Ville de naissance" >
+                                    <input type="text" class="form-control" id="lieu_naissance_pere" name="lieu_naissance_pere" value="{{ old('lieu_naissance_pere') }}" placeholder="Ville de naissance">
                                 </div>
                             </div>
                         </div>
@@ -316,7 +316,7 @@
                                 <span class="input-group-text">
                                     <i class="fas fa-home"></i>
                                 </span>
-                                <input type="text" class="form-control" id="adresse_mere" name="adresse_mere"  value="{{ old('adresse_mere') }}" placeholder="Adresse complète">
+                                <input type="text" class="form-control" id="adresse_mere" name="adresse_mere" value="{{ old('adresse_mere') }}" placeholder="Adresse complète">
                             </div>
                         </div>
 
@@ -326,7 +326,7 @@
                             <label class="form-label">Le déclarant est : *</label>
                             <div class="d-flex flex-wrap">
                                 <div class="form-check me-4 mb-2">
-                                    <input class="form-check-input @error('declarant') is-invalid @enderror" type="radio" name="declarant" id="pere" value="Père"  {{ old('declarant') == 'Père' ? 'checked' : '' }}>
+                                    <input class="form-check-input @error('declarant') is-invalid @enderror" type="radio" name="declarant" id="pere" value="Père" {{ old('declarant') == 'Père' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="pere">
                                         Le père
                                     </label>
@@ -355,7 +355,7 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('nom_declarant') is-invalid @enderror" id="nom_declarant" name="nom_declarant" placeholder="Nom de famille">
+                                        <input type="text" class="form-control @error('nom_declarant') is-invalid @enderror" id="nom_declarant" name="nom_declarant" value="{{ old('nom_declarant') }}" placeholder="Nom de famille">
                                         <em class="error invalid-feedback">Le nom du d&eacute;clarant est obligatoire.</em>
                                     </div>
                                 </div>
@@ -365,7 +365,7 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('prenoms_declarant') is-invalid @enderror" id="prenoms_declarant" name="prenoms_declarant" placeholder="Prénoms">
+                                        <input type="text" class="form-control @error('prenoms_declarant') is-invalid @enderror" id="prenoms_declarant" name="prenoms_declarant" value="{{ old('prenoms_declarant') }}" placeholder="Prénoms">
                                         <em class="error invalid-feedback">Le pr&eacute;nom du d&eacute;clarant est obligatoire.</em>
                                     </div>
                                 </div>
@@ -377,7 +377,7 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-user-tag"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('lien_avec_enfant') is-invalid @enderror" id="lien_avec_enfant" name="lien_avec_enfant" placeholder="Ex: Grand-parent, Oncle, Tante, etc.">
+                                        <input type="text" class="form-control @error('lien_avec_enfant') is-invalid @enderror" id="lien_avec_enfant" name="lien_avec_enfant" value="{{ old('lien_avec_enfant') }}" placeholder="Ex: Grand-parent, Oncle, Tante, etc.">
                                         <em class="error invalid-feedback">Vous devez renseigner le lien ou la qualit&eacute; du d&eacute;clarant</em>
                                     </div>
                                 </div>
@@ -387,7 +387,7 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-phone"></i>
                                         </span>
-                                        <input type="tel" class="form-control @error('contact_declarant') is-invalid @enderror" id="contact_declarant" name="contact_declarant" placeholder="+225 XXXXXXXXXX">
+                                        <input type="tel" class="form-control @error('contact_declarant') is-invalid @enderror" id="contact_declarant" name="contact_declarant" value="{{ old('contact_declarant') }}" placeholder="+225 XXXXXXXXXX">
                                         <em class="error invalid-feedback">Le contact du d&eacute;clarant est obligatoire.</em>
                                     </div>
                                 </div>
@@ -402,7 +402,7 @@
 
                         <div class="mb-3">
                             <label for="certificat_naissance" class="form-label">Certificat de naissance délivré par l'établissement de santé *</label>
-                            <input type="file" class="form-control @error('certificat_naissance') is-invalid @enderror" id="certificat_naissance" name="certificat_naissance"  accept=".pdf,.jpg,.jpeg,.png">
+                            <input type="file" class="form-control @error('certificat_naissance') is-invalid @enderror" id="certificat_naissance" name="certificat_naissance" accept=".pdf,.jpg,.jpeg,.png">
                             <em class="error invalid-feedback">Le certificat de naissance est obligatoire.</em>
                         </div>
 
@@ -418,7 +418,7 @@
                             <em class="error invalid-feedback">La pi&egrave;ce d'identit&eacute; de la m&egrave;re est obligatoire.</em>
                         </div>
 
-                        <div class="mb-3" id="piece_identite_declarant" style="display: none;">
+                        <div class="mb-3">
                             <label for="piece_identite_declarant" class="form-label">Pièce d'identité du déclarant </label>
                             <input type="file" class="form-control @error('piece_identite_declarant') is-invalid @enderror" id="piece_identite_declarant" name="piece_identite_declarant" accept=".pdf,.jpg,.jpeg,.png">
                             <em class="error invalid-feedback">La pi&egrave;ce d'identit&eacute; du d&eacute;clarant est obligatoire.</em>
@@ -449,6 +449,27 @@
     function showLoader() {
         document.getElementById('loader').style.display = 'flex';
     }
-</script>   
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const radios = document.querySelectorAll('input[name="declarant"]');
+        const autreSection = document.getElementById('autre_declarant_section');
+
+        function toggleAutreSection() {
+            const selected = document.querySelector('input[name="declarant"]:checked');
+            if (selected && selected.value === 'Autre') {
+                autreSection.classList.remove('d-none');
+            } else {
+                autreSection.classList.add('d-none');
+            }
+        }
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', toggleAutreSection);
+        });
+
+        // Vérifie au chargement si "Autre" est déjà coché
+        toggleAutreSection();
+    });
+</script>
 @endauth
 @endsection

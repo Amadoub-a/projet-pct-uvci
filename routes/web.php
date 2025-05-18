@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\ProfilController;
 use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
+use App\Http\Controllers\PayementController;
 
 Route::get('/', function () {
     return view('site.index');
@@ -60,6 +61,9 @@ Route::middleware([IsClient::class])->group(function () {
     Route::post('/client-logout', [SiteController::class, 'clientLogout'])->name('client-logout');
 
     Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'sendDeclarationNaissance'])->name('send-declaration-naissance');
+    
+    Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
+    Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

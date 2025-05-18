@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('declarations_naissances', function (Blueprint $table) {
             $table->id();
+            $table->string("numero_declaration");
             $table->string("etat");//enregistrer,en_traitement,disponible
-            $table->boolean("paye");
+            $table->boolean("paye")->default(0);
             $table->string("type_declaration");
+            $table->date("date_declaration");
             $table->integer("montant_declaration")->nullable();
+            $table->date("date_payement")->nullable();
+
 
             $table->string("nom_enfant");
             $table->string("prenoms_enfant");

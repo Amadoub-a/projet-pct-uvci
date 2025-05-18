@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DeclarationNaissance extends BaseModele
 {
-    use HasFactory;
+    protected $table = 'declarations_naissances';
     
     public function getFillable()
     {
         return [
+            'numero_declaration',
+            'montant_declaration',
+            'type_declaration',
+            'date_payement',
+            'date_declaration',
             'etat',
             'paye',
             'nom_enfant',
@@ -54,6 +59,15 @@ class DeclarationNaissance extends BaseModele
             'date_naissance_enfant' => 'date',
             'date_naissance_pere' => 'date',
             'date_naissance_mere' => 'date',
+            'date_payement' => 'date',
+            'date_declaration' => 'date',
         ];
+    }
+            
+
+    public function getNumeroDeclaration(){
+        $latestId = DeclarationNaissance::max('id') + 1;
+        $date = now()->format('Ymd');
+        return $date . '-' . str_pad($latestId, 5, '0', STR_PAD_LEFT);
     }
 }
