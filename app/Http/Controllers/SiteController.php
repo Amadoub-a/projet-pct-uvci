@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 class SiteController extends Controller
 {
     public function services()
-    {     
+    {
         return view("site.front.services");
     }
 
@@ -44,27 +44,27 @@ class SiteController extends Controller
     }
 
     public function tarifs()
-    {     
+    {
         return view("site.front.tarifs");
     }
 
     public function about()
-    {     
+    {
         return view("site.front.about");
     }
 
     public function contact()
-    {     
+    {
         return view("site.front.contact");
     }
 
     public function signIn()
-    {     
+    {
         return view("site.front.sign-in");
     }
 
     public function signUp()
-    {     
+    {
         return view("site.front.sign-up");
     }
 
@@ -106,7 +106,7 @@ class SiteController extends Controller
                     'duplicate_email' => 'Cette adresse e-mail existe deja.',
                 ]);
         }
-        
+
         User::create([
             'name' => $data['prenoms'] . ' ' . $data['nom'],
             'email' => $data['email'],
@@ -125,8 +125,8 @@ class SiteController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-        
-       
+
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -183,7 +183,7 @@ class SiteController extends Controller
                 . "Vous avez demandé à réinitialiser votre mot de passe.<br/>"
                 . "Un nouveau mot de passe a été généré pour vous : <strong>{$newPassword}</strong><br/><br/>"
                 . "Veuillez vous connecter pour changer ce mot de passe.<br/>"
-                . "👉 <a href='{$appUrl}/se-conneceter' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
+                . "👉 <a href='{$appUrl}/se-connecter' style='color: blue; font-weight: bold;'>Se connecter</a><br/><br/>"
                 . "Merci !";
 
             Mail::to($user->email)->send((new SimpleMessage($subject, $body))->onQueue('notifications'));
@@ -198,7 +198,7 @@ class SiteController extends Controller
     }
 
     public function redefnirPassword(Request $request){
-        
+
         $this->validate($request, [
             'password' => 'required',
             'password_confirmation' => 'required',
@@ -219,7 +219,7 @@ class SiteController extends Controller
             $user->confirmation_token = null;
             $user->password = bcrypt($data["password"]);
             $user->save();
-            return redirect('/se-conneceter');
+            return redirect('/se-connecter');
         }
         return redirect()->back()->withErrors('msg'," Votre compte n'existe pas.");
     }

@@ -29,7 +29,7 @@ Route::get('copie-acte', [SiteController::class, 'copieActe'])->name('copie-acte
 Route::get('tarifs', [SiteController::class, 'tarifs'])->name('tarifs');
 Route::get('about', [SiteController::class, 'about'])->name('about');
 Route::get('contact', [SiteController::class, 'contact'])->name('contact');
-Route::get('se-conneceter', [SiteController::class, 'signIn'])->name('sign-in');
+Route::get('se-connecter', [SiteController::class, 'signIn'])->name('sign-in');
 Route::get('cree-compte', [SiteController::class, 'signUp'])->name('sign-up');
 
 Route::get('client-password-request', [SiteController::class, 'clientPasswordRequest'])->name('client-password-request');
@@ -71,25 +71,25 @@ Route::get('/superviseur', 'HomeController@superviseur')->name('superviseur');
 Route::middleware("auth")->prefix("auth")->name('auth.')->group(function (){
     Route::resource('users', UserController::class);
     Route::get('liste-users', [UserController::class, 'listeUsers'])->name('liste-users');
-    
+
     Route::get('profil', [ProfilController::class, 'profil'])->name('profil');
     Route::get('edit-profil', [ProfilController::class, 'edit'])->name('edit-profil');
     Route::get('update-profil/{id}', [ProfilController::class, 'updateProfil'])->name('update-profil');
     Route::put('update-password/{id}', [ProfilController::class, 'updatePassword'])->name('update-password');
-}); 
+});
 
 Route::middleware("auth")->prefix("site")->name('site.')->group(function (){
-   
-}); 
+
+});
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){
-   
+
     Route::resource('nations', NationController::class);
     Route::get('liste-nations', [NationController::class, 'listeNations'])->name('liste-nations');
 
     Route::resource('communes', CommuneController::class);
     Route::get('liste-communes', [CommuneController::class, 'listeCommunes'])->name('liste-communes');
-});  
+});
 
 
 
