@@ -92,7 +92,7 @@ class LoginController extends Controller
     */
     private function logoutAndRedirect(Request $request, string $redirect, array $withData = [])
     {
-        Auth::user()->update(['etat_user' => 0]);
+        Auth::user()->update(['user_connected' => 0]);
 
         $this->guard()->logout();
         $request->session()->invalidate();

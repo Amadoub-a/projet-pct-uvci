@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function listeUsers()
     {
-        $users = User::where('role','!=','super-admin')->orderBy('users.name', 'ASC')->get();
+        $users = User::where('role','!=','super-admin')->where('role','!=','client')->orderBy('users.name', 'ASC')->get();
 
         $jsonData["rows"] = $users->toArray();
         $jsonData["total"] = $users->count();

@@ -5,74 +5,13 @@
 ]
 )
 @section('content-front')
-<style>
-    .style-app-name {
-        text-align: center;
-    }
-
-    .disposition-personnelle {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .disposition-personnelle .text-center {
-        width: 100%;
-    }
-
-    .disposition-personnelle button {
-        width: 80%;
-    }
-
-    .text-personnel {
-        font-size: larger;
-    }
-
-    .text-personnel a {
-        color: black;
-        text-decoration: overline !important;
-    }
-
-
-    .loader {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .loader::after {
-        content: "";
-        border: 16px solid #f3f3f3;
-        border-top: 16px solid #3498db;
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
 <div class="container py-5">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="card shadow">
                 <div class="card-body p-5">
                     <h2 class="text-center mb-4">Inscription</h2>
+                    <div id="loader" class="loader"></div>
                     <form onsubmit="showLoader()" action="{{route('inscription')}}" method="post">
                         @csrf
                         <div class="row">
@@ -156,7 +95,11 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
+    function showLoader() {
+        document.getElementById('loader').style.display = 'flex';
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const telInput = document.getElementById('telephone');
         telInput.addEventListener('input', function (e) {

@@ -9,8 +9,12 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeClientController;
 use App\Http\Controllers\Auth\ProfilController;
+use App\Http\Controllers\DeclarationDeceController;
+use App\Http\Controllers\DeclarationMariageController;
+use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
+use App\Http\Controllers\PayementController;
 
 Route::get('/', function () {
     return view('site.index');
@@ -50,14 +54,22 @@ Route::get('/confirm-compte', function () {
 Route::post('definir-password', [LoginController::class, 'definirPassword'])->name('definir-password');
 Route::post('resete-password', [ProfilController::class, 'resetePassword'])->name('resete-password');
 
+Auth::routes();
 Route::middleware([IsClient::class])->group(function () {
     Route::get('/client-home', [HomeClientController::class, 'clientHome'])->name('client-home');
     Route::get('/mon-profil', [HomeClientController::class, 'monProfil'])->name('mon-profil');
     Route::post('/modifier-profile', [HomeClientController::class, 'modifierProfile'])->name('modifier-profile');
     Route::post('/modifier-password', [HomeClientController::class, 'modifierPassword'])->name('modifier-password');
+    Route::post('/client-logout', [SiteController::class, 'clientLogout'])->name('client-logout');
+
+    Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'storeDeclarationNaissance'])->name('send-declaration-naissance');
+    Route::post('/store-declaration-mariage', [DeclarationMariageController::class, 'storeDeclarationMariage'])->name('store-declaration-mariage');
+    Route::post('/store-declaration-deces', [DeclarationDeceController::class, 'storeDeclarationDeces'])->name('store-declaration-deces');
+    
+    Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
+    Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');
 });
 
-Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/superviseur', 'HomeController@superviseur')->name('superviseur');
 Route::middleware("auth")->prefix("auth")->name('auth.')->group(function (){
