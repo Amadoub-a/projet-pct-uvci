@@ -13,6 +13,25 @@ return new class extends Migration
     {
         Schema::create('payements', function (Blueprint $table) {
             $table->id();
+            $table->integer('prestation_id');
+            $table->string('type_prestation');
+
+            $table->string('reference')->unique(); // Référence interne
+            $table->string('provider')->nullable(); // Exemple : 'orange_money', 'cinetpay'
+            $table->string('transaction_id')->nullable(); // ID API externe
+            $table->string('status')->default('pending'); // Statut : pending, success, failed
+            $table->decimal('montant', 10, 2); // Montant avec décimales
+
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->text('callback_payload')->nullable();
+            $table->timestamp('paid_at')->nullable();
+
+            $table->dateTime('deleted_at')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('created_by')->nullable();
+
             $table->timestamps();
         });
     }

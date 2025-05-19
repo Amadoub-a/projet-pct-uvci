@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeClientController;
 use App\Http\Controllers\Auth\ProfilController;
+use App\Http\Controllers\DeclarationMariageController;
 use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
@@ -60,7 +61,8 @@ Route::middleware([IsClient::class])->group(function () {
     Route::post('/modifier-password', [HomeClientController::class, 'modifierPassword'])->name('modifier-password');
     Route::post('/client-logout', [SiteController::class, 'clientLogout'])->name('client-logout');
 
-    Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'sendDeclarationNaissance'])->name('send-declaration-naissance');
+    Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'storeDeclarationNaissance'])->name('send-declaration-naissance');
+    Route::post('/store-declaration-mariage', [DeclarationMariageController::class, 'storeDeclarationMariage'])->name('store-declaration-mariage');
     
     Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
     Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');

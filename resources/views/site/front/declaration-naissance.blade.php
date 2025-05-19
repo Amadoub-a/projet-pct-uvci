@@ -157,7 +157,7 @@
                                         <option value="ivoirienne" {{ old('nationalite_enfant') == 'ivoirienne' ? 'selected' : '' }}>Ivoirienne</option>
                                         <option value="autre" {{ old('nationalite_enfant') == 'autre' ? 'selected' : '' }}>Autre</option>
                                     </select>
-                                    <em class="error invalid-feedback">Vous devez sélectionner un sexe</em>
+                                    <em class="error invalid-feedback">Vous devez sélectionner la nationalité</em>
                                 </div>
                             </div>
                         </div>

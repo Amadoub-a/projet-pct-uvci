@@ -11,7 +11,8 @@
             <div class="card shadow">
                 <div class="card-body p-5">
                     <h2 class="text-center mb-4">Connexion</h2>
-                     <form method="POST" action="{{ route('connexion') }}">
+                    <div id="loader" class="loader"></div>
+                     <form onsubmit="showLoader()" method="POST" action="{{ route('connexion') }}">
                         @csrf
 
                         <div class="mb-3">
@@ -60,4 +61,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function showLoader() {
+        document.getElementById('loader').style.display = 'flex';
+    }
+</script>
 @endsection

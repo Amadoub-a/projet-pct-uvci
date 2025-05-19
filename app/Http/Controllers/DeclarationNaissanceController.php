@@ -10,7 +10,7 @@ use function Symfony\Component\Clock\now;
 
 class DeclarationNaissanceController extends Controller
 {
-    public function sendDeclarationNaissance(Request $request)
+    public function storeDeclarationNaissance(Request $request)
     {
 
         $request->validate([
