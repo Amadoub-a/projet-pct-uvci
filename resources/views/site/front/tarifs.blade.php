@@ -10,7 +10,7 @@
         <div class="container">
             <h1 class="display-4 fw-bold mb-4">Grille Tarifaire</h1>
             <p class="lead mb-5">
-                Calculez le coût de vos démarches administratives en fonction du type d'acte, du lieu et du mode de
+                Calculez le coût de vos démarches administratives en fonction du type d'acte, du mode de
                 paiement
             </p>
         </div>
