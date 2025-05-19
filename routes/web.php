@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeClientController;
 use App\Http\Controllers\Auth\ProfilController;
+use App\Http\Controllers\DeclarationDeceController;
 use App\Http\Controllers\DeclarationMariageController;
 use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\Parametre\NationController;
@@ -63,6 +64,7 @@ Route::middleware([IsClient::class])->group(function () {
 
     Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'storeDeclarationNaissance'])->name('send-declaration-naissance');
     Route::post('/store-declaration-mariage', [DeclarationMariageController::class, 'storeDeclarationMariage'])->name('store-declaration-mariage');
+    Route::post('/store-declaration-deces', [DeclarationDeceController::class, 'storeDeclarationDeces'])->name('store-declaration-deces');
     
     Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
     Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');

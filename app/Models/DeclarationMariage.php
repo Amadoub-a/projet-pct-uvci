@@ -8,7 +8,7 @@ class DeclarationMariage extends Model
 {
    // protected $table = 'declaration_mariages';
 
-     public function getFillable()
+    public function getFillable()
     {
         return [
             'numero_declaration',

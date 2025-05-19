@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeclarationDece;
 use App\Models\DeclarationMariage;
 use App\Models\DeclarationNaissance;
 use Illuminate\Http\Request;
@@ -35,6 +36,10 @@ class PayementController extends Controller
             if(str_contains(strtolower(string: $service), 'mariage')){
                 $declaration = DeclarationMariage::find($idDeclaration);
             }
+            if(str_contains(strtolower(string: $service), 'décès')){
+                $declaration = DeclarationDece::find($idDeclaration);
+            }
+            
             if ($declaration) {
                 $prestation = [
                     'id' => $declaration->id,

@@ -120,7 +120,8 @@ class DeclarationNaissanceController extends Controller
             // Enregistrer le chemin accessible publiquement
             $declaration->piece_identite_declarant = '/storage/documents/' . $filename;
         }
-
+        
+        $declaration->created_by = $request->user()->id;
         $declaration->save();
         session(['declaration_id' => $declaration->id]);
         session(['service' => "déclaration de naissance"]);

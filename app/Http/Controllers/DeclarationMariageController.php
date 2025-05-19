@@ -132,7 +132,7 @@ class DeclarationMariageController extends Controller
             // Enregistrer le chemin accessible publiquement
             $declaration->contrat_mariage = '/storage/documents/' . $filename;
         }
-
+        $declaration->created_by = $request->user()->id;
         $declaration->save();
         session(['declaration_id' => $declaration->id]);
         session(['service' => "déclaration de mariage"]);
