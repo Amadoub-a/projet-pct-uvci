@@ -17,6 +17,6 @@ class IsClient
             return $next($request);
         }
 
-        return redirect('/se-conneceter'); // Corrigé aussi l'URL (tu avais écrit /se-conneceter)
+        return redirect('/se-connecter');
     }
 }
