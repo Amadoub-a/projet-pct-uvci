@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CopieActe;
 use App\Models\DeclarationDece;
 use App\Models\DeclarationMariage;
 use App\Models\DeclarationNaissance;
+use App\Models\Legalisation;
 use Illuminate\Http\Request;
 
 class PayementController extends Controller
@@ -39,7 +41,12 @@ class PayementController extends Controller
             if(str_contains(strtolower(string: $service), 'décès')){
                 $declaration = DeclarationDece::find($idDeclaration);
             }
-            
+            if(str_contains(strtolower(string: $service), 'légalisation')){
+                $declaration = Legalisation::find($idDeclaration);
+            }
+            if(str_contains(strtolower(string: $service), "copie d'acte")){
+                $declaration = CopieActe::find($idDeclaration);
+            }
             if ($declaration) {
                 $prestation = [
                     'id' => $declaration->id,

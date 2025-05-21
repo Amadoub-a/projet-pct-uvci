@@ -114,9 +114,9 @@
                             <li>
                                 <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-deces' ? 'active' : '' }}" href="{{ route(name: 'declaration-deces') }}">Certificat de décès</a>
                             </li>
-                            <li>
+                            <!--li>
                                 <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-vie' ? 'active' : '' }}" href="{{ route(name: 'declaration-vie') }}">Certification de vie</a>
-                            </li>
+                            </li-->
                             <li>
                                 <a class="dropdown-item {{ Route::currentRouteName() === 'legalisation-document' ? 'active' : '' }}" href="{{ route(name: 'legalisation-document') }}">Légalisation de documents</a>
                             </li>

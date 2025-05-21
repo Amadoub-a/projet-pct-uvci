@@ -79,17 +79,6 @@
                                 </div>
                             </label>
                         </div>
-
-                        <div class="form-check p-3 border rounded">
-                            <input class="form-check-input" type="radio" name="payment_method" id="tresor_money" value="tresor_money">
-                            <label class="form-check-label d-flex align-items-center" for="tresor_money">
-                                <i class="fas fa-university fs-3 me-3 text-info"></i>
-                                <div>
-                                    <span class="d-block fw-bold">TresorMoney</span>
-                                    <span class="text-muted small">Paiement par TresorMoney/TresorPay</span>
-                                </div>
-                            </label>
-                        </div>
                     </div>
 
                     <!-- Mobile Money Form (default) -->

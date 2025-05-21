@@ -257,26 +257,4 @@
     </div>
 </div>
 @endauth
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Validation du formulaire (à implémenter selon les besoins)
-            if (form.checkValidity()) {
-                // Redirection vers la page de paiement avec les paramètres
-                const serviceName = "Certification de document";
-                const amount = "3000"; // Montant en FCFA
-                
-                window.location.href = `payment.html?service=${encodeURIComponent(serviceName)}&amount=${encodeURIComponent(amount)}`;
-            } else {
-                // Afficher les messages de validation du formulaire
-                form.reportValidity();
-            }
-        });
-    });
-</script>
-
 @endsection

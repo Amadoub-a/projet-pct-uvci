@@ -9,9 +9,12 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeClientController;
 use App\Http\Controllers\Auth\ProfilController;
+use App\Http\Controllers\CertificatVieController;
+use App\Http\Controllers\CopieActeController;
 use App\Http\Controllers\DeclarationDeceController;
 use App\Http\Controllers\DeclarationMariageController;
 use App\Http\Controllers\DeclarationNaissanceController;
+use App\Http\Controllers\LegalisationController;
 use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
 use App\Http\Controllers\PayementController;
@@ -65,6 +68,8 @@ Route::middleware([IsClient::class])->group(function () {
     Route::post('/send-declaration-naissance', [DeclarationNaissanceController::class, 'storeDeclarationNaissance'])->name('send-declaration-naissance');
     Route::post('/store-declaration-mariage', [DeclarationMariageController::class, 'storeDeclarationMariage'])->name('store-declaration-mariage');
     Route::post('/store-declaration-deces', [DeclarationDeceController::class, 'storeDeclarationDeces'])->name('store-declaration-deces');
+    Route::post('/store-legalisation', [LegalisationController::class, 'storeLegalisation'])->name('store-legalisation');
+    Route::post('/store-copie-acte', [CopieActeController::class, 'storeCopieActe'])->name('store-copie-acte');
     
     Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
     Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');
