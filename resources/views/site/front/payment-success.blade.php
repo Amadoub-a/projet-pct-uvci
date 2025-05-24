@@ -23,21 +23,21 @@
                             <div class="row mb-3">
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Service :</p>
-                                    <p class="fw-bold" id="service-name">Service demandé</p>
+                                    <p class="fw-bold" id="service-name">{{ $service }}</p>
                                 </div>
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Référence :</p>
-                                    <p class="fw-bold" id="reference-number">REF-2025-0001</p>
+                                    <p class="fw-bold" id="reference-number">{{ $reference }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Date :</p>
-                                    <p class="fw-bold" id="order-date">01/01/2025</p>
+                                    <p class="fw-bold" id="order-date">{{ date("d/m/Y") }}</p>
                                 </div>
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Montant total :</p>
-                                    <p class="fw-bold fs-5 text-success" id="total-amount">5 000 FCFA</p>
+                                    <p class="fw-bold fs-5 text-success" id="total-amount">{{ $montant }}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                     </div>
                     
                     <div class="d-grid gap-2">
-                        <a href="/" class="btn btn-primary btn-lg">
+                        <a href="{{ route(name: 'client-home') }}" class="btn btn-primary btn-lg">
                             <i class="fas fa-home me-2"></i>Retour à l'accueil
                         </a>
                     </div>

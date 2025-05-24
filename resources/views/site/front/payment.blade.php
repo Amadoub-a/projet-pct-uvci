@@ -133,6 +133,13 @@
             return;
         }
 
+        // Récupérer la référence et le montant
+        var reference = document.getElementById('reference-number').innerText;
+        var montant = document.getElementById('total-amount').innerText;
+
+        console.log("Référence : " + reference);
+        console.log("Montant : " + montant);
+
         // Logique pour simuler un paiement réussi ou échoué
         var paymentSuccess = true; // Simuler une réussite, mettre false pour échouer
 
@@ -154,6 +161,18 @@
             prestationIdInput.value = "{{ $prestation['id'] }}";
             form.appendChild(prestationIdInput);
 
+            var referenceInput = document.createElement('input');
+            referenceInput.type = 'hidden';
+            referenceInput.name = 'reference';
+            referenceInput.value = reference; // Ajouter la référence au formulaire
+            form.appendChild(referenceInput);
+
+            var montantInput = document.createElement('input');
+            montantInput.type = 'hidden';
+            montantInput.name = 'montant';
+            montantInput.value = montant; // Ajouter le montant au formulaire
+            form.appendChild(montantInput);
+
             // Ajoutez le CSRF token à l'envoi du formulaire
             var csrfToken = "{{ csrf_token() }}"; // Récupère le CSRF token Laravel
             var csrfInput = document.createElement('input');
@@ -170,5 +189,4 @@
         }
     });
 </script>
-
 @endsection

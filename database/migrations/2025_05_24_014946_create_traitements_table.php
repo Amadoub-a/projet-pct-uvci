@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('traitements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("client_id");
             $table->foreignId("declaration_naissance_id")->nullable();
             $table->foreignId("declaration_mariage_id")->nullable();
             $table->foreignId("declaration_deces_id")->nullable();
             $table->foreignId("legalisation_id")->nullable();
             $table->foreignId("copie_acte_id")->nullable();
+            $table->foreignId("admin_id")->nullable();
 
             $table->string("etat");
             $table->date("date_traitement")->nullable();
@@ -28,6 +30,8 @@ return new class extends Migration
             $table->foreign('declaration_deces_id')->references('id')->on('declaration_deces')->onDelete('cascade');
             $table->foreign('legalisation_id')->references('id')->on('legalisations')->onDelete('cascade');
             $table->foreign('copie_acte_id')->references('id')->on('copie_actes')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->dateTime('deleted_at')->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();

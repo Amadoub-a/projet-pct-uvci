@@ -7,6 +7,7 @@ use App\Models\DeclarationDece;
 use App\Models\DeclarationMariage;
 use App\Models\DeclarationNaissance;
 use App\Models\Legalisation;
+use App\Models\Traitement;
 use Illuminate\Http\Request;
 
 class PayementController extends Controller
@@ -62,8 +63,42 @@ class PayementController extends Controller
     public function paymentSuccess(Request $request){
         $service = $request->input('service');
         $prestationId = $request->input('prestation_id');
+        $montant = $request->input('montant');
+        $reference = $request->input('reference');
 
-        return view('site.front.payment-success');
+        $traitement = new Traitement();
+        $traitement->client_id = $request->user()->id;
+        $traitement->etat = "Enregistré";
+
+        if(str_contains(strtolower($service), 'naissance')){
+            $Naissance = DeclarationNaissance::find($prestationId);
+            $traitement->declaration_naissance_id = $Naissance->id;
+        }
+
+        if(str_contains(strtolower($service), 'mariage')){
+            $Mariage = DeclarationMariage::find($prestationId);
+            $traitement->declaration_mariage_id = $Mariage->id;
+        }
+
+        if(str_contains(strtolower($service), 'décès')){
+            $Dece = DeclarationDece::find($prestationId);
+            $traitement->declaration_deces_id = $Dece->id;
+        }
+
+        if(str_contains(strtolower($service), 'légalisation')){
+            $Legalisation = Legalisation::find($prestationId);
+            $traitement->legalisation_id = $Legalisation->id;
+        }
+
+        if(str_contains(strtolower($service), "copie d'acte")){
+            $CopieActe = CopieActe::find($prestationId);
+            $traitement->copie_acte_id = $CopieActe->id;
+        }
+
+        $traitement->created_by = $request->user()->id;
+        $traitement->save();
+
+        return view('site.front.payment-success',compact( 'service','reference','montant'));
     }
 
     public function paymentFailed()

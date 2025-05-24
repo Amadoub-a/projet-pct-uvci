@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Traitement extends BaseModele
 {
@@ -17,6 +17,8 @@ class Traitement extends BaseModele
             'etat',
             'date_traitement',
             'date_disponible',
+            'client_id',
+            'admin_id'
         ];
     }
 
@@ -26,5 +28,30 @@ class Traitement extends BaseModele
             'date_traitement' => 'date',
             'date_disponible' => 'date',
         ];
+    }
+
+    public function copie_acte(): BelongsTo
+    {
+        return $this->belongsTo(CopieActe::class);
+    }
+
+    public function legalisation(): BelongsTo
+    {
+        return $this->belongsTo(Legalisation::class);
+    }
+
+    public function declaration_deces(): BelongsTo
+    {
+        return $this->belongsTo(DeclarationDece::class);
+    }
+
+    public function declaration_mariage(): BelongsTo
+    {
+        return $this->belongsTo(DeclarationMariage::class);
+    }
+
+    public function declaration_naissance(): BelongsTo
+    {
+        return $this->belongsTo(DeclarationNaissance::class);
     }
 }

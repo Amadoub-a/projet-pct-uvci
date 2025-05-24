@@ -254,7 +254,9 @@
             </div>
         </div>
     </footer>
+    <script type="text/javascript" src="{{asset('template/vendors/jquery/dist/jquery.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/function-crud.js')}}"></script>
     <script type="text/javascript" src="{{asset('plugin/js/bootstrap-table.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('template/vendors/bootstrap-table/locale/bootstrap-table-fr-FR.js')}}"></script>
 </body>

@@ -14,7 +14,6 @@ class DeclarationDeceController extends Controller
             'date_deces' => 'required',
             'heure_deces' => 'required',
             'lieu_deces' => 'required',
-            'etablissement_deces' => 'required',
             'cause_deces' => 'required',
             'nom_defunt' => 'required',
             'prenoms_defunt' => 'required',

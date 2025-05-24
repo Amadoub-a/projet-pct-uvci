@@ -19,6 +19,7 @@ use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
 use App\Http\Controllers\DeclarationMariageController;
 use App\Http\Controllers\DeclarationNaissanceController;
+use App\Http\Controllers\TraitementController;
 
 Route::get('/', function () {
     return view('site.index');
@@ -75,6 +76,9 @@ Route::middleware([IsClient::class])->group(function () {
     Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
     Route::post('/payment-success', [PayementController::class, 'paymentSuccess'])->name('payment.success');
     Route::get('/payment-failed', [PayementController::class, 'paymentFailed'])->name('payment.failed');
+
+    Route::get('/liste-demandes-cours', [TraitementController::class, 'listeDemandesCours'])->name('liste-demandes-cours');
+    Route::get('/liste-demandes-traitees', [TraitementController::class, 'listeDemandesTraitees'])->name('liste-demandes-traitees');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
