@@ -5,19 +5,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CinetPayController;
+use App\Http\Controllers\PayementController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\CopieActeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeClientController;
 use App\Http\Controllers\Auth\ProfilController;
-use App\Http\Controllers\CertificatVieController;
-use App\Http\Controllers\CopieActeController;
-use App\Http\Controllers\DeclarationDeceController;
-use App\Http\Controllers\DeclarationMariageController;
-use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\LegalisationController;
+use App\Http\Controllers\CertificatVieController;
+use App\Http\Controllers\DeclarationDeceController;
 use App\Http\Controllers\Parametre\NationController;
 use App\Http\Controllers\Parametre\CommuneController;
-use App\Http\Controllers\PayementController;
+use App\Http\Controllers\DeclarationMariageController;
+use App\Http\Controllers\DeclarationNaissanceController;
 
 Route::get('/', function () {
     return view('site.index');
@@ -72,7 +73,8 @@ Route::middleware([IsClient::class])->group(function () {
     Route::post('/store-copie-acte', [CopieActeController::class, 'storeCopieActe'])->name('store-copie-acte');
     
     Route::get('/choix-payement', [PayementController::class, 'choixPayement'])->name('choix-payement');
-    Route::post('/make-payement', [PayementController::class, 'makePayement'])->name('make-payement');
+    Route::post('/payment-success', [PayementController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/payment-failed', [PayementController::class, 'paymentFailed'])->name('payment.failed');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

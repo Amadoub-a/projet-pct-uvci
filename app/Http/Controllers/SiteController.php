@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use App\Mail\SimpleMessage;
+use App\Models\Parametre\Commune;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,8 @@ class SiteController extends Controller
     }
 
     public function copieActe(){
-        return view("site.front.copie-acte");
+        $communes = Commune::select('id', 'libelle_commune')->get();
+        return view('site.front.copie-acte', compact('communes'));
     }
 
     public function tarifs()

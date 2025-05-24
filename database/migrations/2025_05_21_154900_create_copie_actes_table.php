@@ -32,10 +32,10 @@ return new class extends Migration
             $table->string("demander_par");
             $table->string("nom_demandeur");
             $table->string("prenom_demandeur");
-            $table->string("email_demandeur");
+            $table->string("email_demandeur")->nullable();
             $table->string("contact_demandeur");
             $table->string("adresse_demandeur");
-            $table->string("piece_identite_demandeur");
+            $table->string("piece_identite_demandeur")->nullable();
 
             $table->dateTime('deleted_at')->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();

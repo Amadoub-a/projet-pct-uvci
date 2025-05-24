@@ -59,8 +59,15 @@ class PayementController extends Controller
         return view("site.front.payment", compact('prestation', 'service'));
     }
 
+    public function paymentSuccess(Request $request){
+        $service = $request->input('service');
+        $prestationId = $request->input('prestation_id');
 
-    public function makePayement(Request $request){
+        return view('site.front.payment-success');
+    }
 
+    public function paymentFailed()
+    {
+        return view(view: 'site.front.payment-failure');
     }
 }

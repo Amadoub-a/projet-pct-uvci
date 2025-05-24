@@ -1,11 +1,6 @@
-@extends(
-'site.layout',
-[
-'title' => "État Civil Côte d'Ivoire - Payement",
-]
-)
+@extends('site.layout', ['title' => "État Civil Côte d'Ivoire - Payement"])
+
 @section('content-front')
-<!-- Hero Section -->
 <!-- Hero Section -->
 <section class="hero-section text-center">
     <div class="container">
@@ -33,7 +28,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <p class="mb-0 text-muted">Service :</p>
-                                    <p class="fw-bold" id="service-name">{{ucfirst($service)  }}</p>
+                                    <p class="fw-bold" id="service-name">{{ ucfirst($service) }}</p>
                                     <input type="hidden" name="service" value="{{ $prestation['id'] }}">
                                 </div>
                                 <div class="col-md-6">
@@ -83,17 +78,6 @@
 
                     <!-- Mobile Money Form (default) -->
                     <div id="mobile_money_form">
-                        <h5 class="mb-3">Détails Mobile Money</h5>
-                        <div class="mb-3">
-                            <label for="mobile_operator" class="form-label">Opérateur *</label>
-                            <select class="form-select" id="mobile_operator" required>
-                                <option value="" selected disabled>Sélectionnez un opérateur</option>
-                                <option value="orange">Orange Money</option>
-                                <option value="mtn">MTN Mobile Money</option>
-                                <option value="moov">Moov Money</option>
-                                <option value="wave">Wave</option>
-                            </select>
-                        </div>
                         <div class="mb-3">
                             <label for="mobile_number" class="form-label">Numéro de téléphone *</label>
                             <div class="input-group">
@@ -101,51 +85,6 @@
                                     <i class="fas fa-phone"></i>
                                 </span>
                                 <input type="tel" class="form-control" id="mobile_number" placeholder="+225 XXXXXXXXXX" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Credit Card Form (hidden by default) -->
-                    <div id="credit_card_form" style="display: none;">
-                        <h5 class="mb-3">Détails de la carte</h5>
-                        <div class="mb-3">
-                            <label for="card_number" class="form-label">Numéro de carte *</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fas fa-credit-card"></i>
-                                </span>
-                                <input type="text" class="form-control" id="card_number" placeholder="XXXX XXXX XXXX XXXX">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="expiry_date" class="form-label">Date d'expiration *</label>
-                                <input type="text" class="form-control" id="expiry_date" placeholder="MM/AA">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="cvv" class="form-label">CVV *</label>
-                                <input type="text" class="form-control" id="cvv" placeholder="XXX">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="card_holder" class="form-label">Nom du titulaire *</label>
-                            <input type="text" class="form-control" id="card_holder" placeholder="Nom tel qu'il apparaît sur la carte">
-                        </div>
-                    </div>
-
-                    <!-- Bank Transfer Form (hidden by default) -->
-                    <div id="tresor_money_form" style="display: none;">
-                        <h5 class="mb-3">Informations TresorMoney</h5>
-                        <div class="alert alert-info">
-                            <p class="mb-0"><i class="fas fa-info-circle me-2"></i>Veuillez composer *760# et suivre les intructions</p>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tresor_mobile_number" class="form-label">Numéro de téléphone *</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fas fa-phone"></i>
-                                </span>
-                                <input type="tel" class="form-control" id="tresor_mobile_number" placeholder="+225 XXXXXXXXXX" required>
                             </div>
                         </div>
                     </div>
@@ -175,5 +114,61 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("pay-button").addEventListener("click", function() {
+        var paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        var mobileNumber = document.getElementById('mobile_number').value;
+        var termsChecked = document.getElementById('terms_conditions').checked; // Vérification de la case des conditions
+
+        // Vérification si le numéro de téléphone est rempli
+        if (!mobileNumber) {
+            alert("Le numéro de téléphone est obligatoire !");
+            return;
+        }
+
+        // Vérification si la case des conditions générales est cochée
+        if (!termsChecked) {
+            alert("Vous devez accepter les conditions générales et la politique de confidentialité !");
+            return;
+        }
+
+        // Logique pour simuler un paiement réussi ou échoué
+        var paymentSuccess = true; // Simuler une réussite, mettre false pour échouer
+
+        if (paymentSuccess) {
+            // Créer un formulaire POST caché pour envoyer les données
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{{ route('payment.success') }}"; // Redirection vers la page de succès
+
+            var serviceInput = document.createElement('input');
+            serviceInput.type = 'hidden';
+            serviceInput.name = 'service';
+            serviceInput.value = "{{ ucfirst($service) }}";
+            form.appendChild(serviceInput);
+
+            var prestationIdInput = document.createElement('input');
+            prestationIdInput.type = 'hidden';
+            prestationIdInput.name = 'prestation_id';
+            prestationIdInput.value = "{{ $prestation['id'] }}";
+            form.appendChild(prestationIdInput);
+
+            // Ajoutez le CSRF token à l'envoi du formulaire
+            var csrfToken = "{{ csrf_token() }}"; // Récupère le CSRF token Laravel
+            var csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            // Soumettre le formulaire
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            window.location.href = "{{ route('payment.failed') }}"; // Redirection vers la page d'échec
+        }
+    });
+</script>
 
 @endsection

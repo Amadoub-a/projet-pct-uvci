@@ -23,7 +23,6 @@ class CopieActeController extends Controller
             'email_demandeur' => 'required',
             'contact_demandeur' => 'required',
             'adresse_demandeur' => 'required',
-            'piece_identite_demandeur' => 'required',
             'declaration_honneur' => 'required',
         ]);
 
@@ -49,7 +48,6 @@ class CopieActeController extends Controller
         $demande->prenom_demandeur = $data['prenom_demandeur'];
         $demande->email_demandeur = $data['email_demandeur'];
         $demande->contact_demandeur = $data['contact_demandeur'];
-        $demande->adresse_demandeur = $data['adresse_demandeur'];
         $demande->adresse_demandeur = $data['adresse_demandeur'];
 
         if (isset($data['piece_identite_demandeur'])) {

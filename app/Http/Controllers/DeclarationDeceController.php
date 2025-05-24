@@ -43,7 +43,7 @@ class DeclarationDeceController extends Controller
         $declaration->etat = 'Enregistrer';
         $declaration->type_declaration = 'deces';
         $declaration->date_declaration = now();
-        $declaration->montant_declaration = 5000;
+        $declaration->montant_declaration = 2100;
 
         $declaration->date_deces = Carbon::createFromFormat('Y-m-d', $data["date_deces"]);
         $declaration->heure_deces = Carbon::createFromFormat('H:i', $data['heure_deces'])->format('H:i:s');

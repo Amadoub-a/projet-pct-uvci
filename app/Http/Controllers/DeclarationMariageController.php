@@ -45,7 +45,7 @@ class DeclarationMariageController extends Controller
         $declaration->etat = 'Enregistrer';
         $declaration->type_declaration = 'mariage';
         $declaration->date_declaration = now();
-        $declaration->montant_declaration = 5000;
+        $declaration->montant_declaration = 5100;
 
         $declaration->date_mariage = Carbon::createFromFormat('Y-m-d', $data["date_mariage"]);
         $declaration->lieu_mariage = $data['lieu_mariage'];

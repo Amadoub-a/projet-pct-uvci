@@ -35,7 +35,7 @@ class LegalisationController extends Controller
         $declaration->etat = 'Enregistrer';
         $declaration->type_declaration = 'legalisation';
         $declaration->date_declaration = now();
-        $declaration->montant_declaration = 5000;
+        $declaration->montant_declaration = 1600;
 
         $declaration->nom_personne = $data['nom_personne'];
         $declaration->prenoms_personne = $data['prenoms_personne'];

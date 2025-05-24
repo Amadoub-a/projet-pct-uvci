@@ -48,7 +48,7 @@ class DeclarationNaissanceController extends Controller
         $declaration->etat = 'Enregistrer';
         $declaration->type_declaration = 'naisance';
         $declaration->date_declaration = now();
-        $declaration->montant_declaration = 5000;
+        $declaration->montant_declaration = 2600;
 
         $declaration->nom_enfant = $data['nom_enfant'];
         $declaration->prenoms_enfant = $data['prenoms_enfant'];
