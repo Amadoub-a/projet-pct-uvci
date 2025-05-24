@@ -4,10 +4,20 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Parametre\Commune;
 use App\Models\DeclarationMariage;
 
 class DeclarationMariageController extends Controller
 {
+    public function vueDeclarationsMariages(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Déclaration des mariages";
+        $btnModalAjout = "FALSE";
+
+        return view("back.mariage.declaration",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
     public function storeDeclarationMariage(Request $request){
         $request->validate([
             'date_mariage' => 'required',
@@ -139,5 +149,13 @@ class DeclarationMariageController extends Controller
 
         return redirect()->route('choix-payement');
 
+    }
+
+    public function listeDeclarationsMariages(){
+        $mariages = DeclarationMariage::orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $mariages->toArray();
+        $jsonData["total"] = $mariages->count();
+        return response()->json($jsonData);
     }
 }

@@ -5,11 +5,21 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\DeclarationNaissance;
+use App\Models\Parametre\Commune;
 
 use function Symfony\Component\Clock\now;
 
 class DeclarationNaissanceController extends Controller
 {
+    public function vueDeclarationsNaissances(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Déclaration des naissances";
+        $btnModalAjout = "FALSE";
+
+        return view("back.naissance.declaration",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
     public function storeDeclarationNaissance(Request $request)
     {
 
@@ -127,5 +137,13 @@ class DeclarationNaissanceController extends Controller
         session(['service' => "déclaration de naissance"]);
 
         return redirect()->route('choix-payement');
+    }
+
+    public function listeDeclarationsNaissances(){
+        $naissances = DeclarationNaissance::orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $naissances->toArray();
+        $jsonData["total"] = $naissances->count();
+        return response()->json($jsonData);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use League\Uri\BaseUri;
+use App\Models\Parametre\Commune;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CopieActe extends BaseModele
 {
@@ -46,6 +48,10 @@ class CopieActe extends BaseModele
         ];
     }
 
+    public function commune(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_naissance');
+    }
     public function getNumeroDeclaration(){
         $latestId = CopieActe::max('id') + 1;
         $date = now()->format('Ymd');

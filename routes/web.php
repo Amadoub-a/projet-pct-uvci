@@ -20,6 +20,7 @@ use App\Http\Controllers\Parametre\CommuneController;
 use App\Http\Controllers\DeclarationMariageController;
 use App\Http\Controllers\DeclarationNaissanceController;
 use App\Http\Controllers\TraitementController;
+use App\Models\DeclarationNaissance;
 
 Route::get('/', function () {
     return view('site.index');
@@ -77,8 +78,8 @@ Route::middleware([IsClient::class])->group(function () {
     Route::post('/payment-success', [PayementController::class, 'paymentSuccess'])->name('payment.success');
     Route::get('/payment-failed', [PayementController::class, 'paymentFailed'])->name('payment.failed');
 
-    Route::get('/liste-demandes-cours', [TraitementController::class, 'listeDemandesCours'])->name('liste-demandes-cours');
-    Route::get('/liste-demandes-traitees', [TraitementController::class, 'listeDemandesTraitees'])->name('liste-demandes-traitees');
+    Route::get('liste-demandes-cours', [TraitementController::class, 'listeDemandesCours'])->name('liste-demandes-cours');
+    Route::get('liste-demandes-traitees', [TraitementController::class, 'listeDemandesTraitees'])->name('liste-demandes-traitees');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -93,8 +94,20 @@ Route::middleware("auth")->prefix("auth")->name('auth.')->group(function (){
     Route::put('update-password/{id}', [ProfilController::class, 'updatePassword'])->name('update-password');
 });
 
-Route::middleware("auth")->prefix("site")->name('site.')->group(function (){
+Route::middleware("auth")->prefix("back")->name('back.')->group(function (){
+    Route::get('liste-nouvelle-demandes', [TraitementController::class, 'listeNouvelleDemandes'])->name('liste-nouvelle-demandes');
 
+    Route::get('liste-declarations-naissances', [DeclarationNaissanceController::class, 'listeDeclarationsNaissances'])->name('liste-declarations-naissances');
+    Route::get('liste-declarations-mariage', [DeclarationMariageController::class, 'listeDeclarationsMariages'])->name('liste-declarations-mariage');
+    Route::get('liste-declarations-deces', [DeclarationDeceController::class, 'listeDeclarationsDeces'])->name('liste-declarations-deces');
+    Route::get('liste-legalisations', [LegalisationController::class, 'listeLegalisations'])->name('liste-legalisations');
+    Route::get('liste-copies-actes', [CopieActeController::class, 'listeCopiesActes'])->name('liste-copies-actes');
+
+    Route::get('vue-declarations-naissances', [DeclarationNaissanceController::class, 'vueDeclarationsNaissances'])->name('vue-declarations-naissances');
+    Route::get('vue-declarations-mariage', [DeclarationMariageController::class, 'vueDeclarationsMariages'])->name('vue-declarations-mariage');
+    Route::get('vue-declarations-deces', [DeclarationDeceController::class, 'vueDeclarationsDeces'])->name('vue-declarations-deces');
+    Route::get('vue-legalisations', [LegalisationController::class, 'vueLegalisations'])->name('vue-legalisations');
+    Route::get('vue-copies-actes', [CopieActeController::class, 'vueCopiesActes'])->name('vue-copies-actes');
 });
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){

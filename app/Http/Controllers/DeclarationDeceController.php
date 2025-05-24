@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\DeclarationDece;
+use App\Models\Parametre\Commune;
 
 class DeclarationDeceController extends Controller
 {
+    public function vueDeclarationsDeces(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Déclaration des décès";
+        $btnModalAjout = "FALSE";
+
+        return view("back.deces.declaration",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+    
     public function storeDeclarationDeces(Request $request){
         
         $request->validate([
@@ -112,5 +122,13 @@ class DeclarationDeceController extends Controller
         session(['service' => "déclaration de décès"]);
 
         return redirect()->route('choix-payement');
+    }
+
+    public function listeDeclarationsDeces(){
+        $deces = DeclarationDece::orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $deces->toArray();
+        $jsonData["total"] = $deces->count();
+        return response()->json($jsonData);
     }
 }

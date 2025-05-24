@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Traitement;
+
 class HomeController extends Controller
 {
     /**
@@ -21,10 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {     
+        $demandeCours = Traitement::where('etat', '=', 'En cours')->orWhere('etat', '=', 'Enregistré')->count();
+        $demandeTraitees = Traitement::where('etat', '=', 'Traité')->count();
+        $demandeRejetees = Traitement::where('etat', '=', 'Rejeté')->count();
+        $demandes = Traitement::all()->count();
+        
         $menuPrincipal = "Tableau de bord";
         $titleControlleur = "";
         $btnModalAjout = "FALSE";
-        return view("home", compact('menuPrincipal','titleControlleur','btnModalAjout'));
+        return view("home", compact('demandeCours','demandeTraitees','demandeRejetees','demandes','menuPrincipal','titleControlleur','btnModalAjout'));
     }
 
     public function superviseur()

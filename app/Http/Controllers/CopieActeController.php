@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\CopieActe;
 use Illuminate\Http\Request;
+use App\Models\Parametre\Commune;
 
 class CopieActeController extends Controller
 {
+    public function vueCopiesActes(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Demandes de copie d'acte";
+        $btnModalAjout = "FALSE";
+
+        return view("back.copie-acte.index",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
     public function storeCopieActe(Request $request){
         $request->validate([
             'type_acte' => 'required',
@@ -33,7 +43,7 @@ class CopieActeController extends Controller
         $demande->etat = 'Enregistrer';
         $demande->type_declaration = $data['type_acte'];
         $demande->date_declaration = now();
-        $demande->montant_declaration = 5000;
+        $demande->montant_declaration = 1600;
 
         $demande->type_acte = $data['type_acte'];
         $demande->type_copie = $data['type_copie'];
@@ -66,5 +76,13 @@ class CopieActeController extends Controller
         session(['service' => "demande de copie d'acte de ".$demande->type_acte]);
 
         return redirect()->route('choix-payement');
+    }
+
+    public function listeCopiesActes(){
+        $copies = CopieActe::with('commune')->orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $copies->toArray();
+        $jsonData["total"] = $copies->count();
+        return response()->json($jsonData);
     }
 }

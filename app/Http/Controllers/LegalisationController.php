@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Legalisation;
 use Illuminate\Http\Request;
+use App\Models\Parametre\Commune;
 
 class LegalisationController extends Controller
 {
+    public function vueLegalisations(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Légalisation des documents";
+        $btnModalAjout = "FALSE";
+
+        return view("back.legalisation.index",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
     public function storeLegalisation(Request $request){
         $request->validate([
             'nom_personne' => 'required',
@@ -100,5 +110,13 @@ class LegalisationController extends Controller
         session(['service' => "légalisation"]);
 
         return redirect()->route('choix-payement');
+    }
+
+    public function listeLegalisations(){
+        $legalisations = Legalisation::orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $legalisations->toArray();
+        $jsonData["total"] = $legalisations->count();
+        return response()->json($jsonData);
     }
 }

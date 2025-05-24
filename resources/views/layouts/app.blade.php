@@ -245,6 +245,38 @@
                                 </a>
                             </li>
                             <li class="app-sidebar__heading"></li>
+                            <li>
+                                <a href="{{route('back.vue-declarations-naissances')}}" class=" {{Route::currentRouteName() === 'back.vue-declarations-naissances' ? 'mm-active' : ''}}" aria-expanded="false">
+                                    <i class="metismenu-icon pe-7s-add-user"></i> 
+                                    Déclaration de naissance
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('back.vue-declarations-mariage')}}" class=" {{Route::currentRouteName() === 'back.vue-declarations-mariage' ? 'mm-active' : ''}}" aria-expanded="false">
+                                    <i class="metismenu-icon pe-7s-bluetooth"></i> 
+                                    Déclaration de mariage
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('back.vue-declarations-deces')}}" class=" {{Route::currentRouteName() === 'back.vue-declarations-deces' ? 'mm-active' : ''}}" aria-expanded="false">
+                                    <i class="metismenu-icon pe-7s-moon"></i> 
+                                    Déclaration de décès
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('back.vue-legalisations')}}" class=" {{Route::currentRouteName() === 'back.vue-legalisations' ? 'mm-active' : ''}}" aria-expanded="false">
+                                    <i class="metismenu-icon pe-7s-note2"></i> 
+                                    Légalisation de document
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('back.vue-copies-actes')}}" class=" {{Route::currentRouteName() === 'back.vue-copies-actes' ? 'mm-active' : ''}}" aria-expanded="false">
+                                    <i class="metismenu-icon pe-7s-file"></i> 
+                                    Copie d'acte
+                                </a>
+                            </li>
+                            <li class="app-sidebar__heading"></li>
+                            <li class="app-sidebar__heading"></li>
                             @include("layouts.menus.admin.parametre")
                             <li class="app-sidebar__heading"></li>
                             <li class="app-sidebar__heading"></li>

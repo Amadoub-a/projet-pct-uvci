@@ -48,7 +48,6 @@
                         <tr>
                             <th data-field="reference">Référence</th>
                             <th data-field="date_declaration" data-formatter="dateFormatter">Date déclaration</th>
-                            <th data-field="date_declaration" data-formatter="dateFormatter">Disponible</th>
                             <th data-field="type">Type de demande</th>
                             <th data-field="date_traitement" data-formatter="dateFormatter">Traitement</th>
                             <th data-field="date_disponible" data-formatter="dateFormatter">Disponible</th>
