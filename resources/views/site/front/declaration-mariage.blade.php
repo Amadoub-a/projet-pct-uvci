@@ -177,7 +177,7 @@
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
                                     <input type="text" class="form-control @error('lieu_naissance_epouse') is-invalid @enderror" id="lieu_naissance_epouse" name="lieu_naissance_epouse" placeholder="Ville de naissance" value="{{ old('lieu_naissance_epouse') }}">
-                                    <em class="error invalid-feedback">La date de naissance de l'epouse est obligatoire</em>
+                                    <em class="error invalid-feedback">Le lieu de naissance de l'epouse est obligatoire</em>
                                 </div>
                             </div>
                         </div>
@@ -233,13 +233,22 @@
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="lieu_mariage" class="form-label">Lieu du mariage *</label>
+                                <label for="lieu_mariage" class="form-label">
+                                    Lieu de mariage *
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
-                                    <input type="text" class="form-control @error('lieu_mariage') is-invalid @enderror" id="lieu_mariage" name="lieu_mariage" placeholder="Ville/Commune" value="{{ old('lieu_mariage') }}">
-                                    <em class="error invalid-feedback">Le lieu du mariage est obligatoire</em>
+                                    <select class="form-select  @error('lieu_mariage') is-invalid @enderror" id="lieu_mariage" name="lieu_mariage">
+                                        <option value="" disabled {{ old('lieu_mariage') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
+                                        @foreach ($communes as $commune)
+                                        <option value="{{ $commune->id }}" {{ old('lieu_mariage') == $commune->id ? 'selected' : '' }}>
+                                            {{ $commune->libelle_commune }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <em class="error invalid-feedback">Veillez sélectionner une commune</em>
                                 </div>
                             </div>
                         </div>
@@ -253,9 +262,9 @@
                                     </span>
                                     <select class="form-select @error('regime_matrimonial') is-invalid @enderror" id="regime_matrimonial" name="regime_matrimonial">
                                         <option value="" selected disabled>Sélectionnez un régime</option>
-                                        <option value="communaute" {{ old('regime_matrimonial') == 'communaute' ? 'selected' : '' }}>Communauté de biens</option>
-                                        <option value="separation" {{ old('regime_matrimonial') == 'separation' ? 'selected' : '' }}>Séparation de biens</option>
-                                        <option value="participation" {{ old('regime_matrimonial') == 'participation' ? 'selected' : '' }}>Participation aux acquêts</option>
+                                        <option value="Communauté de biens" {{ old('regime_matrimonial') == 'communaute' ? 'selected' : '' }}>Communauté de biens</option>
+                                        <option value="Séparation de biens" {{ old('regime_matrimonial') == 'separation' ? 'selected' : '' }}>Séparation de biens</option>
+                                        <option value="Participation aux acquêts" {{ old('regime_matrimonial') == 'participation' ? 'selected' : '' }}>Participation aux acquêts</option>
                                     </select>
                                    <em class="error invalid-feedback">Vous devez sélectionner un régime</em>
                                 </div>

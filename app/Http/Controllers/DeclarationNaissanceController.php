@@ -6,7 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\Traitement;
 use App\Services\PdfService;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Parametre\Commune;
 use App\Models\DeclarationNaissance;
@@ -15,7 +15,20 @@ use App\Services\ConvertisDateToWordService;
 
 class DeclarationNaissanceController extends Controller
 {
-    public function vueDeclarationsNaissances(){
+    public function vueDeclarationsNaissances(Request $request){
+        if($request->query('id')){
+            $id = $request->query('id');
+
+            $naissance = DeclarationNaissance::find($id);
+            $naissance->etat = "En cours";
+            $naissance->save();
+
+            $traitement = Traitement::where('declaration_naissance_id',$naissance->id)->first();
+            $traitement->etat = "En cours";
+            $traitement->date_traitement = Now();
+            $traitement->save();
+        }
+
         $communes = Commune::select('libelle_commune','id')->get();
         $menuPrincipal = "E-civil";
         $titleControlleur = "Déclaration des naissances";
@@ -26,6 +39,7 @@ class DeclarationNaissanceController extends Controller
 
     public function acteNaissance(){
         $communes = Commune::select('libelle_commune','id')->get();
+
         $menuPrincipal = "E-civil";
         $titleControlleur = "Acte de naissance";
         $btnModalAjout = "FALSE";
@@ -290,6 +304,7 @@ class DeclarationNaissanceController extends Controller
                 
                 $traitement = Traitement::where('declaration_naissance_id',$naissance->id)->first();
                 $traitement->etat = "Disponible";
+                $traitement->date_disponible = Now();
                 $traitement->save();
 
                 $jsonData["data"] = $naissance;
@@ -305,5 +320,31 @@ class DeclarationNaissanceController extends Controller
 
         return response()->json(["code" => 0, "msg" => "Problème survenu lors de la signature", "data" => null]);
     }
+    public function updateStateNaissance($id){
+         $jsonData = ["code" => 1, "msg" => " Opération effectuée avec succès."];
+        $naissance = DeclarationNaissance::find($id);
 
+        if($naissance){
+            try {
+
+                $naissance->etat = "En cours";
+                $naissance->created_by = Auth::id();
+                $naissance->save();
+
+                $traitement = Traitement::where('declaration_naissance_id',$naissance->id)->first();
+                $traitement->etat = "En cours";
+                $traitement->save();
+
+                $jsonData["data"] = json_decode($naissance);
+
+                return response()->json($jsonData);
+            } catch (Exception $exc) {
+                $jsonData["code"] = -1;
+                $jsonData["data"] = null;
+                $jsonData["msg"] = $exc->getMessage();
+                return response()->json($jsonData);
+            }
+        }
+        return response()->json(["code" => 0, "msg" => "Echec de modification", "data" => null]);
+    }
 }

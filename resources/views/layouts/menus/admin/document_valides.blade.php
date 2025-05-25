@@ -11,5 +11,17 @@
                 Acte de naissance
             </a>
         </li>
+        <li>
+            <a href="{{ route('back.acte-mariages') }}" class="{{Route::currentRouteName() === 'back.acte-mariages' ? 'mm-active' : ''}}">
+                <i class="fa fa-certificate"></i>
+                Acte de mariage
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('back.acte-deces') }}" class="{{Route::currentRouteName() === 'back.acte-deces' ? 'mm-active' : ''}}">
+                <i class="fa fa-certificate"></i>
+                Acte de décès
+            </a>
+        </li>
     </ul>
 </li>

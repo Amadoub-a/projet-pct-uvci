@@ -75,13 +75,36 @@
         });
     });
 
-    function printRow(idDocument) {
-       window.open("../back/print-acte-naissance/" + idDocument, '_blank');
+    function printRow(idDocument, type) {
+        let url = "";
+
+        switch (type) {
+            case "Déclaration de naissance":
+                url = "../back/print-acte-naissance/" + idDocument;
+                break;
+            case "Déclaration de mariage":
+                url = "../back/print-acte-mariage/" + idDocument;
+                break;
+            case "Déclaration de décès":
+                url = "../back/print-acte-deces/" + idDocument;
+                break;
+            case "Légalisation de document":
+                url = "../back/print-legalisation/" + idDocument;
+                break;
+            case "Demande de copie d'acte":
+                url = "../back/print-copie-acte/" + idDocument;
+                break;
+            default:
+                alert("Type de document inconnu");
+                return;
+        }
+
+        window.open(url, '_blank');
     }
 
     function printFormatter(id, row) {
-        if (row.etat == "Disponible") {
-            return '<button class="btn btn-success btn-sm" title="Imprimer votre document" onClick="javascript:printRow(' + row.traitement_id + ');">Imprimer</button>';
+        if (row.etat === "Disponible") {
+            return `<button class="btn btn-success btn-sm" title="Imprimer votre document" onClick="printRow(${row.traitement_id}, '${row.type.replace(/'/g, "\\'")}');">Imprimer</button>`;
         }
     }
 

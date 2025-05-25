@@ -358,7 +358,6 @@
         </div>
     </div>
 </div>
-
 @endpush
 @push('javascript')
 <script type="text/javascript">

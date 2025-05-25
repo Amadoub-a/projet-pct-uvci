@@ -195,16 +195,26 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="lieu_deces" class="form-label">Lieu du décès *</label>
+                             <div class="col-md-6 mb-3">
+                                <label for="lieu_deces" class="form-label">
+                                    Lieu du décès *
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
-                                    <input type="text" class="form-control @error('lieu_deces') is-invalid @enderror" id="lieu_deces" name="lieu_deces" placeholder="Ville/Commune" value="{{ old('lieu_deces') }}">
-                                    <em class="error invalid-feedback">Le lieu du décès est obligatoire.</em>
+                                    <select class="form-select  @error('lieu_deces') is-invalid @enderror" id="lieu_deces" name="lieu_deces">
+                                        <option value="" disabled {{ old('lieu_deces') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
+                                        @foreach ($communes as $commune)
+                                        <option value="{{ $commune->id }}" {{ old('lieu_deces') == $commune->id ? 'selected' : '' }}>
+                                            {{ $commune->libelle_commune }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <em class="error invalid-feedback">Veillez sélectionner une commune</em>
                                 </div>
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <label for="etablissement_deces" class="form-label">Établissement (si applicable)</label>
                                 <div class="input-group">
@@ -261,12 +271,12 @@
                                     </span>
                                     <select class="form-select @error('lien_parente') is-invalid @enderror" id="lien_parente" name="lien_parente">
                                         <option value="" selected disabled>Sélectionnez une option</option>
-                                        <option value="conjoint" {{ old('lien_parente') == 'conjoint' ? 'selected' : '' }}>Conjoint(e)</option>
-                                        <option value="enfant" {{ old('lien_parente') == 'enfant' ? 'selected' : '' }}>Enfant</option>
-                                        <option value="parent" {{ old('lien_parente') == 'parent' ? 'selected' : '' }}>Parent</option>
-                                        <option value="frere_soeur" {{ old('lien_parente') == 'frere_soeur' ? 'selected' : '' }}>Frère/Sœur</option>
-                                        <option value="autre_parent" {{ old('lien_parente') == 'autre_parent' ? 'selected' : '' }}>Autre parent</option>
-                                        <option value="non_parente" {{ old('lien_parente') == 'non_parente' ? 'selected' : '' }}>Non apparenté</option>
+                                        <option value="Conjoint(e)" {{ old('lien_parente') == 'Conjoint(e)' ? 'selected' : '' }}>Conjoint(e)</option>
+                                        <option value="Enfant" {{ old('lien_parente') == 'Enfant' ? 'selected' : '' }}>Enfant</option>
+                                        <option value="Parent" {{ old('lien_parente') == 'Parent' ? 'selected' : '' }}>Parent</option>
+                                        <option value="Frère/Sœur" {{ old('lien_parente') == 'Frère/Sœur' ? 'selected' : '' }}>Frère/Sœur</option>
+                                        <option value="Autre parent" {{ old('lien_parente') == 'Autre parent' ? 'selected' : '' }}>Autre parent</option>
+                                        <option value="Non apparenté" {{ old('lien_parente') == 'Non apparenté' ? 'selected' : '' }}>Non apparenté</option>
                                     </select>
                                     <em class="error invalid-feedback">Vous devez faire un choix.</em>
                                 </div>

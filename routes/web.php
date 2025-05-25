@@ -114,7 +114,21 @@ Route::middleware("auth")->prefix("back")->name('back.')->group(function (){
     Route::get('liste-acte-naissances', [DeclarationNaissanceController::class, 'listeActeNaissances'])->name('liste-acte-naissances');
     Route::get('print-acte-naissance/{id_acte}', [DeclarationNaissanceController::class, 'printActeNaissance']);
     Route::post('signer-acte-naissance', [DeclarationNaissanceController::class, 'signerActeNaissance'])->name('signer-acte-naissance');
+    Route::delete('update-state-naissance/{id_acte}', [DeclarationNaissanceController::class, 'updateStateNaissance']);
 
+    Route::post('mariage/update', [DeclarationMariageController::class, 'updateMariage'])->name('mariage.update');
+    Route::get('document-valides/acte-mariage', [DeclarationMariageController::class, 'acteMariage'])->name('acte-mariages');
+    Route::get('liste-acte-mariages', [DeclarationMariageController::class, 'listeActeMariages'])->name('liste-acte-mariages');
+    Route::get('print-acte-mariage/{id_acte}', [DeclarationMariageController::class, 'printActeMariage']);
+    Route::post('signer-acte-mariage', [DeclarationMariageController::class, 'signerActeMariage'])->name('signer-acte-mariage');
+    Route::delete('update-state-mariage/{id_acte}', [DeclarationMariageController::class, 'updateStateMariage']);
+
+    Route::post('deces/update', [DeclarationDeceController::class, 'updateDeces'])->name('deces.update');
+    Route::get('document-valides/acte-deces', [DeclarationDeceController::class, 'acteDeces'])->name('acte-deces');
+    Route::get('liste-acte-deces', [DeclarationDeceController::class, 'listeActeDeces'])->name('liste-acte-deces');
+    Route::get('print-acte-deces/{id_acte}', [DeclarationDeceController::class, 'printActeDeces']);
+    Route::post('signer-acte-deces', [DeclarationDeceController::class, 'signerActeDeces'])->name('signer-acte-deces');
+    Route::delete('update-state-deces/{id_acte}', [DeclarationDeceController::class, 'updateStateDeces']);
 });
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){

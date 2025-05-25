@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date("date_payement")->nullable();
 
             $table->date("date_mariage");
-            $table->string("lieu_mariage");
+            $table->foreignId("lieu_mariage");
             $table->string("regime_matrimonial");
             $table->string("officier_etat_civil");
 
@@ -53,7 +53,15 @@ return new class extends Migration
             $table->string("acte_naissance_epouse");
             $table->string("certificats_celibat_ou_coutume");
             $table->string("contrat_mariage ")->nullable();
+
+            $table->string("numero_extrait")->nullable();
+            $table->date("date_registre")->nullable();
+            $table->date("date_delivrance")->nullable();
+            $table->integer("lieu_delivrance")->nullable();
+            $table->string("signature")->nullable();
             
+            $table->foreign('lieu_mariage')->references('id')->on('communes')->onDelete('cascade');
+
             $table->dateTime('deleted_at')->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

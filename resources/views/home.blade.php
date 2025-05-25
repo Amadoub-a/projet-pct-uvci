@@ -18,8 +18,6 @@
                     <th data-field="reference" data-search="true">Référence</th>
                     <th data-field="date_declaration" data-formatter="dateFormatter">Date déclaration</th>
                     <th data-field="type">Type de demande</th>
-                    <th data-field="date_traitement" data-formatter="dateFormatter">Traitement</th>
-                    <th data-field="date_disponible" data-formatter="dateFormatter">Disponible</th>
                     <th data-field="etat">Etat de la demande</th>
                     <th data-field="id" data-width="80px" data-align="center" data-formatter="optionFormatter"><i class="fa fa-wrench"></i></th>
                 </tr>
@@ -139,27 +137,36 @@
             traitement_id: idDemande
         });
 
+        if (!demande) {
+            alert("Demande introuvable.");
+            return;
+        }
+
+        let baseUrl = "";
         switch (demande.type) {
             case "Déclaration de naissance":
-                location.href = "back/vue-declarations-naissances";
+                baseUrl = "back/vue-declarations-naissances";
                 break;
             case "Déclaration de mariage":
-                location.href = "back/vue-declarations-mariage";
+                baseUrl = "back/vue-declarations-mariage";
                 break;
             case "Déclaration de décès":
-                location.href = "back/vue-declarations-deces";
+                baseUrl = "back/vue-declarations-deces";
                 break;
             case "Légalisation de document":
-                location.href = "back/vue-legalisations";
+                baseUrl = "back/vue-legalisations";
                 break;
             case "Demande de copie d'acte":
-                location.href = "back/vue-copies-actes";
+                baseUrl = "back/vue-copies-actes";
                 break;
             default:
                 alert("Demande inconnue ou non prise en charge.");
-                break;
+                return;
         }
+
+        location.href = baseUrl + "?id=" + idDemande;
     }
+
 
 
     function optionFormatter(id, row) {

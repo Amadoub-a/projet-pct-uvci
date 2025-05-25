@@ -1,14 +1,14 @@
 @extends(
 'layouts.app',
 [
-'title' => 'E-Civil | Acte de naissance',
+'title' => 'E-Civil | Acte de mariage',
 ]
 )
 @section('content')
 
 <div class="main-card mb-3 card">
     <div class="card-body">
-        <h5 class="card-title">Liste des actes de naissance</h5>
+        <h5 class="card-title">Liste des actes de mariage</h5>
         <table id="table"
             class="mb-0 table table-striped table-hover"
             data-pagination="true"
@@ -17,21 +17,19 @@
             data-show-columns="false"
             data-unique-id="id"
             data-show-toggle="false"
-            data-url="{{url('back', ['action'=>'liste-acte-naissances'])}}">
+            data-url="{{url('back', ['action'=>'liste-acte-mariages'])}}">
             <thead>
                 <tr>
                     <th data-formatter="imprimePdf" data-width="60px" data-align="center">Extrait</th>
                     <th data-formatter="etatFormatter">Etat</th>
                     <th data-formatter="numeroActFormatter">Numero de l'acte</th>
-                    <th data-field="nom_enfant">Nom</th>
-                    <th data-field="prenoms_enfant">Prénom</th>
-                    <th data-field="sexe_enfant">Sexe</th>
-                    <th data-field="date_naissance_enfant" data-formatter="dateFormatter">Date naissance</th>
-                    <th data-field="heure_naissance_enfant">heure naissance</th>
-                    <th data-field="commune.libelle_commune">Lieu naissance</th>
-                    <th data-field="etablissement_naissance_enfant" data-visible="false">Etablissement</th>
-                    <th data-formatter="pereFormatter">Père</th>
-                    <th data-formatter="mereFormatter">Mère</th>
+                    <th data-field="date_mariage" data-formatter="dateFormatter">Date mariage</th>
+                    <th data-field="commune.libelle_commune">Lieu</th>
+                    <th data-field="regime_matrimonial">Régime</th>
+                    <th data-formatter="epouxFormatter">Epoux</th>
+                    <th data-formatter="epouseFormatter">Epouse</th>
+                    <th data-field="nom_complet_temoins_1">Temoins 1</th>
+                    <th data-field="nom_complet_temoins_2">Temoins 2</th>
                     <th data-field="id" data-width="80px" data-align="center" data-formatter="optionFormatter"><i class="fa fa-wrench"></i></th>
                 </tr>
             </thead>
@@ -45,7 +43,7 @@
         <div class="modal-content">
             <form id="formSignature">
                 @csrf
-                <input type="hidden" class="hidden" id="idNaissanceModifier"/>
+                <input type="hidden" class="hidden" id="idMariageModifier"/>
                 <div class="modal-header bg-primary">
                     <h3 class="modal-title" style="color:#fff;">
                         Signez ci-dessous
@@ -71,7 +69,7 @@
         <div class="modal-content">
             <form id="formSupprimer" ng-controller="formSupprimerCtrl">
                 @csrf
-                <input type="text" class="hidden" id="idNaissanceSupprimer" ng-hide="true" ng-model="naissance.id" />
+                <input type="text" class="hidden" id="idMariageSupprimer" ng-hide="true" ng-model="mariage.id" />
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title" style="color:#fff;">
                         <i class="metismenu-icon pe-7s-trash"></i> Revenir à l'etat précédent
@@ -81,7 +79,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <i class="fa fa-question-circle fa-2x"></i> 
-                        Etes vous certains de vouloir revenir à l'etat précédent pour <br/><b>@{{naissance.numero_extrait}}</b>
+                        Etes vous certains de vouloir revenir à l'etat précédent pour <br/><b>@{{mariage.numero_extrait}}</b>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -101,11 +99,11 @@
         rows = [];
     
     appSmarty.controller('formSupprimerCtrl', function($scope) {
-        $scope.populateForm = function(naissance) {
-            $scope.naissance = naissance;
+        $scope.populateForm = function(mariage) {
+            $scope.mariage = mariage;
         };
         $scope.initForm = function() {
-            $scope.naissance = {};
+            $scope.mariage = {};
         };
     });
 
@@ -143,22 +141,22 @@
 
          $("#formSupprimer").submit(function(e) {
             e.preventDefault();
-            var id = $("#idNaissanceSupprimer").val();
+            var id = $("#idMariageSupprimer").val();
             var formData = $(this).serialize();
             var $ajaxLoader = $(".bs-modal-suppression");
-            supprimerAction('/back/update-state-naissance/' + id, $(this).serialize(), $ajaxLoader, $table);
+            supprimerAction('/back/update-state-mariage/' + id, $(this).serialize(), $ajaxLoader, $table);
         });
     });
 
     function saveSignature(signatureImage) {
-        var idActe = $("#idNaissanceModifier").val(); 
+        var idActe = $("#idMariageModifier").val(); 
         $.ajax({
-            url: "{{ route('back.signer-acte-naissance') }}", 
+            url: "{{ route('back.signer-acte-mariage') }}", 
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
                 signature: signatureImage,
-                idNaissanceModifier: idActe
+                idMariageModifier: idActe
             },
             success: function(response) {
                 $.gritter.add({
@@ -192,18 +190,18 @@
         });
     }
 
-    function signer(idNaissance) {
-        $("#idNaissanceModifier").val(idNaissance);
+    function signer(idMariage) {
+        $("#idMariageModifier").val(idMariage);
         $(".bs-modal-signature").modal("show");
     }
 
-    function deleteRow(idNaissance) {
+    function deleteRow(idMariage) {
         var $scope = angular.element($("#formSupprimer")).scope();
-        var naissance = _.findWhere(rows, {
-            id: idNaissance
+        var mariage = _.findWhere(rows, {
+            id: idMariage
         });
         $scope.$apply(function() {
-            $scope.populateForm(naissance);
+            $scope.populateForm(mariage);
         });
         $(".bs-modal-suppression").modal("show");
     }
@@ -250,8 +248,16 @@
         return "<strong>" + row.numero_extrait + " du " + formatDate(row.date_registre) + "</strong>";
     }
 
+    function epouxFormatter(id, row) {
+        return row.prenoms_epoux + "  " + row.nom_epoux;
+    }
+
+    function epouseFormatter(id, row) {
+        return row.prenoms_epouse + "  " + row.nom_epouse;
+    }
+
     function printRow(id_acte) {
-        window.open("../print-acte-naissance/" + id_acte, '_blank');
+        window.open("../print-acte-mariage/" + id_acte, '_blank');
     }
 
     function imprimePdf(id, row) {

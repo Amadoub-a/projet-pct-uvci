@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->date("date_deces");
             $table->time("heure_deces");
-            $table->string("lieu_deces");
+            $table->foreignId("lieu_deces");
             $table->string("etablissement_deces")->nullable();
             $table->string("cause_deces");
 
@@ -47,6 +47,15 @@ return new class extends Migration
             $table->string("piece_identite_defunt");
             $table->string("acte_naissance_defunt");
             $table->string("piece_identite_declarant");
+
+            $table->string("numero_extrait")->nullable();
+            $table->date("date_registre")->nullable();
+            $table->date("date_delivrance")->nullable();
+            $table->integer("lieu_delivrance")->nullable();
+            $table->string("signature")->nullable();
+            
+            $table->foreign('lieu_deces')->references('id')->on('communes')->onDelete('cascade');
+
             
             $table->dateTime('deleted_at')->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();

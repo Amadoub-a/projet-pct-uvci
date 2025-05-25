@@ -1,14 +1,14 @@
 @extends(
 'layouts.app',
 [
-'title' => 'E-Civil | Acte de naissance',
+'title' => 'E-Civil | Acte de décès',
 ]
 )
 @section('content')
 
 <div class="main-card mb-3 card">
     <div class="card-body">
-        <h5 class="card-title">Liste des actes de naissance</h5>
+        <h5 class="card-title">Liste des actes de décès</h5>
         <table id="table"
             class="mb-0 table table-striped table-hover"
             data-pagination="true"
@@ -17,21 +17,20 @@
             data-show-columns="false"
             data-unique-id="id"
             data-show-toggle="false"
-            data-url="{{url('back', ['action'=>'liste-acte-naissances'])}}">
+            data-url="{{url('back', ['action'=>'liste-acte-deces'])}}">
             <thead>
                 <tr>
                     <th data-formatter="imprimePdf" data-width="60px" data-align="center">Extrait</th>
                     <th data-formatter="etatFormatter">Etat</th>
                     <th data-formatter="numeroActFormatter">Numero de l'acte</th>
-                    <th data-field="nom_enfant">Nom</th>
-                    <th data-field="prenoms_enfant">Prénom</th>
-                    <th data-field="sexe_enfant">Sexe</th>
-                    <th data-field="date_naissance_enfant" data-formatter="dateFormatter">Date naissance</th>
-                    <th data-field="heure_naissance_enfant">heure naissance</th>
-                    <th data-field="commune.libelle_commune">Lieu naissance</th>
-                    <th data-field="etablissement_naissance_enfant" data-visible="false">Etablissement</th>
-                    <th data-formatter="pereFormatter">Père</th>
-                    <th data-formatter="mereFormatter">Mère</th>
+                    <th data-field="date_deces" data-formatter="dateFormatter">Date décès</th>
+                    <th data-field="heure_deces">Heure décès</th>
+                    <th data-field="commune.libelle_commune">Lieu</th>
+                    <th data-field="cause_deces">Cause</th>
+                    <th data-formatter="defuntFormatter">Défunt</th>
+                    <th data-formatter="ageFormatter">Age</th>
+                    <th data-field="sexe_defunt">Sexe</th>
+                    <th data-formatter="declarantFormatter">Déclarant</th>
                     <th data-field="id" data-width="80px" data-align="center" data-formatter="optionFormatter"><i class="fa fa-wrench"></i></th>
                 </tr>
             </thead>
@@ -45,7 +44,7 @@
         <div class="modal-content">
             <form id="formSignature">
                 @csrf
-                <input type="hidden" class="hidden" id="idNaissanceModifier"/>
+                <input type="hidden" class="hidden" id="idDecesModifier"/>
                 <div class="modal-header bg-primary">
                     <h3 class="modal-title" style="color:#fff;">
                         Signez ci-dessous
@@ -71,7 +70,7 @@
         <div class="modal-content">
             <form id="formSupprimer" ng-controller="formSupprimerCtrl">
                 @csrf
-                <input type="text" class="hidden" id="idNaissanceSupprimer" ng-hide="true" ng-model="naissance.id" />
+                <input type="text" class="hidden" id="idDecesSupprimer" ng-hide="true" ng-model="deces.id" />
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title" style="color:#fff;">
                         <i class="metismenu-icon pe-7s-trash"></i> Revenir à l'etat précédent
@@ -81,7 +80,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <i class="fa fa-question-circle fa-2x"></i> 
-                        Etes vous certains de vouloir revenir à l'etat précédent pour <br/><b>@{{naissance.numero_extrait}}</b>
+                        Etes vous certains de vouloir revenir à l'etat précédent pour <br/><b>@{{deces.numero_extrait}}</b>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -101,11 +100,11 @@
         rows = [];
     
     appSmarty.controller('formSupprimerCtrl', function($scope) {
-        $scope.populateForm = function(naissance) {
-            $scope.naissance = naissance;
+        $scope.populateForm = function(deces) {
+            $scope.deces = deces;
         };
         $scope.initForm = function() {
-            $scope.naissance = {};
+            $scope.deces = {};
         };
     });
 
@@ -130,35 +129,24 @@
             }
         });
 
-        $('#date_registre,#date_delivrance,#date_naissance_enfant,#date_naissance_pere,#date_naissance_mere').datepicker({
-            format: 'dd-mm-yyyy',
-            local: 'fr',
-            maxDate: new Date()
-        });
-
-        $("#lieu_delivrance,#lieu_naissance_enfant").select2({
-            theme: "bootstrap4",
-            dropdownParent: $(".bs-modal-ajout")
-        });
-
-         $("#formSupprimer").submit(function(e) {
+        $("#formSupprimer").submit(function(e) {
             e.preventDefault();
-            var id = $("#idNaissanceSupprimer").val();
+            var id = $("#idDecesSupprimer").val();
             var formData = $(this).serialize();
             var $ajaxLoader = $(".bs-modal-suppression");
-            supprimerAction('/back/update-state-naissance/' + id, $(this).serialize(), $ajaxLoader, $table);
+            supprimerAction('/back/update-state-deces/' + id, $(this).serialize(), $ajaxLoader, $table);
         });
     });
 
     function saveSignature(signatureImage) {
-        var idActe = $("#idNaissanceModifier").val(); 
+        var idActe = $("#idDecesModifier").val(); 
         $.ajax({
-            url: "{{ route('back.signer-acte-naissance') }}", 
+            url: "{{ route('back.signer-acte-deces') }}", 
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
                 signature: signatureImage,
-                idNaissanceModifier: idActe
+                idDecesModifier: idActe
             },
             success: function(response) {
                 $.gritter.add({
@@ -192,18 +180,18 @@
         });
     }
 
-    function signer(idNaissance) {
-        $("#idNaissanceModifier").val(idNaissance);
+    function signer(idDeces) {
+        $("#idDecesModifier").val(idDeces);
         $(".bs-modal-signature").modal("show");
     }
 
-    function deleteRow(idNaissance) {
+    function deleteRow(idDeces) {
         var $scope = angular.element($("#formSupprimer")).scope();
-        var naissance = _.findWhere(rows, {
-            id: idNaissance
+        var deces = _.findWhere(rows, {
+            id: idDeces
         });
         $scope.$apply(function() {
-            $scope.populateForm(naissance);
+            $scope.populateForm(deces);
         });
         $(".bs-modal-suppression").modal("show");
     }
@@ -212,20 +200,38 @@
         return date ? formatDate(date) : 'Non définie';
     }
 
-    function pereFormatter(id, row) {
-        if (row.prenoms_pere) {
-            return row.prenoms_pere + "  " + row.nom_pere;
-        } else {
-            return " - ";
-        }
+     function defuntFormatter(id, row) {
+        return row.prenoms_defunt + "  " + row.nom_defunt;
     }
 
-    function mereFormatter(id, row) {
-        if (row.prenoms_mere) {
-            return row.prenoms_mere + "  " + row.nom_mere;
-        } else {
-            return " - ";
+    function declarantFormatter(id, row) {
+        return row.prenoms_declarant + "  " + row.nom_declarant;
+    }
+
+    function ageFormatter(id, row) {
+        // Récupérer la date de naissance et la date de décès depuis les données de la ligne
+        let dateNaissance = row.date_naissance_defunt;
+        let dateDeces = row.date_deces;
+
+        // Vérifier que les deux dates existent
+        if (!dateNaissance || !dateDeces) {
+            return "Date manquante"; // Retourner un message si l'une des dates est manquante
         }
+
+        // Convertir les dates en objets Date
+        const birthDate = new Date(dateNaissance);
+        const deathDate = new Date(dateDeces);
+
+        // Calculer l'âge
+        let age = deathDate.getFullYear() - birthDate.getFullYear(); // Calcul de base en années
+        const monthDifference = deathDate.getMonth() - birthDate.getMonth(); // Vérifier les mois
+
+        // Si la date de décès est avant l'anniversaire de l'année en cours, ajuster l'âge
+        if (monthDifference < 0 || (monthDifference === 0 && deathDate.getDate() < birthDate.getDate())) {
+            age--; // Soustraire une année si l'anniversaire n'est pas encore passé
+        }
+
+        return age > 0 ? age : 0;
     }
 
     function etatFormatter(id, row) {
@@ -251,7 +257,7 @@
     }
 
     function printRow(id_acte) {
-        window.open("../print-acte-naissance/" + id_acte, '_blank');
+        window.open("../print-acte-deces/" + id_acte, '_blank');
     }
 
     function imprimePdf(id, row) {

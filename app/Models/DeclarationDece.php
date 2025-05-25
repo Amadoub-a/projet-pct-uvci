@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Parametre\Commune;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeclarationDece extends Model
 {
@@ -39,6 +41,11 @@ class DeclarationDece extends Model
             'piece_identite_defunt',
             'acte_naissance_defunt',
             'piece_identite_declarant',
+            'numero_extrait',
+            'date_registre',
+            'date_delivrance',
+            'signature',
+            'lieu_delivrance'
         ];
     }
 
@@ -49,7 +56,19 @@ class DeclarationDece extends Model
             'date_naissance_defunt' => 'date',
             'date_declaration' => 'date',
             'date_payement' => 'date',
+            'date_registre' => 'date',
+            'date_delivrance' => 'date',
         ];
+    }
+
+     public function commune(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_deces');
+    }
+
+    public function lieuDelivrance(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_delivrance');
     }
 
     public function getNumeroDeclaration(){

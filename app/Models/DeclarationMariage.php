@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Parametre\Commune;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeclarationMariage extends Model
 {
@@ -46,6 +48,11 @@ class DeclarationMariage extends Model
             'acte_naissance_epouse',
             'certificats_celibat_ou_coutume',
             'contrat_mariage',
+            'numero_extrait',
+            'date_registre',
+            'date_delivrance',
+            'signature',
+            'lieu_delivrance'
         ];
     }
 
@@ -56,9 +63,21 @@ class DeclarationMariage extends Model
             'date_mariage' => 'date',
             'date_naissance_epoux' => 'date',
             'date_naissance_epouse' => 'date',
+            'date_registre' => 'date',
+            'date_delivrance' => 'date',
         ];
     }
 
+    public function commune(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_mariage');
+    }
+
+    public function lieuDelivrance(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_delivrance');
+    }
+    
     public function getNumeroDeclaration(){
         $latestId = DeclarationMariage::max('id') + 1;
         $date = now()->format('Ymd');
