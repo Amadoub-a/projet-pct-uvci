@@ -88,7 +88,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
             
             $.gritter.add({
                 // heading of the notification
-                title: "Smart Parc Auto",
+                title: "E-Civil",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -97,7 +97,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
         }else{
             $.gritter.add({
                 // heading of the notification
-                title: "Smart Parc Auto",
+                title: "E-Civil",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -109,7 +109,7 @@ function editerAction(methode, url, $formObject, formData, $ajaxLoader, $table, 
     .catch(err => {
         $.gritter.add({
             // heading of the notification
-            title: "Smart Parc Auto",
+            title: "E-Civil",
              // the text inside the notification
             text: err.msg,
             sticky: false, 
@@ -166,7 +166,7 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
 
             $.gritter.add({
                 // heading of the notification
-                title: "Smart Parc Auto",
+                title: "E-Civil",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -175,7 +175,7 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
         }else{
             $.gritter.add({
                 // heading of the notification
-                title: "Smart Parc Auto",
+                title: "E-Civil",
                 // the text inside the notification
                 text: response.msg,
                 sticky: false,
@@ -186,7 +186,7 @@ function supprimerAction(url, formData, $ajaxLoader, $table) {
     .catch(err => {
         $.gritter.add({
             // heading of the notification
-            title: "Smart Parc Auto",
+            title: "E-Civil",
              // the text inside the notification
             text: err.msg,
             sticky: false, 
@@ -216,7 +216,7 @@ function chargerNotifications(userId, notificationSound = null) {
             if (response.total > 0) {
                 $(".badge-dot-sm").addClass("bg-danger");
                 $("#notificationCount").text(response.total);
-                document.title = `(${response.total}) Nouveau(x) message(s) - Smart parc Auto`;
+                document.title = `(${response.total}) Nouveau(x) message(s) - E-Civil`;
 
                 $(".all-notification-btn").show();
                 

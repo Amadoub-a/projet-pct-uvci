@@ -106,13 +106,13 @@
                                 <hr class="dropdown-divider" />
                             </li>
                             <li>
-                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-naissance' ? 'active' : '' }}" href="{{ route(name: 'declaration-naissance') }}">Acte de naissance</a>
+                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-naissance' ? 'active' : '' }}" href="{{ route(name: 'declaration-naissance') }}">Déclaration de naissance</a>
                             </li>
                             <li>
-                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-mariage' ? 'active' : '' }}" href="{{ route(name: 'declaration-mariage') }}">Acte de mariage</a>
+                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-mariage' ? 'active' : '' }}" href="{{ route(name: 'declaration-mariage') }}">Déclaration de mariage</a>
                             </li>
                             <li>
-                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-deces' ? 'active' : '' }}" href="{{ route(name: 'declaration-deces') }}">Certificat de décès</a>
+                                <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-deces' ? 'active' : '' }}" href="{{ route(name: 'declaration-deces') }}">Déclaration de décès</a>
                             </li>
                             <!--li>
                                 <a class="dropdown-item {{ Route::currentRouteName() === 'declaration-vie' ? 'active' : '' }}" href="{{ route(name: 'declaration-vie') }}">Certification de vie</a>
@@ -209,13 +209,13 @@
                     <h5>Services</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2">
-                            <a href="{{ route(name: 'declaration-naissance') }}" class="text-white text-decoration-none">Acte de naissance</a>
+                            <a href="{{ route(name: 'declaration-naissance') }}" class="text-white text-decoration-none">Déclaration de naissance</a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route(name: 'declaration-mariage') }}" class="text-white text-decoration-none">Acte de mariage</a>
+                            <a href="{{ route(name: 'declaration-mariage') }}" class="text-white text-decoration-none">Déclaration de mariage</a>
                         </li>
                         <li class="mb-2">
-                            <a href="{{ route(name: 'declaration-deces') }}" class="text-white text-decoration-none">Certificat de décès</a>
+                            <a href="{{ route(name: 'declaration-deces') }}" class="text-white text-decoration-none">Déclaration de décès</a>
                         </li>
                         <li class="mb-2">
                             <a href="{{ route(name: 'legalisation-document') }}" class="text-white text-decoration-none">Légalisation de documents</a>

@@ -106,15 +106,25 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="lieu_naissance_enfant" class="form-label">Lieu de naissance (ville) *</label>
+                                <label for="lieu_naissance_enfant" class="form-label">
+                                    Lieu de naissance *
+                                </label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </span>
-                                    <input type="text" class="form-control @error('lieu_naissance_enfant') is-invalid @enderror" id="lieu_naissance_enfant" name="lieu_naissance_enfant" value="{{ old('lieu_naissance_enfant') }}" placeholder="Commune ou sous préfecture">
-                                    <em class="error invalid-feedback">Le lieu de naissance de l'enfant est obligatoire</em>
+                                    <select class="form-select  @error('lieu_naissance_enfant') is-invalid @enderror" id="lieu_naissance_enfant" name="lieu_naissance_enfant">
+                                        <option value="" disabled {{ old('lieu_naissance_enfant') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
+                                        @foreach ($communes as $commune)
+                                        <option value="{{ $commune->id }}" {{ old('lieu_naissance_enfant') == $commune->id ? 'selected' : '' }}>
+                                            {{ $commune->libelle_commune }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <em class="error invalid-feedback">Veillez sélectionner une commune</em>
                                 </div>
                             </div>
+
                             <div class="col-md-6 mb-3">
                                 <label for="etablissement_naissance_enfant" class="form-label">Établissement de naissance *</label>
                                 <div class="input-group">

@@ -21,19 +21,23 @@ class SiteController extends Controller
     }
 
     public function declarationNaissance(){
-        return view("site.front.declaration-naissance");
+        $communes = Commune::select('libelle_commune','id')->get();
+        return view("site.front.declaration-naissance",compact('communes'));
     }
 
     public function declarationMariage(){
-        return view("site.front.declaration-mariage");
+        $communes = Commune::select('libelle_commune','id')->get();
+        return view("site.front.declaration-mariage",compact('communes'));
     }
 
     public function declarationDeces(){
-        return view("site.front.declaration-deces");
+        $communes = Commune::select('libelle_commune','id')->get();
+        return view("site.front.declaration-deces",compact('communes'));
     }
 
     public function declarationVie(){
-        return view("site.front.declaration-vie");
+        $communes = Commune::select('libelle_commune','id')->get();
+        return view("site.front.declaration-vie",compact('communes'));
     }
 
     public function legalisationDocument(){

@@ -42,7 +42,7 @@ class LegalisationController extends Controller
 
         $declaration = new Legalisation();
         $declaration->numero_declaration = $declaration->getNumeroDeclaration();
-        $declaration->etat = 'Enregistrer';
+        $declaration->etat = 'Enregistré';
         $declaration->type_declaration = 'legalisation';
         $declaration->date_declaration = now();
         $declaration->montant_declaration = 1600;

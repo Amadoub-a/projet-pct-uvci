@@ -22,7 +22,7 @@
                             <th data-field="reference">Référence</th>
                             <th data-field="date_declaration" data-formatter="dateFormatter">Date déclaration</th>
                             <th data-field="type">Type de demande</th>
-                            <th data-field="etat">Etat de la demande</th>
+                            <th data-field="etat" data-formatter="etatFormatter">Etat de la demande</th>
                         </tr>
                     </thead>
                 </table>
@@ -64,7 +64,9 @@
 </div>
 
 <script type="text/javascript">
-    var $tableEnCours = jQuery("#tableEnCours"), $tableTraite = jQuery("#tableTraite"), rows = [];
+    var $tableEnCours = jQuery("#tableEnCours"),
+        $tableTraite = jQuery("#tableTraite"),
+        rows = [];
 
     $(function() {
         $tableEnCours.on('load-success.bs.table', function(e, data) {});
@@ -74,14 +76,24 @@
     });
 
     function printRow(idDocument) {
-        alert(idDocument);
+       window.open("../back/print-acte-naissance/" + idDocument, '_blank');
     }
 
-    function printFormatter(idDoc){
-        return '<button class="btn btn-success btn-sm" title="Imprimer votre document" onClick="javascript:printRow(' + idDoc + ');">Imprimer</button>';
+    function printFormatter(id, row) {
+        if (row.etat == "Disponible") {
+            return '<button class="btn btn-success btn-sm" title="Imprimer votre document" onClick="javascript:printRow(' + row.traitement_id + ');">Imprimer</button>';
+        }
     }
 
-    function dateFormatter(date){
+    function etatFormatter(etat) {
+        if (etat === "Rejeté") {
+            return `<strong style="color: red;">${etat} - Contactez nous 078 145 2561</strong>`;
+        } else {
+            return etat;
+        }
+    }
+
+    function dateFormatter(date) {
         return date ? formatDate(date) : 'Non définie';
     }
 </script>

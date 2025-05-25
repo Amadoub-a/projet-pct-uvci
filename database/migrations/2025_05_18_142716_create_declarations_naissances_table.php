@@ -14,19 +14,18 @@ return new class extends Migration
         Schema::create('declarations_naissances', function (Blueprint $table) {
             $table->id();
             $table->string("numero_declaration");
-            $table->string("etat");//enregistrer,en_traitement,disponible
+            $table->string("etat");
             $table->boolean("paye")->default(0);
             $table->string("type_declaration");
             $table->date("date_declaration");
             $table->integer("montant_declaration")->nullable();
             $table->date("date_payement")->nullable();
 
-
             $table->string("nom_enfant");
             $table->string("prenoms_enfant");
             $table->date("date_naissance_enfant");
             $table->time("heure_naissance_enfant");
-            $table->string("lieu_naissance_enfant");
+            $table->foreignId("lieu_naissance_enfant");
             $table->string("etablissement_naissance_enfant");
             $table->string("nationalite_enfant");
             $table->string("sexe_enfant");
@@ -57,6 +56,14 @@ return new class extends Migration
             $table->string("piece_identite_pere");
             $table->string("piece_identite_mere");
             $table->string("piece_identite_declarant")->nullable();
+
+            $table->foreign('lieu_naissance_enfant')->references('id')->on('communes')->onDelete('cascade');
+
+            $table->string("numero_extrait")->nullable();
+            $table->date("date_registre")->nullable();
+            $table->date("date_delivrance")->nullable();
+            $table->integer("lieu_delivrance")->nullable();
+            $table->string("signature")->nullable();
 
             $table->dateTime('deleted_at')->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();

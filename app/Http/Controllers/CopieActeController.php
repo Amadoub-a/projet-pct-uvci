@@ -40,7 +40,7 @@ class CopieActeController extends Controller
 
         $demande = new CopieActe();
         $demande->numero_declaration = $demande->getNumeroDeclaration();
-        $demande->etat = 'Enregistrer';
+        $demande->etat = 'Enregistré';
         $demande->type_declaration = $data['type_acte'];
         $demande->date_declaration = now();
         $demande->montant_declaration = 1600;

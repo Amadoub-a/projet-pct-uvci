@@ -277,6 +277,7 @@
                             </li>
                             <li class="app-sidebar__heading"></li>
                             <li class="app-sidebar__heading"></li>
+                            @include("layouts.menus.admin.document_valides")
                             @include("layouts.menus.admin.parametre")
                             <li class="app-sidebar__heading"></li>
                             <li class="app-sidebar__heading"></li>

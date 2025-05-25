@@ -17,7 +17,8 @@ class TraitementController extends Controller
     {
         $traitements = Traitement::where(function ($query) {
             $query->where("etat", "Enregistré")
-                ->orWhere("etat", "En cours");
+                ->orWhere("etat", "En cours")
+                ->orWhere("etat", "Rejeté");
         })
             ->where('client_id', Auth::id())
             ->get();
@@ -61,7 +62,7 @@ class TraitementController extends Controller
 
                     if ($declarationModel) {
                         $declarations[] = [
-                            'etat' => $traitement->etat,
+                            'etat' => $declarationModel->etat,
                             'type' => $type,
                             'reference' => $declarationModel->$referenceField,
                             'date_declaration' => $declarationModel->$dateField
@@ -81,9 +82,9 @@ class TraitementController extends Controller
 
     public function listeDemandesTraitees(){
         $traitements = Traitement::where([
-                        ['etat', '=', 'Traité'],
+                        ['etat', '=', 'Disponible'],
                         ['client_id', '=', Auth::id()]
-                    ])->get();
+                    ])->orWhere("etat", "Validé")->get();
 
 
         $declarations = [];

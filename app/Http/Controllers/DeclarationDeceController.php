@@ -49,7 +49,7 @@ class DeclarationDeceController extends Controller
 
         $declaration = new DeclarationDece();
         $declaration->numero_declaration = $declaration->getNumeroDeclaration();
-        $declaration->etat = 'Enregistrer';
+        $declaration->etat = 'Enregistré';
         $declaration->type_declaration = 'deces';
         $declaration->date_declaration = now();
         $declaration->montant_declaration = 2100;

@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Parametre\Commune;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeclarationNaissance extends BaseModele
 {
@@ -50,6 +51,11 @@ class DeclarationNaissance extends BaseModele
             'piece_identite_declarant',
             'type_declaration',
             'montant_declaration',
+            'numero_extrait',
+            'date_registre',
+            'date_delivrance',
+            'signature',
+            'lieu_delivrance'
         ];
     }
 
@@ -61,9 +67,20 @@ class DeclarationNaissance extends BaseModele
             'date_naissance_mere' => 'date',
             'date_payement' => 'date',
             'date_declaration' => 'date',
+            'date_registre' => 'date',
+            'date_delivrance' => 'date',
         ];
     }
-            
+    
+    public function commune(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_naissance_enfant');
+    }
+
+    public function lieuDelivrance(): BelongsTo
+    {
+        return $this->belongsTo(Commune::class,'lieu_delivrance');
+    }
 
     public function getNumeroDeclaration(){
         $latestId = DeclarationNaissance::max('id') + 1;

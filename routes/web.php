@@ -108,10 +108,16 @@ Route::middleware("auth")->prefix("back")->name('back.')->group(function (){
     Route::get('vue-declarations-deces', [DeclarationDeceController::class, 'vueDeclarationsDeces'])->name('vue-declarations-deces');
     Route::get('vue-legalisations', [LegalisationController::class, 'vueLegalisations'])->name('vue-legalisations');
     Route::get('vue-copies-actes', [CopieActeController::class, 'vueCopiesActes'])->name('vue-copies-actes');
+
+    Route::post('naissance/update', [DeclarationNaissanceController::class, 'updateNaissance'])->name('naissance.update');
+    Route::get('document-valides/acte-naissance', [DeclarationNaissanceController::class, 'acteNaissance'])->name('acte-naissances');
+    Route::get('liste-acte-naissances', [DeclarationNaissanceController::class, 'listeActeNaissances'])->name('liste-acte-naissances');
+    Route::get('print-acte-naissance/{id_acte}', [DeclarationNaissanceController::class, 'printActeNaissance']);
+    Route::post('signer-acte-naissance', [DeclarationNaissanceController::class, 'signerActeNaissance'])->name('signer-acte-naissance');
+
 });
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){
-
     Route::resource('nations', NationController::class);
     Route::get('liste-nations', [NationController::class, 'listeNations'])->name('liste-nations');
 

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Models\DeclarationNaissance;
-use App\Models\Parametre\Commune;
+use App\Models\Traitement;
+use App\Services\PdfService;
 
+use Illuminate\Http\Request;
+use App\Models\Parametre\Commune;
+use App\Models\DeclarationNaissance;
 use function Symfony\Component\Clock\now;
+use App\Services\ConvertisDateToWordService;
 
 class DeclarationNaissanceController extends Controller
 {
@@ -18,6 +22,34 @@ class DeclarationNaissanceController extends Controller
         $btnModalAjout = "FALSE";
 
         return view("back.naissance.declaration",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
+    public function acteNaissance(){
+        $communes = Commune::select('libelle_commune','id')->get();
+        $menuPrincipal = "E-civil";
+        $titleControlleur = "Acte de naissance";
+        $btnModalAjout = "FALSE";
+        return view("back.naissance.acte-naissance",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
+    public function listeDeclarationsNaissances(){
+        $naissances = DeclarationNaissance::with('commune')->orderBy('id', 'DESC')
+                     ->whereNotIn('etat',['Disponible','Validé'])
+                     ->get();
+
+        $jsonData["rows"] = $naissances->toArray();
+        $jsonData["total"] = $naissances->count();
+        return response()->json($jsonData);
+    }
+
+    public function listeActeNaissances(){
+        $acteNaissances = DeclarationNaissance::with('commune')
+                        ->whereIn('etat',['Disponible','Validé'])
+                        ->orderBy('id', 'DESC')->get();
+
+        $jsonData["rows"] = $acteNaissances->toArray();
+        $jsonData["total"] = $acteNaissances->count();
+        return response()->json($jsonData);
     }
 
     public function storeDeclarationNaissance(Request $request)
@@ -55,7 +87,7 @@ class DeclarationNaissanceController extends Controller
 
         $declaration = new DeclarationNaissance();
         $declaration->numero_declaration = $declaration->getNumeroDeclaration();
-        $declaration->etat = 'Enregistrer';
+        $declaration->etat = 'Enregistré';
         $declaration->type_declaration = 'naisance';
         $declaration->date_declaration = now();
         $declaration->montant_declaration = 2600;
@@ -139,11 +171,139 @@ class DeclarationNaissanceController extends Controller
         return redirect()->route('choix-payement');
     }
 
-    public function listeDeclarationsNaissances(){
-        $naissances = DeclarationNaissance::orderBy('id', 'DESC')->get();
+    public function updateNaissance(Request $request){
+        $jsonData = ["code" => 1, "msg" => "Enregistrement effectué avec succès."];
 
-        $jsonData["rows"] = $naissances->toArray();
-        $jsonData["total"] = $naissances->count();
-        return response()->json($jsonData);
+        if ($request->isMethod('post') && $request->input('idNaissanceModifier')) {
+            
+            $data = $request->all();
+           
+            try {
+
+                $naissance = DeclarationNaissance::find($data['idNaissanceModifier']);
+
+                if(!$naissance){
+                    return response()->json(["code" => 0, "msg" => "Document introuvable.", "data" => NULL]);
+                }
+
+                $naissance->numero_extrait = $data['numero_extrait'];
+                $naissance->date_registre = isset($data['date_registre']) ? Carbon::createFromFormat('d-m-Y', $data["date_registre"]):null;
+                $naissance->date_delivrance = isset($data['date_delivrance']) ? Carbon::createFromFormat('d-m-Y', $data["date_delivrance"]):null;
+                $naissance->lieu_delivrance = $data['lieu_delivrance'];
+
+                $traitement = Traitement::where('declaration_naissance_id',$naissance->id)->first();
+                $traitement->etat = $data['etat'];
+                $traitement->save();
+
+                $naissance->etat = $data['etat'];
+
+                $naissance->nom_enfant = $data['nom_enfant'];
+                $naissance->prenoms_enfant = $data['prenoms_enfant'];
+                $naissance->date_naissance_enfant = Carbon::createFromFormat('d-m-Y', $data["date_naissance_enfant"]);
+                $naissance->heure_naissance_enfant = Carbon::createFromFormat('H:i:s', trim($data['heure_naissance_enfant']));
+                $naissance->lieu_naissance_enfant = $data['lieu_naissance_enfant'];
+                $naissance->etablissement_naissance_enfant = $data['etablissement_naissance_enfant'];
+                $naissance->nationalite_enfant = $data['nationalite_enfant'];
+                $naissance->sexe_enfant = $data['sexe_enfant'];
+
+                $naissance->nom_pere = $data['nom_pere'] ?? null;
+                $naissance->prenoms_pere = $data['prenoms_pere'] ?? null;
+                $naissance->date_naissance_pere = isset($data["date_naissance_pere"]) ? Carbon::createFromFormat('d-m-Y', $data["date_naissance_pere"]) : NULL;
+                $naissance->lieu_naissance_pere = $data['lieu_naissance_pere'] ?? null;
+                $naissance->nationalite_pere = $data['nationalite_pere'] ?? null;
+                $naissance->profession_pere = $data['profession_pere'] ?? null;
+                $naissance->adresse_pere = $data['adresse_pere'] ?? null;
+
+                $naissance->nom_mere = $data['nom_mere'] ?? null;
+                $naissance->prenoms_mere = $data['prenoms_mere'] ?? null;
+                $naissance->date_naissance_mere = isset($data["date_naissance_mere"]) ? Carbon::createFromFormat('d-m-Y', $data["date_naissance_mere"]) : NULL;
+                $naissance->lieu_naissance_mere = $data['lieu_naissance_mere'] ?? null;
+                $naissance->nationalite_mere = $data['nationalite_mere'] ?? null;
+                $naissance->profession_mere = $data['profession_mere'] ?? null;
+                $naissance->adresse_mere = $data['adresse_mere'] ?? null;
+
+                $naissance->nom_declarant = $data['nom_declarant'] ?? null;
+                $naissance->prenoms_declarant = $data['prenoms_declarant'] ?? null;
+                $naissance->lien_avec_enfant = $data['lien_avec_enfant'] ?? null;
+                $naissance->contact_declarant = $data['contact_declarant'] ?? null;
+
+                $naissance->updated_by = $request->user()->id;
+                $naissance->save();
+
+                $jsonData["data"] = json_decode($naissance);
+                return response()->json($jsonData);     
+
+            }catch (Exception $exc) {
+                $jsonData["code"] = -1;
+                $jsonData["data"] = null;
+                $jsonData["msg"] = $exc->getMessage();
+                return response()->json($jsonData);
+            }
+        }
+
+        return response()->json(["code" => 0, "msg" => "Saisie invalide", "data" => null]);
     }
+    
+    public function printActeNaissance($idActe){
+        $pdfService = new PdfService();
+        $convertisDateService = new ConvertisDateToWordService();
+
+        $acteNaissance = DeclarationNaissance::with('commune','lieuDelivrance')->findOrFail($idActe);
+
+        $dateNaissanceEnWord = $convertisDateService->convertDateToWords($acteNaissance->date_naissance_enfant);
+
+        $template = view('back.naissance.acte-naissance-pdf', compact('acteNaissance','dateNaissanceEnWord'))->render();
+    
+        return $pdfService->generatePdfFromHtml($template);
+    }
+
+    public function signerActeNaissance(Request $request)
+    {
+        $jsonData = ["code" => 1, "msg" => "Document signé avec succès."];
+
+        if ($request->isMethod('post') && $request->input('idNaissanceModifier')) {
+            $data = $request->all();
+
+            $naissance = DeclarationNaissance::find($data['idNaissanceModifier']);
+
+            if (!$naissance) {
+                return response()->json(["code" => 0, "msg" => "Document introuvable.", "data" => null]);
+            }
+
+            try {
+                
+                if (empty($data['signature'])) {
+                    return response()->json(["code" => 0, "msg" => "Aucune signature reçue.", "data" => null]);
+                }
+
+                $signatureData = $data['signature'];
+                $imageData = base64_decode(explode(',', $signatureData)[1]);
+
+                $fileName = 'signature_' . uniqid() . '.png';
+                $path = storage_path('app/public/documents/' . $fileName);
+
+                file_put_contents($path, $imageData);
+
+                $naissance->signature = '/storage/documents/' . $fileName;
+                $naissance->etat = "Disponible";
+                $naissance->save();
+                
+                $traitement = Traitement::where('declaration_naissance_id',$naissance->id)->first();
+                $traitement->etat = "Disponible";
+                $traitement->save();
+
+                $jsonData["data"] = $naissance;
+                return response()->json($jsonData);
+
+            } catch (Exception $exc) {
+                $jsonData["code"] = -1;
+                $jsonData["data"] = null;
+                $jsonData["msg"] = $exc->getMessage();
+                return response()->json($jsonData);
+            }
+        }
+
+        return response()->json(["code" => 0, "msg" => "Problème survenu lors de la signature", "data" => null]);
+    }
+
 }

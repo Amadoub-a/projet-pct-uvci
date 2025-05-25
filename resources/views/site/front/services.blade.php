@@ -27,7 +27,7 @@
                 <img src="{{asset('images/actes/acte-naissance.png')}}" alt="Acte de naissance" class="img-fluid rounded"/>
             </div>
             <div class="col-lg-6">
-                <h2 class="service-title">Acte de naissance</h2>
+                <h2 class="service-title">Déclaration de naissance</h2>
                 <p>
                     L'acte de naissance est un document officiel qui atteste de la
                     naissance d'une personne. Il est essentiel pour de nombreuses
@@ -59,7 +59,7 @@
                     <img src="{{asset('images/actes/acte-mariage.png')}}" alt="Acte de mariage" class="img-fluid rounded"/>
                 </div>
                 <div class="col-lg-6 order-lg-1">
-                    <h2 class="service-title">Acte de mariage</h2>
+                    <h2 class="service-title">Déclaration de mariage</h2>
                     <p>
                         L'acte de mariage est un document officiel qui atteste de
                         l'union civile de deux personnes. Il est nécessaire pour
@@ -91,7 +91,7 @@
                 <img src="{{asset('images/actes/acte-deces.png')}}" alt="Certificat de décès" class="img-fluid rounded"/>
             </div>
             <div class="col-lg-6">
-                <h2 class="service-title">Certificat de décès</h2>
+                <h2 class="service-title">Déclaration de décès</h2>
                 <p>
                     Le certificat de décès est un document officiel qui atteste du
                     décès d'une personne. Il est nécessaire pour les démarches
@@ -111,33 +111,6 @@
                 <p>Immédiatement</p>
 
                 <a href="{{ route(name: 'declaration-deces') }}" class="btn btn-cta mt-3">Faire une demande</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5 mb-5" id="acte-vie">
-    <div class="container">
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <img src="{{asset('images/actes/acte-vie.png')}}" alt="Certificat de décès" class="img-fluid rounded"/>
-            </div>
-            <div class="col-lg-6">
-                <h2 class="service-title">Certificat de vie</h2>
-                <p>
-                    Le certificat de vie est un document officiel qui atteste qu'une personne est vivante à une date donnée. Il est nécessaire pour diverses démarches administratives telles que la justification de l'existence auprès d'organismes de pension, d'assurances, ou d'autres institutions qui requièrent une preuve de vie.
-                </p>
-
-                <h5 class="mt-4">Documents requis :</h5>
-                <ul>
-                    <li>Présence physique de la personne concernée</li>
-                    <li>Pièce d'identité originale et une photocopie (CNI, passeport, etc.)</li>
-                </ul>
-
-                <h5 class="mt-4">Délai d'obtention :</h5>
-                <p>Immédiatement</p>
-
-                <a href="{{ route(name: 'declaration-vie') }}" class="btn btn-cta mt-3">Faire une demande</a>
             </div>
         </div>
     </div>
