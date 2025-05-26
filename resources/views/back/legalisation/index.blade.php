@@ -28,7 +28,7 @@
                     <th data-field="document_original" data-formatter="documentFormatter">Document à légaliser</th>
                     <th data-field="type_document" data-formatter="typeFormatter">Type document</th>
                     <th data-field="nb_copies">Copie(s)</th>
-                    <th data-field="date_document"  data-formatter="dateFormatter">Date document</th>
+                    <th data-field="etat">Etat</th>
                     <th data-field="id" data-width="80px" data-align="center" data-formatter="optionFormatter"><i class="fa fa-wrench"></i></th>
                 </tr>
             </thead>
@@ -38,6 +38,74 @@
 
 @endsection
 @push('modal')
+<div class="modal fade bs-modal-ajout" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formAjout" ng-controller="formAjoutCtrl">
+                @csrf
+                <input type="text" class="hidden" id="idLegalisationModifier" name="idLegalisationModifier" ng-hide="true"/>
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title" style="color:#fff;">
+                        <i class="metismenu-icon pe-7s-add-user"></i> {{$titleControlleur}}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="mb-3 text-primary">
+                        <i class="fa fa-book pe-2"></i> Informations sur la légalisation
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="numero_declaration" class="form-label">Référence *</label>
+                                <input type="text" class="form-control" ng-model="legalisation.numero_declaration" name="numero_declaration" id="numero_declaration" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="nb_copies" class="form-label">Copie *</label>
+                                <input type="text" class="form-control" name="nb_copies" id="nb_copies" ng-model="legalisation.nb_copies" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="etat" class="form-label">Type de document *</label>
+                                <select class="form-select form-control" ng-model="legalisation.type_document" name="type_document" id="type_document" required>
+                                    <option value="Diplôme ou certificat scolaire">Diplôme ou certificat scolaire</option>
+                                    <option value="Contrat">Contrat</option>
+                                    <option value="Procuration">Procuration</option>
+                                    <option value="Attestation">Attestation</option>
+                                    <option value="Relevé de notes">Relevé de notes</option>
+                                    <option value="Autre document">Autre document</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                <label for="etat" class="form-label">Etat *</label>
+                                <select class="form-select form-control" ng-model="legalisation.etat" name="etat" id="etat" required>
+                                    <option value="Enregistré">Enregistré</option>
+                                    <option value="En cours">En cours</option>
+                                    <option value="Validé">Validé</option>
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="Retiré">Retiré</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="mb-2 me-2 btn-icon btn btn-primary">
+                        <i class="pe-7s-check btn-icon-wrapper"></i> Valider
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade bs-modal-documents" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDocumentsLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">  <!-- Réduit la taille du modal avec modal-sm -->
         <div class="modal-content" id="formDocument" ng-controller="formDocumentCtrl">
@@ -86,12 +154,12 @@
         rows = [];
 
     appSmarty.controller('formAjoutCtrl', function($scope) {
-        $scope.populateForm = function(mission) {
-            $scope.mission = mission;
+        $scope.populateForm = function(legalisation) {
+            $scope.legalisation = legalisation;
         };
         $scope.initForm = function() {
             ajout = true;
-            $scope.mission = {};
+            $scope.legalisation = {};
         };
     });
 
@@ -109,8 +177,38 @@
         $table.on('load-success.bs.table', function(e, data) {
             rows = data.rows;
         });
+
+        $("#formAjout").submit(function(e) {
+            e.preventDefault();
+            var $ajaxLoader = $(".bs-modal-ajout");
+
+            var $valid = $(this).valid();
+            if (!$valid) {
+                $validator.focusInvalid();
+                return false;
+            }
+            var formData = new FormData($(this)[0]);
+
+            var url = "{{route('back.update-state-legalisation')}}";
+
+            editerAction('POST', url, $(this), formData, $ajaxLoader, $table, ajout);
+        });
     });
 
+    function updateRow(idLegalisation) {
+        $("#idLegalisationModifier").val(idLegalisation)
+        ajout = false;
+        var $scope = angular.element($("#formAjout")).scope();
+        var legalisation = _.findWhere(rows, {
+            id: idLegalisation
+        });
+
+        $scope.$apply(function() {
+            $scope.populateForm(legalisation);
+        });
+       
+        $(".bs-modal-ajout").modal("show");
+    }
     
     function dateFormatter(date){
         return date ? formatDate(date) : 'Non définie';
@@ -144,7 +242,7 @@
     }
 
     function optionFormatter(id, row) {
-        return row.date_fin ? '--' : '<button class="btn-transition btn btn-xs btn-outline-primary" title="Modifier" onClick="javascript:updateRow(' + id + ');"><i class="lnr-pencil"> </i></button>';
+        return row.etat =="Retiré" ? formatDateComplet(row.updated_at) : '<button class="btn-transition btn btn-xs btn-outline-primary" title="Modifier" onClick="javascript:updateRow(' + id + ');"><i class="lnr-pencil"> </i></button>';
     }
 </script>
 @endpush

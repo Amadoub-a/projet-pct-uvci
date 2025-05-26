@@ -2,20 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Carbon\Carbon;
+use App\Models\Traitement;
 use App\Models\Legalisation;
 use Illuminate\Http\Request;
 use App\Models\Parametre\Commune;
+use Illuminate\Support\Facades\Auth;
 
 class LegalisationController extends Controller
 {
-    public function vueLegalisations(){
+    public function vueLegalisations(Request $request){
         $communes = Commune::select('libelle_commune','id')->get();
+        
+        if($request->query('id')){
+            $id = $request->query('id');
+
+            $legalisation = Legalisation::find($id);
+            $legalisation->etat = "En cours";
+            $legalisation->save();
+
+            $traitement = Traitement::where('legalisation_id',$legalisation->id)->first();
+            $traitement->etat = "En cours";
+            $traitement->date_traitement = Now();
+            $traitement->save();
+        }
+
         $menuPrincipal = "E-civil";
         $titleControlleur = "Légalisation des documents";
         $btnModalAjout = "FALSE";
 
         return view("back.legalisation.index",compact('communes','menuPrincipal','titleControlleur','btnModalAjout'));
+    }
+
+    public function listeLegalisations(){
+        $legalisations = Legalisation::orderBy('id', 'DESC')
+                                        ->get();
+
+        $jsonData["rows"] = $legalisations->toArray();
+        $jsonData["total"] = $legalisations->count();
+        return response()->json($jsonData);
     }
 
     public function storeLegalisation(Request $request){
@@ -110,13 +136,44 @@ class LegalisationController extends Controller
         session(['service' => "légalisation"]);
 
         return redirect()->route('choix-payement');
-    }
+    }   
+    
+    public function updateStateLegalisation(Request $request){
+       $jsonData = ["code" => 1, "msg" => "Opération effectuée avec succès."];
 
-    public function listeLegalisations(){
-        $legalisations = Legalisation::orderBy('id', 'DESC')->get();
+        if ($request->isMethod('post') && $request->input('idLegalisationModifier')) {
 
-        $jsonData["rows"] = $legalisations->toArray();
-        $jsonData["total"] = $legalisations->count();
-        return response()->json($jsonData);
+            $data = $request->all();
+
+            $legalisation = Legalisation::find($data['idLegalisationModifier']);
+
+            if (!$legalisation) {
+                return response()->json(["code" => 0, "msg" => "Document introuvable.", "data" => null]);
+            }
+
+            try {
+               
+                $legalisation->etat = $data['etat'];
+                $legalisation->type_document = $data['type_document'];
+                $legalisation->save();
+                
+                $traitement = Traitement::where('legalisation_id',$legalisation->id)->first();
+                $traitement->etat = $data['etat'];
+                $traitement->date_disponible = Now();
+                $traitement->save();
+
+                $jsonData["data"] = $legalisation;
+                return response()->json($jsonData);
+
+            } catch (Exception $exc) {
+                $jsonData["code"] = -1;
+                $jsonData["data"] = null;
+                $jsonData["msg"] = $exc->getMessage();
+                return response()->json($jsonData);
+            }
+
+        }
+
+       return response()->json(["code" => 0, "msg" => "Problème survenu lors de la l'enregistrement", "data" => null]);
     }
 }

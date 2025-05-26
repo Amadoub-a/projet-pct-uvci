@@ -321,7 +321,7 @@ class DeclarationNaissanceController extends Controller
         return response()->json(["code" => 0, "msg" => "Problème survenu lors de la signature", "data" => null]);
     }
     public function updateStateNaissance($id){
-         $jsonData = ["code" => 1, "msg" => " Opération effectuée avec succès."];
+        $jsonData = ["code" => 1, "msg" => " Opération effectuée avec succès."];
         $naissance = DeclarationNaissance::find($id);
 
         if($naissance){

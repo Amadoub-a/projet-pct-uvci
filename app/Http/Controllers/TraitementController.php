@@ -21,7 +21,7 @@ class TraitementController extends Controller
                 ->orWhere("etat", "Rejeté");
         })
             ->where('client_id', Auth::id())
-            ->get();
+            ->orderBy('id','DESC')->get();
 
         $declarations = [];
 
@@ -81,10 +81,9 @@ class TraitementController extends Controller
     }
 
     public function listeDemandesTraitees(){
-        $traitements = Traitement::where([
-                        ['etat', '=', 'Disponible'],
-                        ['client_id', '=', Auth::id()]
-                    ])->orWhere("etat", "Validé")->get();
+        $traitements = Traitement::where('client_id', '=', Auth::id())
+                                  ->WhereIn("etat",['Disponible','Validé','Retiré'])
+                                  ->orderBy('id','DESC')->get();
 
 
         $declarations = [];

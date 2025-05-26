@@ -128,7 +128,8 @@ Route::middleware("auth")->prefix("back")->name('back.')->group(function (){
     Route::get('liste-acte-deces', [DeclarationDeceController::class, 'listeActeDeces'])->name('liste-acte-deces');
     Route::get('print-acte-deces/{id_acte}', [DeclarationDeceController::class, 'printActeDeces']);
     Route::post('signer-acte-deces', [DeclarationDeceController::class, 'signerActeDeces'])->name('signer-acte-deces');
-    Route::delete('update-state-deces/{id_acte}', [DeclarationDeceController::class, 'updateStateDeces']);
+    
+    Route::post('update-state-legalisation', [LegalisationController::class, 'updateStateLegalisation'])->name('update-state-legalisation');
 });
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){

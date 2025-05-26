@@ -162,12 +162,12 @@
                                     </span>
                                     <select class="form-select @error('type_document') is-invalid @enderror" id="type_document" name="type_document">
                                         <option value="" selected disabled>Sélectionnez un type de document</option>
-                                        <option value="diplome" {{ old('type_document') == 'diplome' ? 'selected' : '' }}>Diplôme ou certificat scolaire</option>
-                                        <option value="contrat" {{ old('type_document') == 'contrat' ? 'selected' : '' }}>Contrat</option>
-                                        <option value="procuration" {{ old('type_document') == 'procuration' ? 'selected' : '' }}>Procuration</option>
-                                        <option value="attestation" {{ old('type_document') == 'attestation' ? 'selected' : '' }}>Attestation</option>
-                                        <option value="releve_notes" {{ old('type_document') == 'releve_notes' ? 'selected' : '' }}>Relevé de notes</option>
-                                        <option value="autre" {{ old('type_document') == 'autre' ? 'selected' : '' }}>Autre document</option>
+                                        <option value="Diplôme ou certificat scolaire" {{ old('type_document') == 'diplome' ? 'selected' : '' }}>Diplôme ou certificat scolaire</option>
+                                        <option value="Contrat" {{ old('type_document') == 'contrat' ? 'selected' : '' }}>Contrat</option>
+                                        <option value="Procuration" {{ old('type_document') == 'procuration' ? 'selected' : '' }}>Procuration</option>
+                                        <option value="Attestation" {{ old('type_document') == 'attestation' ? 'selected' : '' }}>Attestation</option>
+                                        <option value="Relevé de notes" {{ old('type_document') == 'releve_notes' ? 'selected' : '' }}>Relevé de notes</option>
+                                        <option value="Autre document" {{ old('type_document') == 'autre' ? 'selected' : '' }}>Autre document</option>
                                     </select>
                                     <em class="error invalid-feedback">Sélectionner un type de document</em>
                                 </div>

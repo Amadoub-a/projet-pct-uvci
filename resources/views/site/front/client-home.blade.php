@@ -103,7 +103,7 @@
     }
 
     function printFormatter(id, row) {
-        if (row.etat === "Disponible") {
+        if (row.etat === "Disponible" && row.type !="Légalisation de document") {
             return `<button class="btn btn-success btn-sm" title="Imprimer votre document" onClick="printRow(${row.traitement_id}, '${row.type.replace(/'/g, "\\'")}');">Imprimer</button>`;
         }
     }
