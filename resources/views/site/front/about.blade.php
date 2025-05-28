@@ -33,7 +33,7 @@
                     avez la possibilité de le faire et de le télécharger. Il vous suffit juste de suivre quelques étapes
                     pour avoir votre document. En plus de ça, vous pouvez payer en ligne, signer électroniquement et le
                     télécharger sans problème. Fin aux longues heures d'attente, fin aux longs rangs, fin à la perte de
-                    temps, (Le nom de l'Application) est la solution à votre problème.
+                    temps, E-Civil CI est la solution à votre problème.
                 </p>
                 <p>
                     Nous nous engageons à :
