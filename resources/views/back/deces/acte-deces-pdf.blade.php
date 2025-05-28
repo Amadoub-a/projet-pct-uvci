@@ -172,11 +172,19 @@
         <p class="text-center-line">Certifié conforme aux indications portées sur les registres.</p>
 
         <div class="signature-block">
-            <p><em>Délivré à {{ $acteDeces->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteDeces->date_delivrance)->format('d/m/Y') }}</em></p>
+            @isset($dateCopie)
+                <p><em>Délivré à {{ $acteDeces->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($dateCopie)->format('d/m/Y') }}</em></p>
+            @else
+                <p><em>Délivré à {{ $acteDeces->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteDeces->date_delivrance)->format('d/m/Y') }}</em></p>
+            @endif
             <p><strong>L'Officier de l'État Civil</strong></p>
 
             @if($acteDeces->signature)
-                <img src="{{ public_path($acteDeces->signature) }}" alt="Signature">
+                @isset($signatureCopie)
+                    <img src="{{ public_path($signatureCopie) }}" alt="Signature">
+                @else
+                    <img src="{{ public_path($acteDeces->signature) }}" alt="Signature">
+                @endif
             @else
                 <p><em>[Espace pour la signature manuelle ou numérique]</em></p>
             @endif

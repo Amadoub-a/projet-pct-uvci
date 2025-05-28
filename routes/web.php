@@ -130,6 +130,14 @@ Route::middleware("auth")->prefix("back")->name('back.')->group(function (){
     Route::post('signer-acte-deces', [DeclarationDeceController::class, 'signerActeDeces'])->name('signer-acte-deces');
     
     Route::post('update-state-legalisation', [LegalisationController::class, 'updateStateLegalisation'])->name('update-state-legalisation');
+
+    Route::get('rechercher-acte/{numero}/{date}/{lieu}/{type}', [CopieActeController::class, 'rechercherActe']);
+    Route::post('update-copie-acte', [CopieActeController::class, 'updateCopieActe'])->name('copie-acte.update');
+    Route::get('document-valides/copie-acte', [CopieActeController::class, 'copieActe'])->name('copie-acte');
+    Route::get('liste-copie-actes', [CopieActeController::class, 'listeCopieActes'])->name('liste-copie-actes');
+    Route::delete('update-state-copie/{copie_id}', [CopieActeController::class, 'updateStateCopie']);
+    Route::post('signer-copie-acte', [CopieActeController::class, 'signerCopieActe'])->name('signer-copie-acte');
+    Route::get('print-copie-acte/{copie_id}/{type_copie}/{type_acte}', [CopieActeController::class, 'printCopieActe']);
 });
 
 Route::middleware("auth")->prefix("parametre")->name('parametre.')->group(function (){

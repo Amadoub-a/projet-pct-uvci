@@ -229,10 +229,19 @@
         <p class="official-stamp-text">Certifie le présent extrait conforme aux indications portées aux registres.</p>
 
         <div class="signature-area">
-            <i>Délivré à {{ $acteNaissance->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteNaissance->date_delivrance)->format('d/m/Y') }}</i>
+            @isset($dateCopie)
+                <p><em>Délivré à {{ $acteNaissance->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($dateCopie)->format('d/m/Y') }}</em></p>
+            @else
+                <p><em>Délivré à {{ $acteNaissance->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteNaissance->date_delivrance)->format('d/m/Y') }}</em></p>
+            @endif 
             <p><strong>L'Officier de l'État Civil</strong></p>
+
             @if($acteNaissance->signature)
-            <img src="{{ public_path($acteNaissance->signature) }}" alt="Signature">
+                @isset($signatureCopie)
+                    <img src="{{ public_path($signatureCopie) }}" alt="Signature">
+                @else
+                    <img src="{{ public_path($acteNaissance->signature) }}" alt="Signature">
+                @endif
             @else
             <p><em>[Espace pour la signature manuelle ou numérique]</em></p>
             @endif

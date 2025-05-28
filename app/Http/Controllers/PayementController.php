@@ -18,34 +18,22 @@ class PayementController extends Controller
         $prestation = [];
 
         $idDeclaration = session('declaration_id');
-        $idDemande = session('demande_id');
-
-        if ($idDemande) {
-            $demande = DeclarationNaissance::find($idDemande);
-
-            if ($demande) {
-                $prestation = [
-                    'id' => $demande->id,
-                    'numero' => $demande->numero_demande,
-                    'montant' => $demande->montant_demande,
-                ];
-            }
-        }
 
         if ($idDeclaration) {
-            if(str_contains(strtolower($service), 'naissance')){
+            if(str_contains(strtolower($service), 'déclaration de naissance')){
                 $declaration = DeclarationNaissance::find($idDeclaration);
             }
-            if(str_contains(strtolower(string: $service), 'mariage')){
+            if(str_contains(strtolower(string: $service), 'déclaration de mariage')){
                 $declaration = DeclarationMariage::find($idDeclaration);
             }
-            if(str_contains(strtolower(string: $service), 'décès')){
+            if(str_contains(strtolower(string: $service), 'déclaration de décès')){
                 $declaration = DeclarationDece::find($idDeclaration);
             }
             if(str_contains(strtolower(string: $service), 'légalisation')){
                 $declaration = Legalisation::find($idDeclaration);
             }
-            if(str_contains(strtolower(string: $service), "copie d'acte")){
+            if(str_contains(strtolower(string: $service), "copie d'acte de")){
+                
                 $declaration = CopieActe::find($idDeclaration);
             }
             if ($declaration) {
@@ -61,7 +49,8 @@ class PayementController extends Controller
     }
 
     public function paymentSuccess(Request $request){
-        $service = $request->input('service');
+        $service = html_entity_decode($request->input('service'));
+
         $prestationId = $request->input('prestation_id');
         $montant = $request->input('montant');
         $reference = $request->input('reference');
@@ -70,17 +59,17 @@ class PayementController extends Controller
         $traitement->client_id = $request->user()->id;
         $traitement->etat = "Enregistré";
 
-        if(str_contains(strtolower($service), 'naissance')){
+        if(str_contains(strtolower($service), 'déclaration de naissance')){
             $Naissance = DeclarationNaissance::find($prestationId);
             $traitement->declaration_naissance_id = $Naissance->id;
         }
 
-        if(str_contains(strtolower($service), 'mariage')){
+        if(str_contains(strtolower($service), 'déclaration de mariage')){
             $Mariage = DeclarationMariage::find($prestationId);
             $traitement->declaration_mariage_id = $Mariage->id;
         }
 
-        if(str_contains(strtolower($service), 'décès')){
+        if(str_contains(strtolower($service), 'déclaration de décès')){
             $Dece = DeclarationDece::find($prestationId);
             $traitement->declaration_deces_id = $Dece->id;
         }
@@ -90,7 +79,7 @@ class PayementController extends Controller
             $traitement->legalisation_id = $Legalisation->id;
         }
 
-        if(str_contains(strtolower($service), "copie d'acte")){
+        if(str_contains(strtolower($service), "copie d'acte de")){
             $CopieActe = CopieActe::find($prestationId);
             $traitement->copie_acte_id = $CopieActe->id;
         }

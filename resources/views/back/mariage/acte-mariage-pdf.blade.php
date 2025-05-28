@@ -12,8 +12,10 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            font-size: 12px; /* Augmenté légèrement */
-            line-height: 1.4; /* Augmenté légèrement pour la lisibilité */
+            font-size: 12px;
+            /* Augmenté légèrement */
+            line-height: 1.4;
+            /* Augmenté légèrement pour la lisibilité */
             color: #333;
             margin: 0;
             padding: 0;
@@ -22,37 +24,46 @@
 
         .document-container {
             width: 21cm;
-            margin: 15px auto; /* Marge externe un peu plus grande */
+            margin: 15px auto;
+            /* Marge externe un peu plus grande */
             background-color: #fff;
             border: 1px solid #ddd;
-            padding: 1.5cm 2cm; /* Marges internes augmentées */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légèrement plus prononcée */
+            padding: 1.5cm 2cm;
+            /* Marges internes augmentées */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Ombre légèrement plus prononcée */
             position: relative;
             box-sizing: border-box;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px; /* Marge sous l'en-tête augmentée */
+            margin-bottom: 20px;
+            /* Marge sous l'en-tête augmentée */
         }
 
         header h1 {
             font-family: 'Merriweather', serif;
-            font-size: 23px; /* Taille du titre augmentée */
+            font-size: 23px;
+            /* Taille du titre augmentée */
             text-transform: uppercase;
             color: #000;
-            margin-bottom: 8px; /* Marge légèrement augmentée */
+            margin-bottom: 8px;
+            /* Marge légèrement augmentée */
             text-decoration: underline;
         }
 
         header p {
-            font-size: 13px; /* Taille de police pour les paragraphes de l'en-tête augmentée */
+            font-size: 13px;
+            /* Taille de police pour les paragraphes de l'en-tête augmentée */
             margin-bottom: 4px;
         }
 
         .section-block {
-            margin-bottom: 15px; /* Espacement entre les sections augmenté */
-            padding-bottom: 10px; /* Padding légèrement augmenté */
+            margin-bottom: 15px;
+            /* Espacement entre les sections augmenté */
+            padding-bottom: 10px;
+            /* Padding légèrement augmenté */
             border-bottom: 1px dashed #eee;
         }
 
@@ -60,11 +71,13 @@
             font-weight: bold;
             color: #555;
             display: inline-block;
-            width: 100px; /* Largeur pour les libellés ajustée */
+            width: 100px;
+            /* Largeur pour les libellés ajustée */
         }
 
         .main-details strong {
-            font-size: 14px; /* Taille pour les noms des époux augmentée */
+            font-size: 14px;
+            /* Taille pour les noms des époux augmentée */
         }
 
         .text-emphasis {
@@ -74,34 +87,42 @@
 
         .official-stamp-text {
             text-align: center;
-            margin: 25px 0 20px 0; /* Marge supérieure et inférieure augmentées */
+            margin: 25px 0 20px 0;
+            /* Marge supérieure et inférieure augmentées */
             font-style: italic;
-            font-size: 13px; /* Taille de police augmentée */
+            font-size: 13px;
+            /* Taille de police augmentée */
             color: #444;
         }
 
         .signature-area {
             text-align: right;
-            margin-top: 30px; /* Marge supérieure augmentée */
-            padding-top: 15px; /* Padding légèrement augmenté */
+            margin-top: 30px;
+            /* Marge supérieure augmentée */
+            padding-top: 15px;
+            /* Padding légèrement augmenté */
         }
 
         .signature-area p {
             margin-bottom: 4px;
-            font-size: 13px; /* Taille de police augmentée */
+            font-size: 13px;
+            /* Taille de police augmentée */
         }
 
         .signature-area img {
-            max-width: 160px; /* Taille maximale de la signature augmentée */
+            max-width: 160px;
+            /* Taille maximale de la signature augmentée */
             height: auto;
-            margin-top: 8px; /* Marge légèrement augmentée */
+            margin-top: 8px;
+            /* Marge légèrement augmentée */
             display: block;
             margin-left: auto;
         }
 
         .logo-placeholder {
             float: left;
-            width: 80px; /* Taille du logo augmentée */
+            width: 80px;
+            /* Taille du logo augmentée */
             height: 80px;
             border: 1px dashed #ccc;
             text-align: center;
@@ -109,15 +130,19 @@
             font-size: 10px;
             color: #888;
             margin-right: 15px;
-            margin-top: -5px; /* Ajusté légèrement */
+            margin-top: -5px;
+            /* Ajusté légèrement */
             box-sizing: border-box;
         }
 
         .cachet-placeholder {
             position: absolute;
-            bottom: 35px; /* Remonté pour prendre moins de place en bas */
-            left: 2cm; /* Aligné avec la marge de gauche */
-            width: 100px; /* Taille du cachet augmentée */
+            bottom: 35px;
+            /* Remonté pour prendre moins de place en bas */
+            left: 2cm;
+            /* Aligné avec la marge de gauche */
+            width: 100px;
+            /* Taille du cachet augmentée */
             height: 100px;
             border: 2px dashed #bbb;
             border-radius: 50%;
@@ -136,7 +161,8 @@
 
         .cachet-placeholder span {
             display: block;
-            line-height: 1.2; /* Interligne ajusté pour le cachet */
+            line-height: 1.2;
+            /* Interligne ajusté pour le cachet */
         }
 
         /* Styles spécifiques pour l'impression PDF */
@@ -152,7 +178,8 @@
                 box-shadow: none;
                 width: 100%;
                 min-height: auto;
-                padding: 1.5cm 2cm; /* Marge d'impression finale augmentée */
+                padding: 1.5cm 2cm;
+                /* Marge d'impression finale augmentée */
             }
 
             .logo-placeholder,
@@ -225,10 +252,19 @@
         </div>
         <p class="official-stamp-text">Certifie le présent extrait conforme aux indications portées aux registres.</p>
         <div class="signature-area">
-            <i>Délivré à {{ $acteMariage->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteMariage->date_delivrance)->format('d/m/Y') }}</i>
+            @isset($dateCopie)
+            <p><em>Délivré à {{ $acteMariage->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($dateCopie)->format('d/m/Y') }}</em></p>
+            @else
+            <p><em>Délivré à {{ $acteMariage->lieuDelivrance->libelle_commune }}, le {{ \Carbon\Carbon::parse($acteMariage->date_delivrance)->format('d/m/Y') }}</em></p>
+            @endif 
             <p><strong>L'Officier de l'État Civil</strong></p>
+
             @if($acteMariage->signature)
-            <img src="{{ public_path($acteMariage->signature) }}" alt="Signature">
+                @isset($signatureCopie)
+                    <img src="{{ public_path($signatureCopie) }}" alt="Signature">
+                @else
+                    <img src="{{ public_path($acteMariage->signature) }}" alt="Signature">
+                @endif
             @else
             <p><em>[Espace pour la signature manuelle ou numérique]</em></p>
             @endif

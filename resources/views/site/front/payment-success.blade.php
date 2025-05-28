@@ -23,7 +23,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Service :</p>
-                                    <p class="fw-bold" id="service-name">{{ $service }}</p>
+                                    <p class="fw-bold" id="service-name">{{ html_entity_decode($service) }}</p>
                                 </div>
                                 <div class="col-md-6 text-start">
                                     <p class="mb-0 text-muted">Référence :</p>

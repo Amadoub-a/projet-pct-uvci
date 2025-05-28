@@ -23,5 +23,11 @@
                 Acte de décès
             </a>
         </li>
+        <li>
+            <a href="{{ route('back.copie-acte') }}" class="{{Route::currentRouteName() === 'back.copie-acte' ? 'mm-active' : ''}}">
+                <i class="fa fa-certificate"></i>
+                Copie d'acte
+            </a>
+        </li>
     </ul>
 </li>

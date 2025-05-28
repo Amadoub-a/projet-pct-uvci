@@ -133,7 +133,7 @@
     }
 
     function voirDemande(idDemande) {
-        var demande = _.findWhere(rows, {
+        const demande = _.find(rows, {
             traitement_id: idDemande
         });
 
@@ -143,29 +143,32 @@
         }
 
         let baseUrl = "";
-        switch (demande.type) {
-            case "Déclaration de naissance":
-                baseUrl = "back/vue-declarations-naissances";
-                break;
-            case "Déclaration de mariage":
-                baseUrl = "back/vue-declarations-mariage";
-                break;
-            case "Déclaration de décès":
-                baseUrl = "back/vue-declarations-deces";
-                break;
-            case "Légalisation de document":
-                baseUrl = "back/vue-legalisations";
-                break;
-            case "Demande de copie d'acte":
-                baseUrl = "back/vue-copies-actes";
-                break;
-            default:
-                alert("Demande inconnue ou non prise en charge.");
-                return;
+
+        if (demande.type.includes("Demande de copie d'acte")) {
+            baseUrl = "back/vue-copies-actes";
+        } else {
+            switch (demande.type) {
+                case "Déclaration de naissance":
+                    baseUrl = "back/vue-declarations-naissances";
+                    break;
+                case "Déclaration de mariage":
+                    baseUrl = "back/vue-declarations-mariage";
+                    break;
+                case "Déclaration de décès":
+                    baseUrl = "back/vue-declarations-deces";
+                    break;
+                case "Légalisation de document":
+                    baseUrl = "back/vue-legalisations";
+                    break;
+                default:
+                    alert("Demande inconnue ou non prise en charge.");
+                    return;
+            }
         }
 
         location.href = baseUrl + "?id=" + idDemande;
     }
+
 
 
 

@@ -32,7 +32,7 @@ class TraitementController extends Controller
                 'declaration_mariage_id' => 'Déclaration de mariage',
                 'declaration_deces_id' => 'Déclaration de décès',
                 'legalisation_id' => 'Légalisation de document',
-                'copie_acte_id' => "Demande de copie d'acte"
+                'copie_acte_id' => "Demande de copie d'acte de "
             ];
 
             foreach ($declarationTypes as $field => $type) {
@@ -63,7 +63,7 @@ class TraitementController extends Controller
                     if ($declarationModel) {
                         $declarations[] = [
                             'etat' => $declarationModel->etat,
-                            'type' => $type,
+                            'type' => $type.$declarationModel->type_acte,
                             'reference' => $declarationModel->$referenceField,
                             'date_declaration' => $declarationModel->$dateField
                         ];
@@ -129,7 +129,7 @@ class TraitementController extends Controller
                             'etat' => $traitement->etat,
                             'date_traitement' => $traitement->date_traitement,
                             'date_disponible' => $traitement->date_disponible,
-                            'type' => $type,
+                            'type' => $type.$declarationModel->type_acte,
                             'reference' => $declarationModel->$referenceField,
                             'date_declaration' => $declarationModel->$dateField
                         ];
@@ -147,7 +147,7 @@ class TraitementController extends Controller
     }
 
     public function listeNouvelleDemandes(){
-        $traitements = Traitement::where('etat', '=', 'Enregistré')->get();
+        $traitements = Traitement::where('etat', '=', 'Enregistré')->orderBy('id','DESC')->get();
 
         $declarations = [];
 
@@ -158,7 +158,7 @@ class TraitementController extends Controller
                 'declaration_mariage_id' => 'Déclaration de mariage',
                 'declaration_deces_id' => 'Déclaration de décès',
                 'legalisation_id' => 'Légalisation de document',
-                'copie_acte_id' => "Demande de copie d'acte"
+                'copie_acte_id' => "Demande de copie d'acte de "
             ];
 
             foreach ($declarationTypes as $field => $type) {
@@ -192,7 +192,7 @@ class TraitementController extends Controller
                             'etat' => $traitement->etat,
                             'date_traitement' => $traitement->date_traitement,
                             'date_disponible' => $traitement->date_disponible,
-                            'type' => $type,
+                            'type' => $type.$declarationModel->type_acte,
                             'reference' => $declarationModel->$referenceField,
                             'date_declaration' => $declarationModel->$dateField
                         ];

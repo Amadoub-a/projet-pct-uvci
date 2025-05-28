@@ -327,7 +327,7 @@
             maxDate: new Date()
         });
 
-         $("#lieu_delivrance,#lieu_deces").select2({
+        $("#lieu_delivrance,#lieu_deces").select2({
             theme: "bootstrap4",
             dropdownParent: $(".bs-modal-ajout")
         });

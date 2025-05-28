@@ -52,7 +52,7 @@
                                 <div class="form-check me-4 mb-2">
                                     <input class="form-check-input @error('type_acte') is-invalid @enderror"
                                         type="radio" name="type_acte" id="acte_naissance" value="naissance"
-                                        {{ old('type_acte') == 'naissance' ? 'checked' : '' }}>
+                                        {{ old('type_acte') == 'naissance' ? 'checked' : '' }} checked>
                                     <label class="form-check-label" for="acte_naissance">
                                         Acte de naissance
                                     </label>
@@ -87,15 +87,9 @@
                                     </label>
                                 </div>
                                 <div class="form-check me-4 mb-2">
-                                    <input class="form-check-input @error('type_copie') is-invalid @enderror" type="radio" name="type_copie" id="extrait" value="extrait" {{ old('type_acte') == 'extrait' ? 'checked' : '' }}>
+                                    <input class="form-check-input @error('type_copie') is-invalid @enderror" checked type="radio" name="type_copie" id="extrait" value="extrait" {{ old('type_acte') == 'extrait' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="extrait">
                                         Extrait simple
-                                    </label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input @error('type_copie') is-invalid @enderror" type="radio" name="type_copie" id="extrait_plurilingue" value="plurilingue" {{ old('type_acte') == 'plurilingue' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="extrait_plurilingue">
-                                        Extrait plurilingue
                                     </label>
                                 </div>
                             </div>
@@ -104,51 +98,50 @@
 
                         <!-- Informations sur l'acte -->
                         <h4 class="mb-3 mt-4 text-success">Informations sur l'acte</h4>
-
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="numero_acte" class="form-label">Numéro d'acte (Numéro, date du registre et comune/sous prefecture) *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-hashtag"></i>
+                                    </span>
+                                    <input type="text" class="form-control @error('numero_acte') is-invalid @enderror" id="numero_acte" name="numero_acte" placeholder="85655 du 12/05/2025 à Daloa" value="{{ old('numero_acte') }}">
+                                    <em class="error invalid-feedback">Le numéro d'acte est obligatoire</em>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Section pour acte de naissance -->
                         <div id="section_naissance">
                             <div class="row">
-
-                                <div class="mb-3">
-                                    <label for="numero_acte" class="form-label">Numéro d'acte *</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-hashtag"></i>
-                                        </span>
-                                        <input type="text" class="form-control @error('numero_acte') is-invalid @enderror" id="numero_acte" name="numero_acte" placeholder="Numéro d'acte" value="{{ old('numero_acte') }}">
-                                        <em class="error invalid-feedback">Le numéro d'acte est obligatoire</em>
-                                    </div>
-                                </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="nom" class="form-label">Nom de famille *</label>
+                                    <label for="nom_enfant" class="form-label">Nom de famille *</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom" value="{{ old('nom') }}" placeholder="Nom de famille">
+                                        <input type="text" class="form-control @error('nom_enfant') is-invalid @enderror" id="nom_enfant" name="nom_enfant" value="{{ old('nom_enfant') }}" placeholder="Nom de famille de l'enfant">
                                         <em class="error invalid-feedback">Le nom de famille est obligatoire</em>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="prenoms" class="form-label">Prénoms *</label>
+                                    <label for="prenoms_enfant" class="form-label">Prénoms *</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control @error('prenoms') is-invalid @enderror" id="prenoms" name="prenoms" value="{{ old('prenoms') }}" placeholder="Prénoms">
+                                        <input type="text" class="form-control @error('prenoms_enfant') is-invalid @enderror" id="prenoms_enfant" name="prenoms_enfant" value="{{ old('prenoms_enfant') }}" placeholder="Prénoms de l'enfant">
                                         <em class="error invalid-feedback">Le prénom est obligatoire</em>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="date_naissance" class="form-label">Date de naissance *</label>
+                                    <label for="date_naissance_enfant" class="form-label">Date de naissance *</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="fas fa-calendar"></i>
                                         </span>
-                                        <input type="date" class="form-control @error('date_naissance') is-invalid @enderror" id="date_naissance" value="{{ old('date_naissance') }}" name="date_naissance">
+                                        <input type="date" class="form-control @error('date_naissance_enfant') is-invalid @enderror" id="date_naissance_enfant" value="{{ old('date_naissance_enfant') }}" name="date_naissance_enfant">
                                         <em class="error invalid-feedback">La date de naissance est obligatoire</em>
                                     </div>
                                 </div>
@@ -161,12 +154,12 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
-                                        <select class="form-select  @error('lieu_naissance') is-invalid @enderror" id="lieu_naissance"  name="lieu_naissance">
+                                        <select class="form-select  @error('lieu_naissance') is-invalid @enderror" id="lieu_naissance" name="lieu_naissance">
                                             <option value="" disabled {{ old('lieu_naissance') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
                                             @foreach ($communes as $commune)
-                                                <option value="{{ $commune->id }}" {{ old('lieu_naissance') == $commune->id ? 'selected' : '' }}>
-                                                    {{ $commune->libelle_commune }}
-                                                </option>
+                                            <option value="{{ $commune->id }}" {{ old('lieu_naissance') == $commune->id ? 'selected' : '' }}>
+                                                {{ $commune->libelle_commune }}
+                                            </option>
                                             @endforeach
                                         </select>
                                         <em class="error invalid-feedback">Veillez sélectionner une commune</em>
@@ -179,21 +172,23 @@
                         <div id="section_mariage" style="display: none;">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nom_epoux1" class="form-label">Nom et prénoms du premier époux *</label>
+                                    <label for="nom_complet_epoux" class="form-label">Nom et prénoms de l'époux *</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom_epoux1" placeholder="Nom et prénoms">
+                                        <input type="text" class="form-control @error('nom_complet_epoux') is-invalid @enderror" id="nom_complet_epoux" name="nom_complet_epoux" value="{{ old('nom_complet_epoux') }}" placeholder="Nom et prénoms de l'époux">
+                                        <em class="error invalid-feedback">Le nom complet de l'époux est obligatoire</em>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="nom_epoux2" class="form-label">Nom et prénoms du deuxième époux *</label>
+                                    <label for="nom_complet_epouse" class="form-label">Nom et prénoms de l'épouse *</label>
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom_epoux2" placeholder="Nom et prénoms">
+                                        <input type="text" class="form-control @error('nom_complet_epouse') is-invalid @enderror" id="nom_complet_epouse" name="nom_complet_epouse" value="{{ old('nom_complet_epouse') }}" placeholder="Nom et prénoms de l'épouse">
+                                        <em class="error invalid-feedback">Le nom complet de l'épouse est obligatoire</em>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +200,8 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-calendar"></i>
                                         </span>
-                                        <input type="date" class="form-control" id="date_mariage">
+                                        <input type="date" class="form-control @error('date_mariage') is-invalid @enderror" name="date_mariage" id="date_mariage" value="{{ old('date_mariage') }}">
+                                        <em class="error invalid-feedback">La date du mariage est obligatoire</em>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -214,7 +210,15 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="lieu_mariage" placeholder="Ville/Commune">
+                                        <select class="form-select  @error('lieu_mariage') is-invalid @enderror" id="lieu_mariage" name="lieu_mariage">
+                                            <option value="" disabled {{ old('lieu_mariage') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
+                                            @foreach ($communes as $commune)
+                                            <option value="{{ $commune->id }}" {{ old('lieu_mariage') == $commune->id ? 'selected' : '' }}>
+                                                {{ $commune->libelle_commune }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <em class="error invalid-feedback">Veillez sélectionner une commune</em>
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +233,8 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="nom_defunt" placeholder="Nom de famille">
+                                        <input type="text" class="form-control @error('nom_defunt') is-invalid @enderror" id="nom_defunt" name="nom_defunt" value="{{ old('nom_defunt') }}" placeholder="Nom de famille">
+                                        <em class="error invalid-feedback">Le nom du défunt est obligatoire</em>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -238,7 +243,8 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="prenoms_defunt" placeholder="Prénoms">
+                                        <input type="text" class="form-control @error('prenoms_defunt') is-invalid @enderror" id="prenoms_defunt" name="prenoms_defunt" value="{{ old('nom_defunt') }}" placeholder="Prénoms">
+                                        <em class="error invalid-feedback">Le prénoms du défunt est obligatoire</em>
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +256,8 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-calendar"></i>
                                         </span>
-                                        <input type="date" class="form-control" id="date_deces">
+                                        <input type="date" class="form-control @error('date_deces') is-invalid @enderror" id="date_deces" name="date_deces" value="{{ old('date_deces') }}">
+                                        <em class="error invalid-feedback">La date du décès est obligatoire</em>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -259,21 +266,28 @@
                                         <span class="input-group-text">
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="lieu_deces" placeholder="Ville/Commune">
+                                        <select class="form-select  @error('lieu_deces') is-invalid @enderror" id="lieu_deces" name="lieu_deces">
+                                            <option value="" disabled {{ old('lieu_deces') ? '' : 'selected' }}>Sélectionnez une ville ou commune</option>
+                                            @foreach ($communes as $commune)
+                                            <option value="{{ $commune->id }}" {{ old('lieu_deces') == $commune->id ? 'selected' : '' }}>
+                                                {{ $commune->libelle_commune }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <em class="error invalid-feedback">Veillez sélectionner une commune</em>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-
                         <!-- Informations sur le demandeur -->
+                    
                         <h4 class="mb-3 mt-4 text-success">Informations sur le demandeur</h4>
                         <div class="mb-3">
                             <label class="form-label">Vous êtes : *</label>
                             <div class="d-flex flex-wrap">
                                 <div class="form-check me-4 mb-2">
-                                    <input class="form-check-input " type="radio" name="demander_par" id="demandeur_concerne" value="concerne" {{ old('demander_par') == 'concerne' ? 'checked' : '' }}>
+                                    <input class="form-check-input " type="radio" name="demander_par" id="demandeur_concerne" value="concerne" {{ old('demander_par') == 'concerne' ? 'checked' : '' }} checked>
                                     <label class="form-check-label  @error('demander_par') is-invalid @enderror" for="demandeur_concerne">
                                         La personne concernée par l'acte
                                     </label>
@@ -293,62 +307,63 @@
                             </div>
                             <em class="error invalid-feedback">Veillez faire un choix</em>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="nom_demandeur" class="form-label">Nom de famille *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-user"></i>
-                                    </span>
-                                    <input type="text" class="form-control @error('nom_demandeur') is-invalid @enderror" id="nom_demandeur" name="nom_demandeur" placeholder="Nom de famille"  value="{{ old('nom_demandeur') }}">
-                                    <em class="error invalid-feedback">Le nom du demandeur est obligatoire</em>
+                        <div class="row infos-demandeur">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nom_demandeur" class="form-label">Nom de famille *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control @error('nom_demandeur') is-invalid @enderror" id="nom_demandeur" name="nom_demandeur" placeholder="Nom de famille" value="{{ old('nom_demandeur') }}">
+                                        <em class="error invalid-feedback">Le nom du demandeur est obligatoire</em>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="prenom_demandeur" class="form-label">Prénoms *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control @error('prenom_demandeur') is-invalid @enderror" id="prenom_demandeur" name="prenom_demandeur" placeholder="Prénoms" value="{{ old('prenom_demandeur') }}">
+                                        <em class="error invalid-feedback">Le prenom du demandeur est obligatoire</em>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="prenom_demandeur" class="form-label">Prénoms *</label>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email_demandeur" class="form-label">Adresse e-mail </label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <input type="email" class="form-control" id="email_demandeur" name="email_demandeur" placeholder="exemple@email.com" value="{{ old('email_demandeur') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="contact_demandeur" class="form-label">Numéro de téléphone *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                        <input type="tel" class="form-control @error('contact_demandeur') is-invalid @enderror" id="contact_demandeur" name="contact_demandeur" placeholder="+225 XXXXXXXXXX" value="{{ old('contact_demandeur') }}">
+                                        <em class="error invalid-feedback">Le contact du demandeur est obligatoire</em>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="adresse_demandeur" class="form-label">Adresse *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="fas fa-user"></i>
+                                        <i class="fas fa-home"></i>
                                     </span>
-                                    <input type="text" class="form-control @error('prenom_demandeur') is-invalid @enderror" id="prenom_demandeur" name="prenom_demandeur" placeholder="Prénoms" value="{{ old('prenom_demandeur') }}">
-                                    <em class="error invalid-feedback">Le prenom du demandeur est obligatoire</em>
+                                    <input type="text" class="form-control @error('adresse_demandeur') is-invalid @enderror" id="adresse_demandeur" name="adresse_demandeur" placeholder="Adresse complète" value="{{ old('adresse_demandeur') }}">
+                                    <em class="error invalid-feedback">L'adresse du demandeur est obligatoire</em>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="email_demandeur" class="form-label">Adresse e-mail </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-envelope"></i>
-                                    </span>
-                                    <input type="email" class="form-control" id="email_demandeur" name="email_demandeur" placeholder="exemple@email.com" value="{{ old('email_demandeur') }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="contact_demandeur" class="form-label">Numéro de téléphone *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-phone"></i>
-                                    </span>
-                                    <input type="tel" class="form-control @error('contact_demandeur') is-invalid @enderror" id="contact_demandeur" name="contact_demandeur" placeholder="+225 XXXXXXXXXX" value="{{ old('contact_demandeur') }}">
-                                    <em class="error invalid-feedback">Le contact du demandeur est obligatoire</em>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="adresse_demandeur" class="form-label">Adresse *</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fas fa-home"></i>
-                                </span>
-                                <input type="text" class="form-control @error('adresse_demandeur') is-invalid @enderror" id="adresse_demandeur" name="adresse_demandeur" placeholder="Adresse complète" value="{{ old('adresse_demandeur') }}">
-                                <em class="error invalid-feedback">L'adresse du demandeur est obligatoire</em>
-                            </div>
-                        </div>
-
                         <!-- Documents justificatifs -->
                         <h4 class="mb-3 mt-4 text-success">Documents justificatifs</h4>
                         <div class="alert alert-info">
@@ -356,26 +371,29 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="piece_identite_demandeur" class="form-label">Pièce d'identité du demandeur </label>
-                            <input type="file" class="form-control" id="piece_identite_demandeur" name="piece_identite_demandeur" accept=".pdf,.jpg,.jpeg,.png">
+                            <label for="piece_identite_demandeur" class="form-label">Pièce d'identité du demandeur *</label>
+                            <input type="file" class="form-control @error('piece_identite_demandeur') is-invalid @enderror" id="piece_identite_demandeur" name="piece_identite_demandeur" accept=".pdf,.jpg,.jpeg,.png">
+                            <em class="error invalid-feedback">La pièce d'identité du demandeur est obligatoire</em>
                         </div>
 
                         <div id="section_justificatif_lien" style="display: none;">
                             <div class="mb-3">
                                 <label for="justificatif_lien" class="form-label">Justificatif de lien de parenté ou d'intérêt légitime *</label>
-                                <input type="file" class="form-control" id="justificatif_lien" accept=".pdf,.jpg,.jpeg,.png">
+                                <input type="file" class="form-control @error('justificatif_lien') is-invalid @enderror" id="justificatif_lien" name="justificatif_lien" accept=".pdf,.jpg,.jpeg,.png">
+                                <em class="error invalid-feedback">Ce document est obligatoire</em>
                             </div>
                         </div>
 
                         <div id="section_procuration" style="display: none;">
                             <div class="mb-3">
                                 <label for="procuration" class="form-label">Procuration *</label>
-                                <input type="file" class="form-control" id="procuration" accept=".pdf,.jpg,.jpeg,.png">
+                                <input type="file" class="form-control @error('procuration') is-invalid @enderror" id="procuration" name="procuration" accept=".pdf,.jpg,.jpeg,.png">
+                                <em class="error invalid-feedback">Ce document est obligatoire</em>
                             </div>
                         </div>
 
                         <!-- Déclaration sur l'honneur -->
-                         <div class="mb-4 mt-4">
+                        <div class="mb-4 mt-4">
                             <div class="form-check">
                                 <input class="form-check-input @error('declaration_honneur') is-invalid @enderror" type="checkbox" id="declaration_honneur" name="declaration_honneur">
                                 <label class="form-check-label" for="declaration_honneur">
@@ -399,6 +417,71 @@
     function showLoader() {
         document.getElementById('loader').style.display = 'flex';
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const radios = document.querySelectorAll('input[name="type_acte"]');
+        const sections = {
+            naissance: document.getElementById('section_naissance'),
+            mariage: document.getElementById('section_mariage'),
+            deces: document.getElementById('section_deces')
+        };
+
+        function showSection(type) {
+            for (const key in sections) {
+                sections[key].style.display = 'none';
+            }
+            if (sections[type]) {
+                sections[type].style.display = 'block';
+            }
+        }
+
+        // Affiche la section sélectionnée lors du chargement si old() est défini
+        const selected = document.querySelector('input[name="type_acte"]:checked');
+        if (selected) {
+            showSection(selected.value);
+        }
+
+        // Met à jour l'affichage quand on change de type d'acte
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                showSection(this.value);
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const radiosDemandeur = document.querySelectorAll('input[name="demander_par"]');
+
+        const sectionLien = document.getElementById('section_justificatif_lien');
+        const sectionProcuration = document.getElementById('section_procuration');
+        const sectionInfosDemandeur = document.querySelectorAll('.infos-demandeur');
+
+        function toggleSections(value) {
+            // Réinitialisation
+            sectionLien.style.display = 'none';
+            sectionProcuration.style.display = 'none';
+            sectionInfosDemandeur.forEach(el => el.style.display = 'block');
+
+            if (value === 'parent') {
+                sectionLien.style.display = 'block';
+            } else if (value === 'autre') {
+                sectionProcuration.style.display = 'block';
+            } else if (value === 'concerne') {
+                sectionInfosDemandeur.forEach(el => el.style.display = 'none');
+            }
+        }
+
+        // Détecte la sélection initiale (old value)
+        const selected = document.querySelector('input[name="demander_par"]:checked');
+        if (selected) toggleSections(selected.value);
+
+        // Écoute les changements
+        radiosDemandeur.forEach(radio => {
+            radio.addEventListener('change', function() {
+                toggleSections(this.value);
+            });
+        });
+    });
 </script>
 @endauth
 @endsection

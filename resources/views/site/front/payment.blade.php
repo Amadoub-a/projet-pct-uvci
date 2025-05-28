@@ -10,12 +10,17 @@
         </p>
     </div>
 </section>
-
+<div id="loader" style="display: none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.8); z-index:9999; justify-content:center; align-items:center;">
+    <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+</div>
 <!-- Payment Section -->
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-8">
             <div class="card shadow">
+
                 <div class="card-body p-4 p-md-5">
                     <h2 class="text-center mb-4">Détails de la transaction</h2>
 
@@ -28,7 +33,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <p class="mb-0 text-muted">Service :</p>
-                                    <p class="fw-bold" id="service-name">{{ ucfirst($service) }}</p>
+                                    <p class="fw-bold" id="service-name">{{ html_entity_decode(ucfirst($service)) }}</p>
                                     <input type="hidden" name="service" value="{{ $prestation['id'] }}">
                                 </div>
                                 <div class="col-md-6">
@@ -116,6 +121,9 @@
 </div>
 
 <script>
+    function showLoader() {
+        document.getElementById('loader').style.display = 'flex';
+    }
     document.getElementById("pay-button").addEventListener("click", function() {
         var paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
         var mobileNumber = document.getElementById('mobile_number').value;
@@ -144,6 +152,7 @@
         var paymentSuccess = true; // Simuler une réussite, mettre false pour échouer
 
         if (paymentSuccess) {
+            showLoader();
             // Créer un formulaire POST caché pour envoyer les données
             var form = document.createElement('form');
             form.method = 'POST';

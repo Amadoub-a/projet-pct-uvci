@@ -15,7 +15,7 @@ use App\Services\ConvertisDateToWordService;
 class DeclarationDeceController extends Controller
 {
     public function vueDeclarationsDeces(Request $request){
-         if($request->query('id')){
+        if($request->query('id')){
             $id = $request->query('id');
 
             $deces = DeclarationDece::find($id);
