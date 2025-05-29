@@ -115,7 +115,100 @@
         </div>
     </div>
 </div>
+<div class="row g-4">
+    <!-- Naissances -->
+    <div class="col-12 col-md-4">
+        <div class="card border-success shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-success mb-3">
+                    <i class="fas fa-baby me-2"></i>Naissances par commune
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-success text-center">
+                            <tr>
+                                <th>#</th>
+                                <th>Commune</th>
+                                <th><i class="fas fa-baby"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($nbNaissanceParCommune as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->commune->libelle_commune }}</td>
+                                    <td class="fw-bold text-success text-center">{{ $item->total }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Mariages -->
+    <div class="col-12 col-md-4">
+        <div class="card border-primary shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-primary mb-3">
+                    <i class="fas fa-ring me-2"></i>Mariages par commune
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-primary text-center">
+                            <tr>
+                                <th>#</th>
+                                <th>Commune</th>
+                                <th><i class="fas fa-ring"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($nbMariageParCommune as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->commune->libelle_commune }}</td>
+                                    <td class="fw-bold text-primary text-center">{{ $item->total }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Décès -->
+    <div class="col-12 col-md-4">
+        <div class="card border-danger shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-danger mb-3">
+                    <i class="fas fa-skull-crossbones me-2"></i>Décès par commune
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-danger text-center">
+                            <tr>
+                                <th>#</th>
+                                <th>Commune</th>
+                                <th><i class="fas fa-skull-crossbones"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($nbDecesParCommune as $index => $item)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $item->commune->libelle_commune }}</td>
+                                    <td class="fw-bold text-danger text-center">{{ $item->total }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('javascript')
 <script type="text/javascript">
