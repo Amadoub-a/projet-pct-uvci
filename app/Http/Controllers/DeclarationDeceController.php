@@ -187,6 +187,10 @@ class DeclarationDeceController extends Controller
                     return response()->json(["code" => 0, "msg" => "Document introuvable.", "data" => NULL]);
                 }
 
+                if($data['etat'] == "Validé" && (empty($data['numero_extrait']) or empty($data['date_registre']) or empty($data['date_delivrance']) or empty($data['lieu_delivrance']))){
+                    return response()->json(["code" => 0, "msg" => "Vous dévez attribuer un numéro d'acte, une date de registre et le lieu de délivrance.", "data" => NULL]);
+                }
+
                 $deces->numero_extrait = $data['numero_extrait'];
                 $deces->date_registre = isset($data['date_registre']) ? Carbon::createFromFormat('d-m-Y', $data["date_registre"]):null;
                 $deces->date_delivrance = isset($data['date_delivrance']) ? Carbon::createFromFormat('d-m-Y', $data["date_delivrance"]):null;
