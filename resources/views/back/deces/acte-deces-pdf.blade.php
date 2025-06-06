@@ -191,7 +191,7 @@
         </div>
 
         <div class="cachet-placeholder">
-            Cachet Officiel
+             <img src="{{ public_path("/timbre.jpg") }}" alt="Timbre">
         </div>
     </div>
 </body>
